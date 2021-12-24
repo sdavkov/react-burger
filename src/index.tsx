@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import App from './components/app/app';
 import reportWebVitals from './reportWebVitals';
+import '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css'
 
 ReactDOM.render(
   <React.StrictMode>

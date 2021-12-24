@@ -1,0 +1,24 @@
+.header {
+    background: #1C1C21;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.nav {
+    display: flex;
+}
+
+@media (max-width: 870px) {
+    .row {
+        flex-direction: column;
+    }
+
+    .nav {
+        order: 1;
+    }
+}
