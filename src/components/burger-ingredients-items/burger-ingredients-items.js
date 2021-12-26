@@ -25,6 +25,7 @@ const BurgerIngredientsItems = ({ title, burgerIngredients, cart }) => {
 }
 
 BurgerIngredientsItems.propTypes = {
+    title: PropTypes.string.isRequired,
     burgerIngredients: PropTypes.arrayOf(burgerIngredientsPropTypes).isRequired,
     cart: PropTypes.arrayOf(cartPropTypes).isRequired,
 }

@@ -9,17 +9,20 @@ const getTotal = (burgerIngredients, cart) => {
 }
 
 const BurgerConstructor = ({ burgerIngredients, cart }) => {
+
+    const bun = burgerIngredients.find(item => item._id === cart.find(cartItem => cartItem.type == 'bun')._id)
+
     return (
         <div className={styles.constructor + ' mt-25'}>
-            {cart.find(cartItem => cartItem.type === 'bun') && (
+            {bun && (
                 <div className={styles.item + ' mr-4'}>
                     <div></div>
                     <ConstructorElement
                         type="top"
                         isLocked={true}
-                        text={burgerIngredients.find(item => item._id === cart.find(cartItem => cartItem.type == 'bun')._id).name}
-                        price={burgerIngredients.find(item => item._id === cart.find(cartItem => cartItem.type == 'bun')._id).price}
-                        thumbnail={burgerIngredients.find(item => item._id === cart.find(cartItem => cartItem.type == 'bun')._id).image}
+                        text={bun.name + ' (верх)'}
+                        price={bun.price}
+                        thumbnail={bun.image}
                     />
                 </div>
             )}
@@ -36,15 +39,15 @@ const BurgerConstructor = ({ burgerIngredients, cart }) => {
                     </div>
                 ))}
             </div>
-            {cart.find(cartItem => cartItem.type === 'bun') && (
+            {bun && (
                 <div className={styles.item + ' mr-4'}>
                     <div></div>
                     <ConstructorElement
                         type="bottom"
                         isLocked={true}
-                        text={burgerIngredients.find(item => item._id === cart.find(cartItem => cartItem.type == 'bun')._id).name}
-                        price={burgerIngredients.find(item => item._id === cart.find(cartItem => cartItem.type == 'bun')._id).price}
-                        thumbnail={burgerIngredients.find(item => item._id === cart.find(cartItem => cartItem.type == 'bun')._id).image}
+                        text={bun.name + ' (низ)'}
+                        price={bun.price}
+                        thumbnail={bun.image}
                     />
                 </div>
             )}
