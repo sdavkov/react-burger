@@ -4,10 +4,10 @@ import styles from './burger-ingredients-items.module.css'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { burgerIngredientsPropTypes, cartPropTypes } from '../../utils/ptop-types'
 
-const BurgerIngredientsItems = ({ title, burgerIngredients, cart }) => {
+const BurgerIngredientsItems = ({ title, burgerIngredients, cart, refObj }) => {
     return (
         <>
-            <p className='text text_type_main-medium pt-10'>{title}</p>
+            <p ref={refObj} className='text text_type_main-medium pt-10'>{title}</p>
             <div className={styles.items + ' pt-6 pb-10 pl-4'}>
                 {burgerIngredients.map(item => (
                     <div className={styles.item + ' pr-6'} key={item._id}>
