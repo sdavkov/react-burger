@@ -10,7 +10,7 @@ const getTotal = (burgerIngredients, cart) => {
 
 const BurgerConstructor = ({ burgerIngredients, cart }) => {
 
-    const bun = burgerIngredients.find(item => item._id === cart.find(cartItem => cartItem.type == 'bun')._id)
+    const bun = cart.find(cartItem => cartItem.type == 'bun')
 
     return (
         <div className={styles.constructor + ' mt-25'}>
@@ -32,9 +32,9 @@ const BurgerConstructor = ({ burgerIngredients, cart }) => {
                         <DragIcon type="primary" />
                         <ConstructorElement
                             isLocked={false}
-                            text={burgerIngredients.find(item => item._id === cartItem._id).name}
-                            price={burgerIngredients.find(item => item._id === cartItem._id).price}
-                            thumbnail={burgerIngredients.find(item => item._id === cartItem._id).image}
+                            text={cartItem.name}
+                            price={cartItem.price}
+                            thumbnail={cartItem.image}
                         />
                     </div>
                 ))}

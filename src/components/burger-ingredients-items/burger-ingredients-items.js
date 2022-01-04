@@ -12,7 +12,7 @@ const BurgerIngredientsItems = ({ title, burgerIngredients, cart, refObj }) => {
                 {burgerIngredients.map(item => (
                     <div className={styles.item + ' pr-6'} key={item._id}>
                         <div className={styles.image + ' ml-4 mr-4 pb-1'}>
-                            {cart.find(cartItem => cartItem._id === item._id) && <p className={styles.count + ' text text_type_digits-default'}>{cart.filter(cartItem => cartItem._id === item._id).length}</p>}
+                            {cart && cart.length > 0 && cart.find(cartItem => cartItem._id === item._id) && <p className={styles.count + ' text text_type_digits-default'}>{cart.filter(cartItem => cartItem._id === item._id).length}</p>}
                             <img src={item.image} />
                         </div>
                         <div className={styles.price + ' pb-1'}><p className="text text_type_digits-default mr-1">{item.price}</p><CurrencyIcon type="primary" /></div>
