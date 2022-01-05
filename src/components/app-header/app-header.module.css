@@ -12,13 +12,3 @@
 .nav {
     display: flex;
 }
-
-@media (max-width: 870px) {
-    .row {
-        flex-direction: column;
-    }
-
-    .nav {
-        order: 1;
-    }
-}
