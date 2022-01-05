@@ -9,7 +9,6 @@ const API_URL = 'https://norma.nomoreparties.space/api/ingredients';
 
 const App = React.memo(() => {
 
-
   const [state, setState] = useState({
     ingredientsData: [],
     loading: false,
@@ -34,7 +33,7 @@ const App = React.memo(() => {
   }, [])
 
   useEffect(() => {
-    //Заполняем тестовые данные  для отрисовки конструктора
+    //Заполняем тестовые данные для отрисовки конструктора
     if (state.ingredientsData.length > 0) {
       const bun = state.ingredientsData.find((item) => item.type === 'bun');
       const additionals = state.ingredientsData.filter(item => item.type !== 'bun');

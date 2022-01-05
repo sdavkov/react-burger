@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import styles from './burger-ingredients.module.css'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
@@ -7,37 +7,37 @@ import { burgerIngredientsPropTypes, cartPropTypes } from '../../utils/ptop-type
 
 const BurgerIngredients = ({ burgerIngredients, cart }) => {
 
+    const [activeTypeOfBurgerIngredients, setActiveTypeOfBurgerIngredients] = useState('bun')
+
     const refBun = useRef(null);
     const refMain = useRef(null);
     const refSauce = useRef(null);
 
-    const [typeOfBurgerIngredients, setTypeOfBurgerIngredients] = useState('bun')
-
-    const changefBurgerIngredientsType = type => {
-        setTypeOfBurgerIngredients(type);
+    const changeActiveTypeOfBurgerIngredients = useCallback(type => {
+        setActiveTypeOfBurgerIngredients(type);
         if (type === 'bun') refBun.current.scrollIntoView({ behavior: 'smooth' })
         if (type === 'sauce') refSauce.current.scrollIntoView({ behavior: 'smooth' })
         if (type === 'main') refMain.current.scrollIntoView({ behavior: 'smooth' })
-    }
+    }, [])
 
     return (
         <div className={styles.ingredients + ' mr-10'}>
             <p className='text_type_main-large pt-10 pb-5'>Соберите бургер</p>
             <div className={styles.tab}>
-                <Tab value="bun" active={typeOfBurgerIngredients === 'bun'} onClick={changefBurgerIngredientsType}>
+                <Tab value="bun" active={activeTypeOfBurgerIngredients === 'bun'} onClick={changeActiveTypeOfBurgerIngredients}>
                     Булки
                 </Tab>
-                <Tab value="sauce" active={typeOfBurgerIngredients === 'sauce'} onClick={changefBurgerIngredientsType}>
+                <Tab value="sauce" active={activeTypeOfBurgerIngredients === 'sauce'} onClick={changeActiveTypeOfBurgerIngredients}>
                     Соусы
                 </Tab>
-                <Tab value="main" active={typeOfBurgerIngredients === 'main'} onClick={changefBurgerIngredientsType}>
+                <Tab value="main" active={activeTypeOfBurgerIngredients === 'main'} onClick={changeActiveTypeOfBurgerIngredients}>
                     Начинки
                 </Tab>
             </div>
             <div className={styles.items}>
-                <BurgerIngredientsItems refObj={refBun} title='Булки' burgerIngredients={burgerIngredients.filter(item => item.type === 'bun')} cart={cart} />
-                <BurgerIngredientsItems refObj={refSauce} title='Соусы' burgerIngredients={burgerIngredients.filter(item => item.type === 'sauce')} cart={cart} />
-                <BurgerIngredientsItems refObj={refMain} title='Начинки' burgerIngredients={burgerIngredients.filter(item => item.type === 'main')} cart={cart} />
+                <BurgerIngredientsItems ref={refBun} title='Булки' burgerIngredients={burgerIngredients.filter(item => item.type === 'bun')} cart={cart} />
+                <BurgerIngredientsItems ref={refSauce} title='Соусы' burgerIngredients={burgerIngredients.filter(item => item.type === 'sauce')} cart={cart} />
+                <BurgerIngredientsItems ref={refMain} title='Начинки' burgerIngredients={burgerIngredients.filter(item => item.type === 'main')} cart={cart} />
             </div>
         </div>
     )
