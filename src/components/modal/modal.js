@@ -15,7 +15,9 @@ const Modal = React.memo(({ visible, setVisible, title, children }) => {
                 <div className={styles.modal} onClick={e => e.stopPropagation()}>
                     <div className={styles.title + ' pl-10 pt-10 pr-10'}>
                         <p className='text text_type_main-large'>{title}</p>
-                        <CloseIcon type="primary" onClick={() => setVisible(false)} />
+                        <div className={styles.close}>
+                            <CloseIcon type="primary" onClick={() => setVisible(false)} />
+                        </div>
                     </div>
                     {children}
                 </div>

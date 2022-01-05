@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import styles from './burger-ingredients-items.module.css'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { burgerIngredientsPropTypes } from '../../utils/ptop-types'
+import { burgerIngredientsPropTypes, cartPropTypes } from '../../utils/ptop-types'
 import IngredientDetails from '../ingredient-details/ingredient-details'
 
 const BurgerIngredientsItems = React.memo(React.forwardRef(({ title, burgerIngredients, cart }, ref) => {
