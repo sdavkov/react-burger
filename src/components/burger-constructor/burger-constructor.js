@@ -1,14 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import styles from './burger-constructor.module.css'
 import { Button, ConstructorElement, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { burgerIngredientsPropTypes, cartPropTypes } from '../../utils/ptop-types'
+import OrderDetails from '../order-details/order-details'
 
 const getTotal = (burgerIngredients, cart) => {
     return cart.reduce((total, item) => total + burgerIngredients.find(ingredient => ingredient._id === item._id).price, 0)
 }
 
-const BurgerConstructor = ({ burgerIngredients, cart }) => {
+const BurgerConstructor = React.memo(({ burgerIngredients, cart }) => {
+
+    const [visibleModal, setVisibleModal] = useState(false);
 
     const bun = cart.find(cartItem => cartItem.type == 'bun')
 
@@ -56,13 +59,14 @@ const BurgerConstructor = ({ burgerIngredients, cart }) => {
                     <p className="text text_type_digits-medium mr-2">{getTotal(burgerIngredients, cart)}</p>
                     <CurrencyIcon type="primary" />
                 </div>
-                <Button type="primary" size="large">
+                <OrderDetails visible={visibleModal} setVisible={setVisibleModal} />
+                <Button type="primary" size="large" onClick={() => setVisibleModal(true)}>
                     Оформить заказ
                 </Button>
             </div>
         </div >
     )
-}
+})
 
 BurgerConstructor.propTypes = {
     burgerIngredients: PropTypes.arrayOf(burgerIngredientsPropTypes).isRequired,
