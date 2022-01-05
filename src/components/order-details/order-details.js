@@ -1,9 +1,10 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Modal from '../modal/modal'
 import styles from './order-details.module.css'
 import orderImage from '../../images/order.svg'
 
-const OrderDetails = ({ visible, setVisible }) => {
+const OrderDetails = React.memo(({ visible, setVisible }) => {
     return (
         <Modal visible={visible} setVisible={setVisible}>
             <div className={styles.details}>
@@ -15,6 +16,11 @@ const OrderDetails = ({ visible, setVisible }) => {
             </div>
         </Modal>
     )
+})
+
+OrderDetails.propTypes = {
+    visible: PropTypes.bool.isRequired,
+    setVisible: PropTypes.func.isRequired
 }
 
 export default OrderDetails

@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 import styles from './burger-ingredients.module.css'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import BurgerIngredientsItems from '../burger-ingredients-items/burger-ingredients-items'
-import { burgerIngredientsPropTypes, cartPropTypes } from '../../utils/ptop-types'
+import { burgerIngredientsPropTypes } from '../../utils/ptop-types'
 
-const BurgerIngredients = ({ burgerIngredients, cart }) => {
+const BurgerIngredients = React.memo(({ burgerIngredients, cart }) => {
 
     const [activeTypeOfBurgerIngredients, setActiveTypeOfBurgerIngredients] = useState('bun')
 
@@ -41,11 +41,11 @@ const BurgerIngredients = ({ burgerIngredients, cart }) => {
             </div>
         </div>
     )
-}
+})
 
 BurgerIngredients.propTypes = {
     burgerIngredients: PropTypes.arrayOf(burgerIngredientsPropTypes).isRequired,
-    cart: PropTypes.arrayOf(cartPropTypes).isRequired,
+    cart: PropTypes.arrayOf(burgerIngredientsPropTypes).isRequired,
 }
 
 export default BurgerIngredients

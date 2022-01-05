@@ -7,7 +7,7 @@ import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 const modalRoot = document.getElementById("react-modals");
 
-const Modal = ({ visible, setVisible, title, children }) => {
+const Modal = React.memo(({ visible, setVisible, title, children }) => {
 
     return ReactDOM.createPortal(
         visible && (
@@ -22,10 +22,12 @@ const Modal = ({ visible, setVisible, title, children }) => {
             </ModalOverlay>)
         , modalRoot
     )
-}
+})
 
 Modal.propTypes = {
-
+    visible: PropTypes.bool.isRequired,
+    setVisible: PropTypes.func.isRequired,
+    title: PropTypes.string
 }
 
 export default Modal

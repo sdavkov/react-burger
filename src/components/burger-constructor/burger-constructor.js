@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import styles from './burger-constructor.module.css'
 import { Button, ConstructorElement, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { burgerIngredientsPropTypes, cartPropTypes } from '../../utils/ptop-types'
+import { burgerIngredientsPropTypes } from '../../utils/ptop-types'
 import OrderDetails from '../order-details/order-details'
 
 const getTotal = (burgerIngredients, cart) => {
@@ -70,7 +70,7 @@ const BurgerConstructor = React.memo(({ burgerIngredients, cart }) => {
 
 BurgerConstructor.propTypes = {
     burgerIngredients: PropTypes.arrayOf(burgerIngredientsPropTypes).isRequired,
-    cart: PropTypes.arrayOf(cartPropTypes).isRequired,
+    cart: PropTypes.arrayOf(burgerIngredientsPropTypes).isRequired,
 }
 
 export default BurgerConstructor
