@@ -1,16 +1,27 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import styles from './burger-ingredients-items.module.css'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { burgerIngredientsPropTypes, cartPropTypes } from '../../utils/ptop-types'
+import IngredientDetails from '../ingredient-details/ingredient-details'
 
-const BurgerIngredientsItems =  React.memo(React.forwardRef(({ title, burgerIngredients, cart }, ref) => {
+const BurgerIngredientsItems = React.memo(React.forwardRef(({ title, burgerIngredients, cart }, ref) => {
+
+    const [visibleModal, setVisibleModal] = useState(false);
+    const [currentIngredient, setCurrentIngredient] = useState(null);
+
+    const showModal = (ingredient) => {
+        setCurrentIngredient(ingredient);
+        setVisibleModal(true);
+    }
+
     return (
         <>
+            <IngredientDetails visible={visibleModal} setVisible={setVisibleModal} ingredient={currentIngredient} />
             <p ref={ref} className='text text_type_main-medium pt-10'>{title}</p>
             <div className={styles.items + ' pt-6 pb-10 pl-4'}>
                 {burgerIngredients.map(item => (
-                    <div className={styles.item + ' pr-6'} key={item._id}>
+                    <div className={styles.item + ' pr-6'} key={item._id} onClick={() => showModal(item)}>
                         <div className={styles.image + ' ml-4 mr-4 pb-1'}>
                             {cart && cart.length > 0 && cart.find(cartItem => cartItem._id === item._id) && <p className={styles.count + ' text text_type_digits-default'}>{cart.filter(cartItem => cartItem._id === item._id).length}</p>}
                             <img src={item.image} />

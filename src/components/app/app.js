@@ -3,6 +3,7 @@ import { burgerIngridientsJSON, cartData } from '../../utils/data';
 import AppHeader from '../app-header/app-header';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
+import Modal from '../modal/modal';
 import styles from './app.module.css'
 
 const API_URL = 'https://norma.nomoreparties.space/api/ingredients';
