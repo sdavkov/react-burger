@@ -34,7 +34,7 @@ const BurgerIngredients = React.memo(({ burgerIngredients, cart }) => {
                     Начинки
                 </Tab>
             </div>
-            <div className={styles.items}>
+            <div className={styles.items + ' custom-scroll'}>
                 <BurgerIngredientsItems ref={refBun} title='Булки' burgerIngredients={burgerIngredients.filter(item => item.type === 'bun')} cart={cart} />
                 <BurgerIngredientsItems ref={refSauce} title='Соусы' burgerIngredients={burgerIngredients.filter(item => item.type === 'sauce')} cart={cart} />
                 <BurgerIngredientsItems ref={refMain} title='Начинки' burgerIngredients={burgerIngredients.filter(item => item.type === 'main')} cart={cart} />

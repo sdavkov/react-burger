@@ -3,7 +3,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    gap: 10px;
+    gap: 12px;
 }
 
 .items {
@@ -14,27 +14,10 @@
     gap: 10px;
 }
 
-.items::-webkit-scrollbar {
-    width: 8px;
-    /* width of the entire scrollbar */
-}
-
-.items::-webkit-scrollbar-track {
-    background: #2F2F37;
-    /* color of the tracking area */
-}
-
-.items::-webkit-scrollbar-thumb {
-    background-color: #8585AD;
-    /* roundness of the scroll thumb */
-    border: 3px solid #8585AD;
-    /* creates padding around scroll thumb */
-}
-
 .item {
     width: 536px;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
 }
 
