@@ -3,12 +3,18 @@ import { burgerIngridientsJSON, cartData } from '../../utils/data';
 import AppHeader from '../app-header/app-header';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
+import IngredientDetails from '../ingredient-details/ingredient-details';
 import Modal from '../modal/modal';
+import OrderDetails from '../order-details/order-details';
 import styles from './app.module.css'
 
 const API_URL = 'https://norma.nomoreparties.space/api/ingredients';
 
 const App = React.memo(() => {
+
+  const [visibleOrderDetails, setVisibleOrderDetails] = useState(false);
+  const [visibleIngredientDetail, setVisibleIngredientDetail] = useState(false);
+  const [currentIngredient, setCurrentIngredient] = useState(null);
 
   const [state, setState] = useState({
     ingredientsData: [],
@@ -55,12 +61,19 @@ const App = React.memo(() => {
           {state.loading ? (<p className={styles.loading + ' text text_type_main-medium'}>Загрузка ...</p>) :
             state.error !== '' ? (<p className={styles.error + ' text text_type_main-medium'}>{state.error}</p>) :
               (<main className={styles.row}>
-                <BurgerIngredients burgerIngredients={state.ingredientsData} cart={cart} />
+                <BurgerIngredients burgerIngredients={state.ingredientsData} cart={cart} setCurrentIngredient={setCurrentIngredient} setVisibleIngredientDetail={setVisibleIngredientDetail} />
                 <div className="pl-10">&nbsp;</div>
-                <BurgerConstructor burgerIngredients={state.ingredientsData} cart={cart} />
+                <BurgerConstructor burgerIngredients={state.ingredientsData} cart={cart} setVisibleOrderDetails={setVisibleOrderDetails} />
               </main>)
           }
         </div>
+        <Modal visible={visibleOrderDetails} setVisible={setVisibleOrderDetails} >
+          <OrderDetails />
+        </Modal>
+        {currentIngredient && (
+          <Modal visible={visibleIngredientDetail} setVisible={setVisibleIngredientDetail} >
+            <IngredientDetails ingredient={currentIngredient} />
+          </Modal>)}
       </>
     </>
   );

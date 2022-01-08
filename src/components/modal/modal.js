@@ -24,7 +24,7 @@ const Modal = React.memo(({ visible, setVisible, title, children }) => {
 
     return ReactDOM.createPortal(
         visible && (
-            <ModalOverlay setVisible={setVisible}>
+            <>
                 <div className={styles.modal} onClick={e => e.stopPropagation()}>
                     <div className={styles.title + ' pl-10 pt-10 pr-10'}>
                         <p className='text text_type_main-large'>{title}</p>
@@ -34,7 +34,8 @@ const Modal = React.memo(({ visible, setVisible, title, children }) => {
                     </div>
                     {children}
                 </div>
-            </ModalOverlay>)
+                <ModalOverlay setVisible={setVisible} />
+            </>)
         , modalRoot
     )
 })
