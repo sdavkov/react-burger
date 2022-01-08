@@ -17,19 +17,20 @@ const BurgerConstructor = React.memo(({ burgerIngredients, cart }) => {
 
     return (
         <div className={styles.constructor + ' mt-25'}>
+
+            {bun && (
+                <div className={styles.item + ' mr-4'}>
+                    <div></div>
+                    <ConstructorElement
+                        type="top"
+                        isLocked={true}
+                        text={bun.name + ' (верх)'}
+                        price={bun.price}
+                        thumbnail={bun.image}
+                    />
+                </div>
+            )}
             <div className={styles.items + ' custom-scroll'}>
-                {bun && (
-                    <div className={styles.item + ' mr-4'}>
-                        <div></div>
-                        <ConstructorElement
-                            type="top"
-                            isLocked={true}
-                            text={bun.name + ' (верх)'}
-                            price={bun.price}
-                            thumbnail={bun.image}
-                        />
-                    </div>
-                )}
                 {cart.filter(cartItem => cartItem.type !== 'bun').map((cartItem, index) => (
                     <div key={index} className={styles.item + ' mr-4'}>
                         <DragIcon type="primary" />
@@ -41,19 +42,19 @@ const BurgerConstructor = React.memo(({ burgerIngredients, cart }) => {
                         />
                     </div>
                 ))}
-                {bun && (
-                    <div className={styles.item + ' mr-4'}>
-                        <div></div>
-                        <ConstructorElement
-                            type="bottom"
-                            isLocked={true}
-                            text={bun.name + ' (низ)'}
-                            price={bun.price}
-                            thumbnail={bun.image}
-                        />
-                    </div>
-                )}
             </div>
+            {bun && (
+                <div className={styles.item + ' mr-4'}>
+                    <div></div>
+                    <ConstructorElement
+                        type="bottom"
+                        isLocked={true}
+                        text={bun.name + ' (низ)'}
+                        price={bun.price}
+                        thumbnail={bun.image}
+                    />
+                </div>
+            )}
             <div className={styles.total + ' mt-10 mb-10 mr-4'}>
                 <div className={styles.sum + ' mr-10'}>
                     <p className="text text_type_digits-medium mr-2">{getTotal(burgerIngredients, cart)}</p>
