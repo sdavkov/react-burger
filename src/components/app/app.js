@@ -50,21 +50,18 @@ const App = React.memo(() => {
   return (
     <>
       <AppHeader />
-      <div className={styles.content}>
+      <>
         <div className='container'>
           {state.loading ? (<p className={styles.loading + ' text text_type_main-medium'}>Загрузка ...</p>) :
             state.error !== '' ? (<p className={styles.error + ' text text_type_main-medium'}>{state.error}</p>) :
-              (<div className={styles.row}>
-                <>
-                  <BurgerIngredients burgerIngredients={state.ingredientsData} cart={cart} />
-                  {cart.length > 0 && <BurgerConstructor burgerIngredients={state.ingredientsData} cart={cart} />}
-                </>
-              </div>)
+              (<main className={styles.row}>
+                <BurgerIngredients burgerIngredients={state.ingredientsData} cart={cart} />
+                <div className="pl-10">&nbsp;</div>
+                <BurgerConstructor burgerIngredients={state.ingredientsData} cart={cart} />
+              </main>)
           }
         </div>
-      </div>
-      <footer className={styles.footer}>
-      </footer>
+      </>
     </>
   );
 });

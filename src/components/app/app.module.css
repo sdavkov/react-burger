@@ -1,16 +1,6 @@
-.content {
-  flex: 1 1 auto;
-  overflow: hidden;
-}
-
 .row {
-  height: 100%;
-  display: flex;
-  justify-content: space-between;
-}
-
-.footer {
-  flex: 0 0 20px;
+  display: grid;
+  grid-template-columns: 1fr min-content 1fr;
 }
 
 .loading {

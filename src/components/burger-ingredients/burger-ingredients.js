@@ -21,7 +21,7 @@ const BurgerIngredients = React.memo(({ burgerIngredients, cart }) => {
     }, [])
 
     return (
-        <div className={styles.ingredients + ' mr-10'}>
+        <div className={styles.ingredients + ' pb-5'}>
             <p className='text_type_main-large pt-10 pb-5'>Соберите бургер</p>
             <div className={styles.tab}>
                 <Tab value="bun" active={activeTypeOfBurgerIngredients === 'bun'} onClick={changeActiveTypeOfBurgerIngredients}>
