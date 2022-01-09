@@ -3,7 +3,7 @@ import React from 'react'
 import AppHeaderItem from '../app-header-item/app-header-item'
 import styles from './app-header.module.css'
 
-const AppHeader = () => {
+const AppHeader = React.memo(() => {
     return (
         <header className={styles.header}>
             <div className="container">
@@ -18,6 +18,6 @@ const AppHeader = () => {
             </div>
         </header>
     )
-}
+})
 
 export default AppHeader

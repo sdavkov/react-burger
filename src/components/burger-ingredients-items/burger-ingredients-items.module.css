@@ -1,6 +1,7 @@
 .items {
     display: flex;
     flex-wrap: wrap;
+    gap: 32px 24px;
 }
 
 .item {
@@ -8,22 +9,11 @@
     flex-direction: column;
     align-items: center;
     width: 272px;
+    cursor: pointer;
 }
 
 .image {
     position: relative;
-}
-
-.count {
-    background: #4C4CFF;
-    border-radius: 16px;
-    position: absolute;
-    width: 32px;
-    height: 32px;
-    text-align: center;
-    right: 0px;
-    top: 0px;
-    padding-top: 3px;
 }
 
 .price {

@@ -1,0 +1,23 @@
+.ingredient {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 720px;
+}
+
+.image {
+    width: 480px;
+    height: 240px;
+}
+
+.analyzes {
+    display: flex;
+}
+
+.analysis {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}

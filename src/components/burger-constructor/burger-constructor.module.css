@@ -1,46 +1,35 @@
 .constructor {
-    flex-basis: 600px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 10px;
+    max-height: calc(100vh - 96px);
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) max-content;
+}
+
+.list {
+    display: grid;
+    grid-template-rows: repeat(2,max-content) 1fr repeat(2,max-content);
+    max-height: 100%;
 }
 
 .items {
-    overflow: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 10px;
-}
-
-.items::-webkit-scrollbar {
-    width: 8px;
-    /* width of the entire scrollbar */
-}
-
-.items::-webkit-scrollbar-track {
-    background: #2F2F37;
-    /* color of the tracking area */
-}
-
-.items::-webkit-scrollbar-thumb {
-    background-color: #8585AD;
-    /* roundness of the scroll thumb */
-    border: 3px solid #8585AD;
-    /* creates padding around scroll thumb */
+    overflow-y: auto;
 }
 
 .item {
-    width: 536px;
-    display: flex;
-    justify-content: space-between;
+
+    display: grid;
     align-items: center;
+    grid-template-columns: 32px 1fr;
+}
+
+.item:first-child {
+    padding-top: 0;
 }
 
 .total {
-    display: flex;
+    display: grid;
     align-items: center;
+    grid-template-columns: repeat(2,max-content);
+    justify-content: flex-end;
 }
 
 .sum {

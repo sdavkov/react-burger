@@ -1,40 +1,15 @@
-.content {
-  flex: 1 1 auto;
-  overflow: hidden;
-}
-
 .row {
-  height: 100%;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr min-content 1fr;
 }
 
-.footer {
-  flex: 0 0 20px;
+.loading {
+  text-align: center;
+  margin: 20px 0;
 }
 
-@media (max-width: 870px) {
-  .row {
-    flex-direction: column;
-    justify-content: flex-start;
-    height: 100%;
-    overflow: auto;
-  }
-
-  .row::-webkit-scrollbar {
-    width: 8px;
-    /* width of the entire scrollbar */
-  }
-
-  .row::-webkit-scrollbar-track {
-    background: #2F2F37;
-    /* color of the tracking area */
-  }
-
-  .row::-webkit-scrollbar-thumb {
-    background-color: #8585AD;
-    /* roundness of the scroll thumb */
-    border: 3px solid #8585AD;
-    /* creates padding around scroll thumb */
-  }
+.error {
+  color: red;
+  text-align: center;
+  margin: 20px 0;
 }

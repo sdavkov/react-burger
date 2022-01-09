@@ -11,8 +11,3 @@ export const burgerIngredientsPropTypes = PropTypes.shape({
     price: PropTypes.number.isRequired,
     image: PropTypes.string.isRequired,
 });
-
-export const cartPropTypes = PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    type: PropTypes.oneOf(['bun', 'main', 'sauce']).isRequired,
-});
