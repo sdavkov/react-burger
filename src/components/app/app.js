@@ -29,13 +29,13 @@ const App = React.memo(() => {
       setState({ ...state, loading: true });
       try {
         const res = await fetch(API_URL);
-        if (res.ok) {
-          const data = await res.json();
-          setState({ ...state, ingredientsData: data.data, loading: false });
-        }
-        else {
-          setState({ ...state, error: 'Ошибка при загрузке данных.', loading: false });
-        }
+
+        if (!res.ok)
+          throw new Error(`Неверный ответ сервера: ${res.status}`)
+
+        const data = await res.json();
+        setState({ ...state, ingredientsData: data.data, loading: false });
+
       }
       catch (e) {
         setState({ ...state, error: `Ошибка при загрузке данных: ${e}`, loading: false });
