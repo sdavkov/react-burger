@@ -2,10 +2,10 @@ import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './total-burger-constructor.module.css'
-import { BurgerConstructorContext } from '../../context/burger-constructor-context'
+import { BurgerConstructorContext } from '../../services/burger-constructor-context'
 import { useFetching } from '../../hooks/useFetching'
 import OrdersService from '../../api/orders-service'
-import { clearBurgerConstructorAction, setOrderAction } from '../../context/burger-constructor-reducer'
+import { clearBurgerConstructorAction, setOrderAction } from '../../services/burger-constructor-reducer'
 
 
 function TotalBurgerConstructor({ setVisibleOrderDetails }) {
@@ -34,7 +34,7 @@ function TotalBurgerConstructor({ setVisibleOrderDetails }) {
 }
 
 TotalBurgerConstructor.propTypes = {
-    setVisibleOrderDetails: PropTypes.func
+    setVisibleOrderDetails: PropTypes.func.isRequired
 }
 
 export default TotalBurgerConstructor

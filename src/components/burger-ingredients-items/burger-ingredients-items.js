@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import styles from './burger-ingredients-items.module.css'
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { burgerIngredientsPropTypes } from '../../utils/ptop-types'
-import { BurgerConstructorContext } from '../../context/burger-constructor-context'
+import { BurgerConstructorContext } from '../../services/burger-constructor-context'
 
 const BurgerIngredientsItems = React.memo(React.forwardRef(({ title, burgerIngredients, setVisibleIngredientDetail, setCurrentIngredient }, ref) => {
 

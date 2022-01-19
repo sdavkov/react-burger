@@ -9,11 +9,11 @@ const AppHeader = React.memo(() => {
             <div className="container">
                 <div className={styles.row + ' pt-4 pb-4'}>
                     <nav className={styles.nav}>
-                        <AppHeaderItem text='Конструктор' active={true}><BurgerIcon type="secondary" /></AppHeaderItem>
-                        <AppHeaderItem text='Лента заказов' active={false}><ListIcon type="secondary" /></AppHeaderItem>
+                        <AppHeaderItem text='Конструктор' active={true} extCssClasses='pt-5 pr-5 pb-5'><BurgerIcon type="secondary" /></AppHeaderItem>
+                        <AppHeaderItem text='Лента заказов' active={false} extCssClasses="p-5"><ListIcon type="secondary" /></AppHeaderItem>
                     </nav>
                     <Logo />
-                    <AppHeaderItem text='Личный кабинет' active={false}><ProfileIcon type="secondary" /></AppHeaderItem>
+                    <AppHeaderItem text='Личный кабинет' active={false} extCssClasses='pt-5 pl-5 pb-5' ><ProfileIcon type="secondary" /></AppHeaderItem>
                 </div>
             </div>
         </header>

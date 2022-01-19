@@ -1,6 +1,8 @@
+import { API_URL } from "../utils/constants";
+
 export default class OrdersService {
     static async createOrder(ingredients) {
-        const res = await fetch('https://norma.nomoreparties.space/api/orders', {
+        const res = await fetch(`${API_URL}orders`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'

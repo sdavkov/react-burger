@@ -1,15 +1,17 @@
-import React, { useContext } from 'react'
+import React, { useContext, useMemo } from 'react'
 import PropTypes from 'prop-types'
 import styles from './burger-constructor.module.css'
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { BurgerConstructorContext } from '../../context/burger-constructor-context'
+import { BurgerConstructorContext } from '../../services/burger-constructor-context'
 import TotalBurgerConstructor from '../total-burger-constructor/total-burger-constructor'
+import { removeBurgerConstructorAction } from '../../services/burger-constructor-reducer'
 
 const BurgerConstructor = React.memo(({ setVisibleOrderDetails }) => {
 
-    const [burgerConstructorState] = useContext(BurgerConstructorContext)
+    const [burgerConstructorState, dispatchBurgerConstructor] = useContext(BurgerConstructorContext)
 
-    const bun = burgerConstructorState.cart.find(cartItem => cartItem.ingredient.type == 'bun');
+    const bun = useMemo(() => burgerConstructorState.cart.find(cartItem => cartItem.ingredient.type == 'bun'), [burgerConstructorState]);
+    const additionals = useMemo(() => burgerConstructorState.cart.filter(cartItem => cartItem.ingredient.type !== 'bun'), [burgerConstructorState]);
 
     return (
         <div className={styles.constructor + ' pt-25 pb-5 pr-4 pl-4'}>
@@ -32,7 +34,7 @@ const BurgerConstructor = React.memo(({ setVisibleOrderDetails }) => {
                             </>
                         )}
                         <div className={styles.items + ' custom-scroll'}>
-                            {burgerConstructorState.cart.filter(cartItem => cartItem.ingredient.type !== 'bun').map((cartItem, index) => (
+                            {additionals.map((cartItem) => (
                                 <React.Fragment key={cartItem.cart_id}>
                                     <div className={styles.item + ' pt-4'}>
                                         <DragIcon type="primary" />
@@ -41,6 +43,7 @@ const BurgerConstructor = React.memo(({ setVisibleOrderDetails }) => {
                                             text={cartItem.ingredient.name}
                                             price={cartItem.ingredient.price}
                                             thumbnail={cartItem.ingredient.image}
+                                            handleClose={() => { dispatchBurgerConstructor(removeBurgerConstructorAction(cartItem)) }}
                                         />
                                     </div>
                                 </React.Fragment>
@@ -70,7 +73,7 @@ const BurgerConstructor = React.memo(({ setVisibleOrderDetails }) => {
 })
 
 BurgerConstructor.propTypes = {
-    setVisibleOrderDetails: PropTypes.func,
+    setVisibleOrderDetails: PropTypes.func.isRequired,
 }
 
 export default BurgerConstructor

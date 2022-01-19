@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import styles from './order-details.module.css'
 import orderImage from '../../images/order.svg'
-import { BurgerConstructorContext } from '../../context/burger-constructor-context'
+import { BurgerConstructorContext } from '../../services/burger-constructor-context'
 
 const OrderDetails = React.memo(() => {
     

@@ -44,9 +44,9 @@ const BurgerIngredients = React.memo(({ burgerIngredients, setCurrentIngredient,
 })
 
 BurgerIngredients.propTypes = {
-    burgerIngredients: PropTypes.arrayOf(burgerIngredientsPropTypes).isRequired,
-    setCurrentIngredient: PropTypes.func,
-    setVisibleIngredientDetail: PropTypes.func
+    burgerIngredients: PropTypes.arrayOf(burgerIngredientsPropTypes.isRequired).isRequired,
+    setCurrentIngredient: PropTypes.func.isRequired,
+    setVisibleIngredientDetail: PropTypes.func.isRequired
 }
 
 export default BurgerIngredients

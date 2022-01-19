@@ -8,41 +8,40 @@ import { useEffect } from 'react';
 
 const modalRoot = document.getElementById("react-modals");
 
-const Modal = React.memo(({ visible, setVisible, title, children }) => {
-
-    const keyDown = (e) => {
-        if (e.keyCode === 27)
-            setVisible(false);
-    }
+const Modal = React.memo(({ closeModal, title, children }) => {
 
     useEffect(() => {
+
+        const keyDown = (e) => {
+            if (e.keyCode === 27)
+                closeModal();
+        }
+
         window.addEventListener('keydown', keyDown)
         return () => {
             window.removeEventListener('keydown', keyDown)
         }
-    })
+    }, [closeModal])
 
     return ReactDOM.createPortal(
-        visible && (
-            <>
-                <div className={styles.modal} onClick={e => e.stopPropagation()}>
-                    <div className={styles.title + ' pl-10 pt-10 pr-10'}>
-                        <p className='text text_type_main-large'>{title}</p>
-                        <div className={styles.close}>
-                            <CloseIcon type="primary" onClick={() => setVisible(false)} />
-                        </div>
+        <>
+            <div className={styles.modal} onClick={e => e.stopPropagation()}>
+                <div className={styles.title + ' pl-10 pt-10 pr-10'}>
+                    <p className='text text_type_main-large'>{title}</p>
+                    <div className={styles.close}>
+                        <CloseIcon type="primary" onClick={closeModal} />
                     </div>
-                    {children}
                 </div>
-                <ModalOverlay setVisible={setVisible} />
-            </>)
+                {children}
+            </div>
+            <ModalOverlay closeModal={closeModal} />
+        </>
         , modalRoot
     )
 })
 
 Modal.propTypes = {
-    visible: PropTypes.bool.isRequired,
-    setVisible: PropTypes.func.isRequired,
+    closeModal: PropTypes.func.isRequired,
     title: PropTypes.string
 }
 
