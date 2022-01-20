@@ -1,0 +1,11 @@
+.total {
+    display: grid;
+    align-items: center;
+    grid-template-columns: repeat(2,max-content);
+    justify-content: flex-end;
+}
+
+.sum {
+    display: flex;
+    align-items: center;
+}

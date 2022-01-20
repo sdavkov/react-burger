@@ -5,7 +5,7 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import BurgerIngredientsItems from '../burger-ingredients-items/burger-ingredients-items'
 import { burgerIngredientsPropTypes } from '../../utils/ptop-types'
 
-const BurgerIngredients = React.memo(({ burgerIngredients, cart, setCurrentIngredient, setVisibleIngredientDetail }) => {
+const BurgerIngredients = React.memo(({ burgerIngredients, setCurrentIngredient, setVisibleIngredientDetail }) => {
 
     const [activeTypeOfBurgerIngredients, setActiveTypeOfBurgerIngredients] = useState('bun')
 
@@ -35,19 +35,18 @@ const BurgerIngredients = React.memo(({ burgerIngredients, cart, setCurrentIngre
                 </Tab>
             </div>
             <div className={styles.items + ' custom-scroll'}>
-                <BurgerIngredientsItems ref={refBun} title='Булки' burgerIngredients={burgerIngredients.filter(item => item.type === 'bun')} cart={cart} setCurrentIngredient={setCurrentIngredient} setVisibleIngredientDetail={setVisibleIngredientDetail} />
-                <BurgerIngredientsItems ref={refSauce} title='Соусы' burgerIngredients={burgerIngredients.filter(item => item.type === 'sauce')} cart={cart} setCurrentIngredient={setCurrentIngredient} setVisibleIngredientDetail={setVisibleIngredientDetail} />
-                <BurgerIngredientsItems ref={refMain} title='Начинки' burgerIngredients={burgerIngredients.filter(item => item.type === 'main')} cart={cart} setCurrentIngredient={setCurrentIngredient} setVisibleIngredientDetail={setVisibleIngredientDetail} />
+                <BurgerIngredientsItems ref={refBun} title='Булки' burgerIngredients={burgerIngredients.filter(item => item.type === 'bun')} setCurrentIngredient={setCurrentIngredient} setVisibleIngredientDetail={setVisibleIngredientDetail} />
+                <BurgerIngredientsItems ref={refSauce} title='Соусы' burgerIngredients={burgerIngredients.filter(item => item.type === 'sauce')} setCurrentIngredient={setCurrentIngredient} setVisibleIngredientDetail={setVisibleIngredientDetail} />
+                <BurgerIngredientsItems ref={refMain} title='Начинки' burgerIngredients={burgerIngredients.filter(item => item.type === 'main')} setCurrentIngredient={setCurrentIngredient} setVisibleIngredientDetail={setVisibleIngredientDetail} />
             </div>
         </div>
     )
 })
 
 BurgerIngredients.propTypes = {
-    burgerIngredients: PropTypes.arrayOf(burgerIngredientsPropTypes).isRequired,
-    cart: PropTypes.arrayOf(burgerIngredientsPropTypes).isRequired,
-    setCurrentIngredient: PropTypes.func,
-    setVisibleIngredientDetail: PropTypes.func
+    burgerIngredients: PropTypes.arrayOf(burgerIngredientsPropTypes.isRequired).isRequired,
+    setCurrentIngredient: PropTypes.func.isRequired,
+    setVisibleIngredientDetail: PropTypes.func.isRequired
 }
 
 export default BurgerIngredients

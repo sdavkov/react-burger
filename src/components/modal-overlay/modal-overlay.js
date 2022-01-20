@@ -2,15 +2,15 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styles from './modal-overlay.module.css'
 
-const ModalOverlay = React.memo(({setVisible}) => {
+const ModalOverlay = React.memo(({ closeModal }) => {
     return (
-        <div className={styles.overlay} onClick={() => setVisible(false)}>
+        <div className={styles.overlay} onClick={closeModal}>
         </div>
     )
 })
 
 ModalOverlay.propTypes = {
-    setVisible: PropTypes.func.isRequired,
+    closeModal: PropTypes.func.isRequired,
 }
 
 export default ModalOverlay
