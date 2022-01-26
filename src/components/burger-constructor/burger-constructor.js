@@ -32,8 +32,8 @@ const BurgerConstructor = React.memo(() => {
         })
     });
 
-    const canDropDecoratorCssClass = isHover ? (canDrop ? styles.allowDrop : styles.disableDrop) : '';
-    console.log(canDropDecoratorCssClass)
+    const canDropDecoratorCssClass = cart.length === 0 ? (isHover ? (canDrop ? styles.allowDrop : styles.disableDrop) : '') : '';
+
     return (
         <div className={`${styles.constructor} pt-25 pb-5 pr-4 pl-4`}>
             <>
