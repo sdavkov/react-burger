@@ -7,6 +7,7 @@ const BurgerIngredients = React.memo(() => {
 
     const [activeTypeOfBurgerIngredients, setActiveTypeOfBurgerIngredients] = useState('bun')
 
+    const refRoot = useRef(null);
     const refBun = useRef(null);
     const refMain = useRef(null);
     const refSauce = useRef(null);
@@ -16,7 +17,18 @@ const BurgerIngredients = React.memo(() => {
         if (type === 'bun') refBun.current.scrollIntoView({behavior: 'smooth'})
         if (type === 'sauce') refSauce.current.scrollIntoView({behavior: 'smooth'})
         if (type === 'main') refMain.current.scrollIntoView({behavior: 'smooth'})
-    }, [])
+    }, [refBun, refMain, refSauce, setActiveTypeOfBurgerIngredients])
+
+    const handleScroll = useCallback(()=> {
+        if (refRoot.current && refBun.current && refSauce.current && refMain.current) {
+            const bunDistance = Math.abs(refRoot.current.getBoundingClientRect().top - refBun.current.getBoundingClientRect().top)
+            const sauceDistance = Math.abs(refRoot.current.getBoundingClientRect().top - refSauce.current.getBoundingClientRect().top)
+            const mainDistance = Math.abs(refRoot.current.getBoundingClientRect().top - refMain.current.getBoundingClientRect().top)
+            const min = Math.min(bunDistance, sauceDistance, mainDistance)
+            const activeTab = min === bunDistance ? 'bun' : min === sauceDistance ? 'sauce' : 'main'
+            setActiveTypeOfBurgerIngredients(activeTab)
+        }
+    }, [refRoot, refBun, refMain, refSauce, setActiveTypeOfBurgerIngredients])
 
     return (
         <div className={styles.ingredients + ' pb-5'}>
@@ -35,7 +47,7 @@ const BurgerIngredients = React.memo(() => {
                     Начинки
                 </Tab>
             </div>
-            <div className={styles.items + ' custom-scroll'}>
+            <div className={styles.items + ' custom-scroll'} ref={refRoot} onScroll={handleScroll}>
                 <BurgerIngredientsItems ref={refBun} title='Булки' type='bun'/>
                 <BurgerIngredientsItems ref={refSauce} title='Соусы' type='sauce'/>
                 <BurgerIngredientsItems ref={refMain} title='Начинки' type='main'/>
