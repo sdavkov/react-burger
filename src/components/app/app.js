@@ -9,10 +9,17 @@ import styles from './app.module.css'
 import {useDispatch, useSelector} from "react-redux";
 import {CLEAR_CURRENT_BURGER_INGREDIENT, getBurgerIngredients} from "../../services/actions/burger-ingredients";
 import {CLEAR_CURRENT_ORDER_NUMBER} from "../../services/actions/burger-constructor";
+import {DndProvider} from "react-dnd";
+import {HTML5Backend} from "react-dnd-html5-backend";
 
 const App = React.memo(() => {
 
-    const {burgerIngredientsRequest, burgerIngredientsRequestFailed, currentBurgerIngredient, currentOrderNumber} = useSelector(store => ({
+    const {
+        burgerIngredientsRequest,
+        burgerIngredientsRequestFailed,
+        currentBurgerIngredient,
+        currentOrderNumber
+    } = useSelector(store => ({
         burgerIngredientsRequest: store.burgerIngredients.burgerIngredientsRequest,
         burgerIngredientsRequestFailed: store.burgerIngredients.burgerIngredientsRequestFailed,
         currentBurgerIngredient: store.burgerIngredients.currentBurgerIngredient,
@@ -42,13 +49,15 @@ const App = React.memo(() => {
                     burgerIngredientsRequestFailed ? (
                             <p className={styles.error + ' text text_type_main-medium'}>Ошибка загрузки ингредиентов</p>) :
                         (<main className={styles.row}>
-                            <BurgerIngredients/>
+                            <DndProvider backend={HTML5Backend}>
+                                <BurgerIngredients/>
+                                <div className="pl-10">&nbsp;</div>
+                                <BurgerConstructor/>
+                            </DndProvider>
                             {currentBurgerIngredient && (
                                 <Modal closeModal={clearCurrentIngredient}>
                                     <IngredientDetails/>
                                 </Modal>)}
-                            <div className="pl-10">&nbsp;</div>
-                            <BurgerConstructor/>
                             {currentOrderNumber && (
                                 <Modal closeModal={clearCurrentOrder}>
                                     <OrderDetails/>
