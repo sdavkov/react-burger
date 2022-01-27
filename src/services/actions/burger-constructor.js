@@ -16,6 +16,18 @@ const getTotal = (cart) => {
     return total;
 }
 
+export function moveCartItem(dragIndex, hoverIndex) {
+    return function (dispatch, getState) {
+        let cart = [...getState().burgerConstructor.cart];
+        const bun = cart.find(cartItem => cartItem.burgerIngredient.type === 'bun');
+        const additions = cart.filter(cartItem => cartItem.burgerIngredient.type !== 'bun');
+        const dragItem = additions.splice(dragIndex, 1)[0];
+        additions.splice(hoverIndex, 0, dragItem);
+        cart = [bun, ...additions];
+        dispatch({type: SET_CART, payload: {cart, total: getTotal(cart)}});
+    }
+}
+
 export function addCartItem(burgerIngredient) {
     return function (dispatch, getState) {
         let cart = [...getState().burgerConstructor.cart];
