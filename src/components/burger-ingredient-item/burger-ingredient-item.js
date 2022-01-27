@@ -5,6 +5,7 @@ import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-com
 import {useDispatch, useSelector} from "react-redux";
 import {SET_CURRENT_BURGER_INGREDIENT} from "../../services/actions/burger-ingredients";
 import {useDrag} from "react-dnd";
+import {burgerIngredientPropTypes} from "../../utils/types";
 
 
 const BurgerIngredientItem = ({burgerIngredient}) => {
@@ -39,17 +40,7 @@ const BurgerIngredientItem = ({burgerIngredient}) => {
 }
 
 BurgerIngredientItem.propTypes = {
-    burgerIngredient: PropTypes.shape({
-        _id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        type: PropTypes.oneOf(['bun', 'main', 'sauce']).isRequired,
-        proteins: PropTypes.number.isRequired,
-        fat: PropTypes.number.isRequired,
-        carbohydrates: PropTypes.number.isRequired,
-        calories: PropTypes.number.isRequired,
-        price: PropTypes.number.isRequired,
-        image: PropTypes.string.isRequired,
-    }),
+    burgerIngredient: burgerIngredientPropTypes,
 }
 
 export default BurgerIngredientItem

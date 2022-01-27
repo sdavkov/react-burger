@@ -5,6 +5,7 @@ import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger
 import {removeCartItem} from "../../services/actions/burger-constructor";
 import {useDispatch} from "react-redux";
 import {useDrag, useDrop} from "react-dnd";
+import {burgerIngredientPropTypes} from "../../utils/types";
 
 const BurgerConstructorItem = ({cartItem, index, moveCard, topBun = false, bottomBun = false}) => {
 
@@ -99,17 +100,7 @@ const BurgerConstructorItem = ({cartItem, index, moveCard, topBun = false, botto
 BurgerConstructorItem.propTypes = {
     cartItem: PropTypes.shape({
         id: PropTypes.string.isRequired,
-        burgerIngredient: PropTypes.shape({
-            _id: PropTypes.string.isRequired,
-            name: PropTypes.string.isRequired,
-            type: PropTypes.oneOf(['bun', 'main', 'sauce']).isRequired,
-            proteins: PropTypes.number.isRequired,
-            fat: PropTypes.number.isRequired,
-            carbohydrates: PropTypes.number.isRequired,
-            calories: PropTypes.number.isRequired,
-            price: PropTypes.number.isRequired,
-            image: PropTypes.string.isRequired
-        })
+        burgerIngredient: burgerIngredientPropTypes,
     }).isRequired,
     index: PropTypes.number,
     moveCard: PropTypes.func,

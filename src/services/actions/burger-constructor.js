@@ -1,5 +1,6 @@
 import {v4 as uuidv4} from "uuid";
 import {API_URL} from "../../utils/constants";
+import {checkResponse} from "../../utils/checkResponse";
 
 export const SET_CART = 'SET_CART';
 export const CLEAR_CART = 'CLEAR_CART';
@@ -59,15 +60,13 @@ export function createOrder() {
                 'Content-Type': 'application/json;charset=utf-8'
             },
             body: JSON.stringify({ingredients: getState().burgerConstructor.cart.map(item => item.burgerIngredient._id)})
-        }).then(res => {
-            if (res && res.ok) {
-                res.json().then(data => {
-                    dispatch({type: GET_ORDER_REQUEST_SUCCESS, payload: data.order.number});
-                    dispatch({type: CLEAR_CART});
-                })
-            } else
-                dispatch({type: GET_ORDER_REQUEST_FIELD});
         })
+            .then(checkResponse)
+            .then(data => {
+                dispatch({type: GET_ORDER_REQUEST_SUCCESS, payload: data.order.number});
+                dispatch({type: CLEAR_CART});
+            })
+            .catch(dispatch({type: GET_ORDER_REQUEST_FIELD}));
     }
 }
 
