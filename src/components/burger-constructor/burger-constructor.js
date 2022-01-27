@@ -5,14 +5,15 @@ import {useDispatch, useSelector} from "react-redux";
 import {addCartItem, moveCartItem} from "../../services/actions/burger-constructor";
 import {useDrop} from "react-dnd";
 import BurgerConstructorItem from "../burger-constructor-item/burger-constructor-item";
+import {BURGER_INGREDIENT_BUN_TYPE} from "../../utils/constants";
 
 
 const BurgerConstructor = React.memo(() => {
 
     const cart = useSelector(store => store.burgerConstructor.cart);
 
-    const bun = useMemo(() => cart.find(cartItem => cartItem.burgerIngredient.type === 'bun'), [cart]);
-    const additions = useMemo(() => cart.filter(cartItem => cartItem.burgerIngredient.type !== 'bun'), [cart]);
+    const bun = useMemo(() => cart.find(cartItem => cartItem.burgerIngredient.type === BURGER_INGREDIENT_BUN_TYPE), [cart]);
+    const additions = useMemo(() => cart.filter(cartItem => cartItem.burgerIngredient.type !== BURGER_INGREDIENT_BUN_TYPE), [cart]);
 
     const dispatch = useDispatch();
 
@@ -22,7 +23,7 @@ const BurgerConstructor = React.memo(() => {
             dispatch(addCartItem(burgerIngredient))
         },
         canDrop(burgerIngredient) {
-            if (bun || burgerIngredient.type === 'bun')
+            if (bun || burgerIngredient.type === BURGER_INGREDIENT_BUN_TYPE)
                 return true;
             else
                 return false;

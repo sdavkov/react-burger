@@ -6,6 +6,7 @@ import {removeCartItem} from "../../services/actions/burger-constructor";
 import {useDispatch} from "react-redux";
 import {useDrag, useDrop} from "react-dnd";
 import {burgerIngredientPropTypes} from "../../utils/types";
+import {BURGER_INGREDIENT_BUN_TYPE} from "../../utils/constants";
 
 const BurgerConstructorItem = ({cartItem, index, moveCard, topBun = false, bottomBun = false}) => {
 
@@ -20,7 +21,7 @@ const BurgerConstructorItem = ({cartItem, index, moveCard, topBun = false, botto
             };
         },
         canDrop() {
-            if (cartItem.burgerIngredient.type === 'bun')
+            if (cartItem.burgerIngredient.type === BURGER_INGREDIENT_BUN_TYPE)
                 return false;
             else
                 return true;
@@ -32,7 +33,7 @@ const BurgerConstructorItem = ({cartItem, index, moveCard, topBun = false, botto
             const dragIndex = item.index;
             const hoverIndex = index;
             // Булки не учавствуют в сортировке
-            if (cartItem.burgerIngredient.type === 'bun') {
+            if (cartItem.burgerIngredient.type === BURGER_INGREDIENT_BUN_TYPE) {
                 return;
             }
             // Don't replace items with themselves

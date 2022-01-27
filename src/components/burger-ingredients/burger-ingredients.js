@@ -2,10 +2,15 @@ import React, {useCallback, useRef, useState} from 'react'
 import styles from './burger-ingredients.module.css'
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components'
 import BurgerIngredientsItems from '../burger-ingredients-items/burger-ingredients-items'
+import {
+    BURGER_INGREDIENT_BUN_TYPE,
+    BURGER_INGREDIENT_MAIN_TYPE,
+    BURGER_INGREDIENT_SAUCE_TYPE
+} from "../../utils/constants";
 
 const BurgerIngredients = React.memo(() => {
 
-    const [activeTypeOfBurgerIngredients, setActiveTypeOfBurgerIngredients] = useState('bun')
+    const [activeTypeOfBurgerIngredients, setActiveTypeOfBurgerIngredients] = useState(BURGER_INGREDIENT_BUN_TYPE)
 
     const refRoot = useRef(null);
     const refBun = useRef(null);
@@ -14,9 +19,9 @@ const BurgerIngredients = React.memo(() => {
 
     const changeActiveTypeOfBurgerIngredients = useCallback(type => {
         setActiveTypeOfBurgerIngredients(type);
-        if (type === 'bun') refBun.current.scrollIntoView({behavior: 'smooth'})
-        if (type === 'sauce') refSauce.current.scrollIntoView({behavior: 'smooth'})
-        if (type === 'main') refMain.current.scrollIntoView({behavior: 'smooth'})
+        if (type === BURGER_INGREDIENT_BUN_TYPE) refBun.current.scrollIntoView({behavior: 'smooth'})
+        if (type === BURGER_INGREDIENT_SAUCE_TYPE) refSauce.current.scrollIntoView({behavior: 'smooth'})
+        if (type === BURGER_INGREDIENT_MAIN_TYPE) refMain.current.scrollIntoView({behavior: 'smooth'})
     }, [refBun, refMain, refSauce, setActiveTypeOfBurgerIngredients])
 
     const handleScroll = useCallback(()=> {
@@ -25,7 +30,7 @@ const BurgerIngredients = React.memo(() => {
             const sauceDistance = Math.abs(refRoot.current.getBoundingClientRect().top - refSauce.current.getBoundingClientRect().top)
             const mainDistance = Math.abs(refRoot.current.getBoundingClientRect().top - refMain.current.getBoundingClientRect().top)
             const min = Math.min(bunDistance, sauceDistance, mainDistance)
-            const activeTab = min === bunDistance ? 'bun' : min === sauceDistance ? 'sauce' : 'main'
+            const activeTab = min === bunDistance ? BURGER_INGREDIENT_BUN_TYPE : min === sauceDistance ? BURGER_INGREDIENT_SAUCE_TYPE : BURGER_INGREDIENT_MAIN_TYPE
             setActiveTypeOfBurgerIngredients(activeTab)
         }
     }, [refRoot, refBun, refMain, refSauce, setActiveTypeOfBurgerIngredients])
@@ -34,23 +39,23 @@ const BurgerIngredients = React.memo(() => {
         <div className={styles.ingredients + ' pb-5'}>
             <p className='text_type_main-large pt-10 pb-5'>Соберите бургер</p>
             <div className={styles.tab}>
-                <Tab value="bun" active={activeTypeOfBurgerIngredients === 'bun'}
+                <Tab value="bun" active={activeTypeOfBurgerIngredients === BURGER_INGREDIENT_BUN_TYPE}
                      onClick={changeActiveTypeOfBurgerIngredients}>
                     Булки
                 </Tab>
-                <Tab value="sauce" active={activeTypeOfBurgerIngredients === 'sauce'}
+                <Tab value="sauce" active={activeTypeOfBurgerIngredients === BURGER_INGREDIENT_SAUCE_TYPE}
                      onClick={changeActiveTypeOfBurgerIngredients}>
                     Соусы
                 </Tab>
-                <Tab value="main" active={activeTypeOfBurgerIngredients === 'main'}
+                <Tab value="main" active={activeTypeOfBurgerIngredients === BURGER_INGREDIENT_MAIN_TYPE}
                      onClick={changeActiveTypeOfBurgerIngredients}>
                     Начинки
                 </Tab>
             </div>
             <div className={styles.items + ' custom-scroll'} ref={refRoot} onScroll={handleScroll}>
-                <BurgerIngredientsItems ref={refBun} title='Булки' type='bun'/>
-                <BurgerIngredientsItems ref={refSauce} title='Соусы' type='sauce'/>
-                <BurgerIngredientsItems ref={refMain} title='Начинки' type='main'/>
+                <BurgerIngredientsItems ref={refBun} title='Булки' type={BURGER_INGREDIENT_BUN_TYPE}/>
+                <BurgerIngredientsItems ref={refSauce} title='Соусы' type={BURGER_INGREDIENT_SAUCE_TYPE}/>
+                <BurgerIngredientsItems ref={refMain} title='Начинки' type={BURGER_INGREDIENT_MAIN_TYPE}/>
             </div>
         </div>
     )

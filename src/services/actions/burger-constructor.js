@@ -1,5 +1,5 @@
 import {v4 as uuidv4} from "uuid";
-import {API_URL} from "../../utils/constants";
+import {API_URL, BURGER_INGREDIENT_BUN_TYPE} from "../../utils/constants";
 import {checkResponse} from "../../utils/checkResponse";
 
 export const SET_CART = 'SET_CART';
@@ -10,8 +10,8 @@ export const GET_ORDER_REQUEST_FIELD = 'GET_ORDER_REQUEST_FIELD';
 export const CLEAR_CURRENT_ORDER_NUMBER = 'CLEAR_CURRENT_ORDER';
 
 const getTotal = (cart) => {
-    const bun = cart.find((item) => item.burgerIngredient.type === 'bun');
-    const additions = cart.filter(item => item.burgerIngredient.type !== 'bun');
+    const bun = cart.find((item) => item.burgerIngredient.type === BURGER_INGREDIENT_BUN_TYPE);
+    const additions = cart.filter(item => item.burgerIngredient.type !== BURGER_INGREDIENT_BUN_TYPE);
     let total = bun.burgerIngredient.price * 2;
     total += additions.reduce((total, item) => total + item.burgerIngredient.price, 0);
     return total;
@@ -20,8 +20,8 @@ const getTotal = (cart) => {
 export function moveCartItem(dragIndex, hoverIndex) {
     return function (dispatch, getState) {
         let cart = [...getState().burgerConstructor.cart];
-        const bun = cart.find(cartItem => cartItem.burgerIngredient.type === 'bun');
-        const additions = cart.filter(cartItem => cartItem.burgerIngredient.type !== 'bun');
+        const bun = cart.find(cartItem => cartItem.burgerIngredient.type === BURGER_INGREDIENT_BUN_TYPE);
+        const additions = cart.filter(cartItem => cartItem.burgerIngredient.type !== BURGER_INGREDIENT_BUN_TYPE);
         const dragItem = additions.splice(dragIndex, 1)[0];
         additions.splice(hoverIndex, 0, dragItem);
         cart = [bun, ...additions];
@@ -32,11 +32,11 @@ export function moveCartItem(dragIndex, hoverIndex) {
 export function addCartItem(burgerIngredient) {
     return function (dispatch, getState) {
         let cart = [...getState().burgerConstructor.cart];
-        if (burgerIngredient.type === 'bun') {
+        if (burgerIngredient.type === BURGER_INGREDIENT_BUN_TYPE) {
             //удаляем другую булку, т.к. может быть только одна булка
-            cart = cart.filter(item => item.burgerIngredient.type !== 'bun');
+            cart = cart.filter(item => item.burgerIngredient.type !== BURGER_INGREDIENT_BUN_TYPE);
         }
-        if ((burgerIngredient.type !== 'bun' && cart.find(item => item.burgerIngredient.type === 'bun')) || burgerIngredient.type === 'bun') {
+        if ((burgerIngredient.type !== BURGER_INGREDIENT_BUN_TYPE && cart.find(item => item.burgerIngredient.type === BURGER_INGREDIENT_BUN_TYPE)) || burgerIngredient.type === BURGER_INGREDIENT_BUN_TYPE) {
             //добавляем ингредиент, только если булка уже добавлена или добавляемый ингредиент и есть булка
             cart.push({id: uuidv4(), burgerIngredient});
             dispatch({type: SET_CART, payload: {cart, total: getTotal(cart)}});
