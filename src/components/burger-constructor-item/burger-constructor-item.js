@@ -18,12 +18,22 @@ const BurgerConstructorItem = ({cartItem, index, moveCard, topBun = false, botto
                 handlerId: monitor.getHandlerId(),
             };
         },
+        canDrop() {
+            if (cartItem.burgerIngredient.type === 'bun')
+                return false;
+            else
+                return true;
+        },
         hover(item, monitor) {
             if (!ref.current) {
                 return;
             }
             const dragIndex = item.index;
             const hoverIndex = index;
+            // Булки не учавствуют в сортировке
+            if (cartItem.burgerIngredient.type === 'bun') {
+                return;
+            }
             // Don't replace items with themselves
             if (dragIndex === hoverIndex) {
                 return;
