@@ -1,40 +1,28 @@
-import React, { useContext } from 'react'
-import PropTypes from 'prop-types'
+import React, {useCallback} from 'react'
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './total-burger-constructor.module.css'
-import { BurgerConstructorContext } from '../../services/burger-constructor-context'
-import { useFetching } from '../../hooks/useFetching'
-import OrdersService from '../../api/orders-service'
-import { clearBurgerConstructorAction, setOrderAction } from '../../services/burger-constructor-reducer'
+import {useDispatch, useSelector} from "react-redux";
+import {createOrder} from "../../services/actions/burger-constructor";
 
+function TotalBurgerConstructor() {
 
-function TotalBurgerConstructor({ setVisibleOrderDetails }) {
-
-    const [burgerConstructorState, dispatchBurgerConstructor] = useContext(BurgerConstructorContext)
-
-    const [fetchCreateOrder, isLoading, error] = useFetching(async () => {
-        const result = await OrdersService.createOrder(burgerConstructorState.cart)
-        if (result.success) {
-            dispatchBurgerConstructor(setOrderAction(result));
-            setVisibleOrderDetails(true)
-        }
-    })
+    const dispatch = useDispatch();
+    const total = useSelector(store => store.burgerConstructor.total)
+    const handlerButtonClick = useCallback(() => {
+        dispatch(createOrder())
+    }, [dispatch])
 
     return (
         <div className={styles.total + ' mt-10 mb-10 mr-10'}>
             <div className={styles.sum + ' mr-10'}>
-                <p className="text text_type_digits-medium mr-2">{burgerConstructorState.total}</p>
+                <p className="text text_type_digits-medium mr-2">{total}</p>
                 <CurrencyIcon type="primary" />
             </div>
-            <Button type="primary" size="large" onClick={fetchCreateOrder}>
+            <Button type="primary" size="large" onClick={handlerButtonClick} >
                 Оформить заказ
             </Button>
         </div>
     )
-}
-
-TotalBurgerConstructor.propTypes = {
-    setVisibleOrderDetails: PropTypes.func.isRequired
 }
 
 export default TotalBurgerConstructor

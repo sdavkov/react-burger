@@ -1,79 +1,69 @@
-import React, { useContext, useMemo } from 'react'
-import PropTypes from 'prop-types'
+import React, {useCallback, useMemo} from 'react'
 import styles from './burger-constructor.module.css'
-import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { BurgerConstructorContext } from '../../services/burger-constructor-context'
 import TotalBurgerConstructor from '../total-burger-constructor/total-burger-constructor'
-import { removeBurgerConstructorAction } from '../../services/burger-constructor-reducer'
+import {useDispatch, useSelector} from "react-redux";
+import {addCartItem, moveCartItem} from "../../services/actions/burger-constructor";
+import {useDrop} from "react-dnd";
+import BurgerConstructorItem from "../burger-constructor-item/burger-constructor-item";
+import {BURGER_INGREDIENT_BUN_TYPE} from "../../utils/constants";
 
-const BurgerConstructor = React.memo(({ setVisibleOrderDetails }) => {
 
-    const [burgerConstructorState, dispatchBurgerConstructor] = useContext(BurgerConstructorContext)
+const BurgerConstructor = React.memo(() => {
 
-    const bun = useMemo(() => burgerConstructorState.cart.find(cartItem => cartItem.ingredient.type == 'bun'), [burgerConstructorState]);
-    const additionals = useMemo(() => burgerConstructorState.cart.filter(cartItem => cartItem.ingredient.type !== 'bun'), [burgerConstructorState]);
+    const cart = useSelector(store => store.burgerConstructor.cart);
+
+    const bun = useMemo(() => cart.find(cartItem => cartItem.burgerIngredient.type === BURGER_INGREDIENT_BUN_TYPE), [cart]);
+    const additions = useMemo(() => cart.filter(cartItem => cartItem.burgerIngredient.type !== BURGER_INGREDIENT_BUN_TYPE), [cart]);
+
+    const dispatch = useDispatch();
+
+    const [{isHover, canDrop}, dropTarget] = useDrop({
+        accept: "ingredient",
+        drop(burgerIngredient) {
+            dispatch(addCartItem(burgerIngredient))
+        },
+        canDrop(burgerIngredient) {
+            if (bun || burgerIngredient.type === BURGER_INGREDIENT_BUN_TYPE)
+                return true;
+            else
+                return false;
+        },
+        collect: monitor => ({
+            isHover: monitor.isOver(),
+            canDrop: monitor.canDrop(),
+        })
+    });
+
+    const canDropDecoratorCssClass = cart.length === 0 ? (isHover ? (canDrop ? styles.allowDrop : styles.disableDrop) : '') : '';
+
+    const moveCard = useCallback((dragIndex, hoverIndex) => {
+        dispatch(moveCartItem(dragIndex, hoverIndex));
+    }, [cart]);
 
     return (
-        <div className={styles.constructor + ' pt-25 pb-5 pr-4 pl-4'}>
-            {burgerConstructorState.cart.length > 0 && (
-                <>
-                    <div className={styles.list}>
-                        {bun && (
-                            <>
-                                <div className={styles.item}>
-                                    <div></div>
-                                    <ConstructorElement
-                                        type="top"
-                                        isLocked={true}
-                                        text={bun.ingredient.name + ' (верх)'}
-                                        price={bun.ingredient.price}
-                                        thumbnail={bun.ingredient.image}
-                                    />
-                                </div>
-                                <div className='pt-4'></div>
-                            </>
-                        )}
-                        <div className={styles.items + ' custom-scroll'}>
-                            {additionals.map((cartItem) => (
-                                <React.Fragment key={cartItem.cart_id}>
-                                    <div className={styles.item + ' pt-4'}>
-                                        <DragIcon type="primary" />
-                                        <ConstructorElement
-                                            isLocked={false}
-                                            text={cartItem.ingredient.name}
-                                            price={cartItem.ingredient.price}
-                                            thumbnail={cartItem.ingredient.image}
-                                            handleClose={() => { dispatchBurgerConstructor(removeBurgerConstructorAction(cartItem)) }}
-                                        />
-                                    </div>
-                                </React.Fragment>
-                            ))}
-                        </div>
-                        {bun && (
-                            <>
-                                <div className='pt-4'></div>
-                                <div className={styles.item}>
-                                    <div></div>
-                                    <ConstructorElement
-                                        type="bottom"
-                                        isLocked={true}
-                                        text={bun.ingredient.name + ' (низ)'}
-                                        price={bun.ingredient.price}
-                                        thumbnail={bun.ingredient.image}
-                                    />
-                                </div>
-                            </>
-                        )}
-                    </div>
-                    <TotalBurgerConstructor setVisibleOrderDetails={setVisibleOrderDetails} />
-                </>
-            )}
-        </div >
+        <div className={`${styles.constructor} pt-25 pb-5 pr-4 pl-4`}>
+            <>
+                <div className={`${styles.list} ${canDropDecoratorCssClass}`} ref={dropTarget}>
+                    {cart.length > 0 &&
+                        <>
+                            <BurgerConstructorItem cartItem={bun} topBun={true}/>
+                            <div className='pt-4'></div>
+                            <div className={styles.items + ' custom-scroll'}>
+                                {additions.map((cartItem, index) => (
+                                    <BurgerConstructorItem key={cartItem.id} index={index} moveCard={moveCard}
+                                                           cartItem={cartItem}/>
+                                ))}
+                            </div>
+                            <BurgerConstructorItem cartItem={bun} bottomBun={true}/>
+                        </>
+                    }
+                </div>
+                {cart.length > 0 &&
+                    <TotalBurgerConstructor/>
+                }
+            </>
+        </div>
     )
 })
-
-BurgerConstructor.propTypes = {
-    setVisibleOrderDetails: PropTypes.func.isRequired,
-}
 
 export default BurgerConstructor

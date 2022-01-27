@@ -15,7 +15,6 @@
 }
 
 .item {
-
     display: grid;
     align-items: center;
     grid-template-columns: 32px 1fr;
@@ -23,4 +22,12 @@
 
 .item:first-child {
     padding-top: 0;
+}
+
+.allowDrop {
+    border: medium solid aquamarine;
+}
+
+.disableDrop {
+    border: medium solid red;
 }
