@@ -1,73 +1,36 @@
 import React, {useCallback, useEffect} from 'react';
 import AppHeader from '../app-header/app-header';
-import BurgerConstructor from '../burger-constructor/burger-constructor';
-import BurgerIngredients from '../burger-ingredients/burger-ingredients';
-import IngredientDetails from '../ingredient-details/ingredient-details';
-import Modal from '../modal/modal';
-import OrderDetails from '../order-details/order-details';
-import styles from './app.module.css'
-import {useDispatch, useSelector} from "react-redux";
-import {CLEAR_CURRENT_BURGER_INGREDIENT, getBurgerIngredients} from "../../services/actions/burger-ingredients";
-import {CLEAR_CURRENT_ORDER_NUMBER} from "../../services/actions/burger-constructor";
-import {DndProvider} from "react-dnd";
-import {HTML5Backend} from "react-dnd-html5-backend";
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import {ForgotPasswordPage, HomePage, LoginPage, ProfilePage, RegisterPage, ResetPasswordPage} from "../../pages";
 
-const App = React.memo(() => {
-
-    const {
-        burgerIngredientsRequest,
-        burgerIngredientsRequestFailed,
-        currentBurgerIngredient,
-        currentOrderNumber
-    } = useSelector(store => ({
-        burgerIngredientsRequest: store.burgerIngredients.burgerIngredientsRequest,
-        burgerIngredientsRequestFailed: store.burgerIngredients.burgerIngredientsRequestFailed,
-        currentBurgerIngredient: store.burgerIngredients.currentBurgerIngredient,
-        currentOrderNumber: store.burgerConstructor.currentOrderNumber,
-    }))
-
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(getBurgerIngredients())
-    }, [dispatch])
-
-    const clearCurrentIngredient = useCallback(() => {
-        dispatch({type: CLEAR_CURRENT_BURGER_INGREDIENT})
-    }, [dispatch]);
-
-    const clearCurrentOrder = useCallback(() => {
-        dispatch({type: CLEAR_CURRENT_ORDER_NUMBER});
-    }, [dispatch])
-
+function App() {
     return (
-        <>
+        <React.Fragment>
             <AppHeader/>
-            <div className='container'>
-                {burgerIngredientsRequest ? (
-                        <p className={styles.loading + ' text text_type_main-medium'}>Загрузка ...</p>) :
-                    burgerIngredientsRequestFailed ? (
-                            <p className={styles.error + ' text text_type_main-medium'}>Ошибка загрузки ингредиентов</p>) :
-                        (<main className={styles.row}>
-                            <DndProvider backend={HTML5Backend}>
-                                <BurgerIngredients/>
-                                <div className="pl-10">&nbsp;</div>
-                                <BurgerConstructor/>
-                            </DndProvider>
-                            {currentBurgerIngredient && (
-                                <Modal closeModal={clearCurrentIngredient}>
-                                    <IngredientDetails/>
-                                </Modal>)}
-                            {currentOrderNumber && (
-                                <Modal closeModal={clearCurrentOrder}>
-                                    <OrderDetails/>
-                                </Modal>
-                            )}
-                        </main>)
-                }
-            </div>
-        </>
-    );
-});
+            <Router>
+                <Switch>
+                    <Route path="/" exact={true}>
+                        <HomePage/>
+                    </Route>
+                    <Route path="/login" exact={true}>
+                        <LoginPage/>
+                    </Route>
+                    <Route path="/register" exact={true}>
+                        <RegisterPage/>
+                    </Route>
+                    <Route path="/forgot-password" exact={true}>
+                        <ForgotPasswordPage/>
+                    </Route>
+                    <Route path="/reset-password">
+                        <ResetPasswordPage/>
+                    </Route>
+                    <Route path="/profile">
+                        <ProfilePage/>
+                    </Route>
+                </Switch>
+            </Router>
+        </React.Fragment>
+    )
+};
 
 export default App;
