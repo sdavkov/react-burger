@@ -1,10 +1,16 @@
 import {API_URL} from "../utils/constants";
 
-export function checkResponse(res) {
+export async function checkResponse(res) {
     if (res.ok)
         return res.json();
-    else
-        return Promise.reject(new Error(`Ошибка ${res.status}`))
+    else {
+        let data = null;
+        try {
+            data = await res.json();
+        } finally {
+            return Promise.reject(new Error(`Ошибка ${res.status}` + (data ? `: ${data.message}` : '')));
+        }
+    }
 }
 
 export const getCreateOrderRequest = async (cart) =>
@@ -19,7 +25,7 @@ export const getCreateOrderRequest = async (cart) =>
 export const getBurgerIngredientsRequest = async () =>
     await fetch(`${API_URL}ingredients`);
 
-export const getForgotPasswordRequest = async (email) => await
+export const getForgotPasswordRequest = async ({email}) => await
     fetch(`${API_URL}password-reset`, {
         method: 'POST',
         headers: {
@@ -28,7 +34,7 @@ export const getForgotPasswordRequest = async (email) => await
         body: JSON.stringify({email})
     });
 
-export const getPasswordResetRequest = async ({password, token}) => await
+export const getResetPasswordRequest = async ({password, token}) => await
     fetch(`${API_URL}password-reset/reset`, {
         method: 'POST',
         headers: {
@@ -46,7 +52,7 @@ export const getLoginUserRequest = async ({email, password}) => await
         body: JSON.stringify({email, password})
     });
 
-export const getRegisterUserRequest = async ({email, password, name}) => await
+export const getRegisterUserRequest = async ({name, email, password}) => await
     fetch(`${API_URL}auth/register`, {
         method: 'POST',
         headers: {
@@ -55,7 +61,7 @@ export const getRegisterUserRequest = async ({email, password, name}) => await
         body: JSON.stringify({email, password, name})
     });
 
-export const getLogoutUserRequest = async ({token}) => await
+export const getLogoutUserRequest = async (token) => await
     fetch(`${API_URL}auth/logout`, {
         method: 'POST',
         headers: {
@@ -64,7 +70,7 @@ export const getLogoutUserRequest = async ({token}) => await
         body: JSON.stringify({token})
     });
 
-export const getRefreshTokenRequest = async ({token}) => await
+export const getRefreshTokenRequest = async (token) => await
     fetch(`${API_URL}auth/token`, {
         method: 'POST',
         headers: {
