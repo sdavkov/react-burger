@@ -1,6 +1,6 @@
 import {v4 as uuidv4} from "uuid";
-import {API_URL, BURGER_INGREDIENT_BUN_TYPE} from "../../utils/constants";
-import {checkResponse} from "../../utils/checkResponse";
+import {BURGER_INGREDIENT_BUN_TYPE} from "../../utils/constants";
+import {checkResponse, getCreateOrderRequest} from "../api";
 
 export const SET_CART = 'SET_CART';
 export const CLEAR_CART = 'CLEAR_CART';
@@ -54,13 +54,7 @@ export function removeCartItem(burgerIngredient) {
 export function createOrder() {
     return function (dispatch, getState) {
         dispatch({type: GET_ORDER_REQUEST});
-        fetch(`${API_URL}orders`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify({ingredients: getState().burgerConstructor.cart.map(item => item.burgerIngredient._id)})
-        })
+        getCreateOrderRequest(getState().burgerConstructor.cart)
             .then(checkResponse)
             .then(data => {
                 dispatch({type: GET_ORDER_REQUEST_SUCCESS, payload: data.order.number});
