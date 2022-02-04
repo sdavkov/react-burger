@@ -6,9 +6,21 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap;
 }
 
 .nav {
+    flex: 0 0 33.3%;
     display: flex;
+}
+
+.logo {
+    flex: 0 0 33.3%;
+    display: flex;
+    justify-content: center;
+}
+
+.profile {
+    flex: 0 0 33.3%;
+    display: flex;
+    justify-content: end;
 }

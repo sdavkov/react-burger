@@ -2,14 +2,14 @@ import React, {useCallback, useEffect} from 'react';
 import styles from "./home.module.css";
 import {DndProvider} from "react-dnd";
 import {HTML5Backend} from "react-dnd-html5-backend";
-import BurgerIngredients from "../components/burger-ingredients/burger-ingredients";
-import BurgerConstructor from "../components/burger-constructor/burger-constructor";
-import Modal from "../components/modal/modal";
-import IngredientDetails from "../components/ingredient-details/ingredient-details";
-import OrderDetails from "../components/order-details/order-details";
+import BurgerIngredients from "../../components/burger-ingredients/burger-ingredients";
+import BurgerConstructor from "../../components/burger-constructor/burger-constructor";
+import Modal from "../../components/modal/modal";
+import IngredientDetails from "../../components/ingredient-details/ingredient-details";
+import OrderDetails from "../../components/order-details/order-details";
 import {useDispatch, useSelector} from "react-redux";
-import {CLEAR_CURRENT_BURGER_INGREDIENT, getBurgerIngredients} from "../services/actions/burger-ingredients";
-import {CLEAR_CURRENT_ORDER_NUMBER} from "../services/actions/burger-constructor";
+import {CLEAR_CURRENT_BURGER_INGREDIENT, getBurgerIngredients} from "../../services/actions/burger-ingredients";
+import {CLEAR_CURRENT_ORDER_NUMBER} from "../../services/actions/burger-constructor";
 
 export function HomePage(props) {
 
@@ -40,7 +40,7 @@ export function HomePage(props) {
     }, [dispatch])
 
     return (
-        <div className='container'>
+        <React.Fragment>
             {burgerIngredientsRequest ? (
                     <p className={styles.loading + ' text text_type_main-medium'}>Загрузка ...</p>) :
                 burgerIngredientsRequestFailed ? (
@@ -62,6 +62,6 @@ export function HomePage(props) {
                         )}
                     </main>)
             }
-        </div>
+        </React.Fragment>
     );
 }

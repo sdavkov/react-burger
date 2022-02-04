@@ -7,28 +7,30 @@ function App() {
     return (
         <React.Fragment>
             <AppHeader/>
-            <Router>
-                <Switch>
-                    <Route path="/" exact={true}>
-                        <HomePage/>
-                    </Route>
-                    <Route path="/login" exact={true}>
-                        <LoginPage/>
-                    </Route>
-                    <Route path="/register" exact={true}>
-                        <RegisterPage/>
-                    </Route>
-                    <Route path="/forgot-password" exact={true}>
-                        <ForgotPasswordPage/>
-                    </Route>
-                    <Route path="/reset-password">
-                        <ResetPasswordPage/>
-                    </Route>
-                    <Route path="/profile">
-                        <ProfilePage/>
-                    </Route>
-                </Switch>
-            </Router>
+            <div className='container'>
+                <Router>
+                    <Switch>
+                        <Route path="/" exact={true}>
+                            <HomePage/>
+                        </Route>
+                        <Route path="/login" exact={true}>
+                            <LoginPage/>
+                        </Route>
+                        <Route path="/register" exact={true}>
+                            <RegisterPage/>
+                        </Route>
+                        <Route path="/forgot-password" exact={true}>
+                            <ForgotPasswordPage/>
+                        </Route>
+                        <Route path="/reset-password">
+                            <ResetPasswordPage/>
+                        </Route>
+                        <Route path="/profile">
+                            <ProfilePage/>
+                        </Route>
+                    </Switch>
+                </Router>
+            </div>
         </React.Fragment>
     )
 };

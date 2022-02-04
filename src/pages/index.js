@@ -1,8 +1,8 @@
-import {HomePage} from "./home";
-import {LoginPage} from "./login";
-import {ForgotPasswordPage} from "./forgot-password";
-import {ProfilePage} from "./profile";
-import {RegisterPage} from "./register";
-import {ResetPasswordPage} from "./reset-password";
+import {HomePage} from "./home/home";
+import {LoginPage} from "./login/login";
+import {ForgotPasswordPage} from "./forgot-password/forgot-password";
+import {ProfilePage} from "./profile/profile";
+import {RegisterPage} from "./register/register";
+import {ResetPasswordPage} from "./reset-password/reset-password";
 
 export {HomePage, LoginPage, ForgotPasswordPage, ProfilePage, RegisterPage, ResetPasswordPage};

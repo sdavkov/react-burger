@@ -1,0 +1,37 @@
+.profile {
+    margin-top: 120px;
+    display: flex;
+    width: 1244px;
+}
+
+.nav {
+    flex: 0 0 320px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-right: 60px;
+}
+
+.nav li {
+    height: 64px;
+    display: flex;
+    align-items: center;
+}
+
+.content {
+    flex: 0 0 auto;
+}
+
+.actions {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+.profile :global(.input_size_default) {
+    width: 480px;
+}
+
+.link {
+    color: #4C4CFF;
+}
