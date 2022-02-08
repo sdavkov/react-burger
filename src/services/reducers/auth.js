@@ -1,39 +1,19 @@
 import {
-    SET_USER_FORM_VALUE,
     GET_AUTH_REQUEST,
     GET_AUTH_REQUEST_FIELD,
-    GET_AUTH_REQUEST_SUCCESS,
-    SET_CURRENT_USER, SET_RESET_PASSWORD_STATUS
+    GET_AUTH_REQUEST_SUCCESS, LOGOUT_USER,
+    SET_CURRENT_USER
 } from "../actions/auth";
 
 const initialState = {
-    authUserForm: {
-        name: '',
-        email: '',
-        password: '',
-        token: '',
-    },
     currentUser: null,
-    accessToken: '',
-    refreshToken: '',
     authRequest: false,
     authRequestFailed: false,
     authRequestFailedMessage: '',
-    resetPassword: false,
 }
 
 export const authReducer = (state = initialState, action) => {
     switch (action.type) {
-        case SET_USER_FORM_VALUE: {
-            const {field, value} = action.payload;
-            return {
-                ...state,
-                authUserForm: {
-                    ...state.authUserForm,
-                    [field]: value,
-                }
-            }
-        }
         case GET_AUTH_REQUEST:
             return {
                 ...state,
@@ -57,22 +37,21 @@ export const authReducer = (state = initialState, action) => {
                 authRequestFailedMessage: action.payload
             }
         case SET_CURRENT_USER: {
-            const {user: {name, email}, accessToken, refreshToken} = action.payload;
+            const {user: {name, email}} = action.payload;
             return {
                 ...state,
                 currentUser: {
                     name,
                     email,
-                },
-                accessToken,
-                refreshToken,
+                }
             }
         }
-        case SET_RESET_PASSWORD_STATUS:
+        case LOGOUT_USER: {
             return {
                 ...state,
-                resetPassword: true,
+                currentUser: null,
             }
+        }
         default:
             return state;
     }

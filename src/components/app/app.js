@@ -1,38 +1,106 @@
 import React, {useCallback, useEffect} from 'react';
 import AppHeader from '../app-header/app-header';
-import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
-import {ForgotPasswordPage, HomePage, LoginPage, ProfilePage, RegisterPage, ResetPasswordPage} from "../../pages";
+import {BrowserRouter as Router, Route, Switch, useHistory, useLocation} from "react-router-dom";
+import {
+    Error404,
+    ForgotPasswordPage,
+    HomePage,
+    LoginPage,
+    ProfilePage,
+    RegisterPage,
+    ResetPasswordPage
+} from "../../pages";
+import ProtectedRoute from "../protected-route/protected-route";
+import OnlyNonAuthorizedRoute from "../only-non-authorized-route/only-non-authorized-route";
+import {useDispatch, useSelector} from "react-redux";
+import Modal from "../modal/modal";
+import IngredientDetails from "../ingredient-details/ingredient-details";
+import {CLEAR_CURRENT_BURGER_INGREDIENT, getBurgerIngredients} from "../../services/actions/burger-ingredients";
+import OrderDetails from "../order-details/order-details";
+import {CLEAR_CURRENT_ORDER_NUMBER} from "../../services/actions/burger-constructor";
 
 function App() {
-    return (
-        <React.Fragment>
-            <AppHeader/>
-            <div className='container'>
-                <Router>
-                    <Switch>
+
+    const dispatch = useDispatch();
+    useEffect(() =>
+            dispatch(getBurgerIngredients()),
+        [dispatch])
+
+    const ModalSwitch = () => {
+        const location = useLocation();
+        const history = useHistory();
+        let background = location.state && location.state.background;
+
+        const dispatch = useDispatch();
+
+        const handleIngredientModalClose = () => {
+            dispatch({type: CLEAR_CURRENT_BURGER_INGREDIENT})
+            history.goBack();
+        };
+
+        const handleNewOrderModalClose = () => {
+            dispatch({type: CLEAR_CURRENT_ORDER_NUMBER});
+            history.goBack();
+        };
+
+        return (
+            <React.Fragment>
+                <AppHeader/>
+                <div className='container'>
+                    <Switch location={background || location}>
                         <Route path="/" exact={true}>
                             <HomePage/>
                         </Route>
-                        <Route path="/login" exact={true}>
+                        <OnlyNonAuthorizedRoute path="/login" exact={true}>
                             <LoginPage/>
-                        </Route>
-                        <Route path="/register" exact={true}>
+                        </OnlyNonAuthorizedRoute>
+                        <OnlyNonAuthorizedRoute path="/register" exact={true}>
                             <RegisterPage/>
-                        </Route>
-                        <Route path="/forgot-password" exact={true}>
+                        </OnlyNonAuthorizedRoute>
+                        <OnlyNonAuthorizedRoute path="/forgot-password" exact={true}>
                             <ForgotPasswordPage/>
-                        </Route>
-                        <Route path="/reset-password">
+                        </OnlyNonAuthorizedRoute>
+                        <OnlyNonAuthorizedRoute path="/reset-password">
                             <ResetPasswordPage/>
-                        </Route>
-                        <Route path="/profile">
+                        </OnlyNonAuthorizedRoute>
+                        <ProtectedRoute path="/profile">
                             <ProfilePage/>
+                        </ProtectedRoute>
+                        <ProtectedRoute
+                            path='/create-new-order'
+                            children={
+                                <Modal onClose={handleNewOrderModalClose}>
+                                    <OrderDetails/>
+                                </Modal>
+                            }
+                        />
+                        <Route path='/ingredients/:ingredientId' exact>
+                            <IngredientDetails/>
+                        </Route>
+                        <Route>
+                            <Error404/>
                         </Route>
                     </Switch>
-                </Router>
-            </div>
-        </React.Fragment>
-    )
-};
+                    {background && (
+                        <Route
+                            path='/ingredients/:ingredientId'
+                            children={
+                                <Modal onClose={handleIngredientModalClose}>
+                                    <IngredientDetails/>
+                                </Modal>
+                            }
+                        />
+                    )}
+                </div>
+            </React.Fragment>
+        )
+    };
+
+    return (
+        <Router>
+            <ModalSwitch/>
+        </Router>
+    );
+}
 
 export default App;

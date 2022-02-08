@@ -5,35 +5,20 @@ import styles from "./register.module.css";
 import {useDispatch, useSelector} from "react-redux";
 import {registerUser, setAuthFormValue, setUserFormValue} from "../../services/actions/auth";
 import Error from "../../components/error/error";
+import useForm from "../../hooks/useForm";
+import useAuth from "../../hooks/useAuth";
 
 export function RegisterPage(props) {
 
-    const {
-        name,
-        email,
-        password,
-        authRequest,
-        authRequestFailedMessage,
-    } = useSelector(store => ({
-        name: store.auth.authUserForm.name,
-        email: store.auth.authUserForm.email,
-        password: store.auth.authUserForm.password,
-        authRequest: store.auth.authRequest,
-        authRequestFailedMessage: store.auth.authRequestFailedMessage,
-    }))
+    const {form, onChangeHandler} = useForm({name: '', email: '', password: ''})
+    const {authRequest, authRequestFailedMessage} = useAuth();
 
     const dispatch = useDispatch();
 
-    const onChangeHandler = (e) => {
-        dispatch(setUserFormValue(e.target.name, e.target.value));
-    }
-
     const onSubmitHandler = (e) => {
       e.preventDefault();
-      dispatch(registerUser())
+      dispatch(registerUser(form))
     }
-
-    console.log(authRequestFailedMessage)
 
     return (
         <div className={styles.register}>
@@ -41,7 +26,7 @@ export function RegisterPage(props) {
             <form className={'mt-6'} onSubmit={onSubmitHandler}>
                 <div className={'mb-6'}>
                     <Input
-                        value={name}
+                        value={form.name}
                         type={'text'}
                         placeholder={'Имя'}
                         name={'name'}
@@ -50,7 +35,7 @@ export function RegisterPage(props) {
                 </div>
                 <div className={'mb-6'}>
                     <Input
-                        value={email}
+                        value={form.email}
                         type={'email'}
                         name='email'
                         placeholder={'E-mail'}
@@ -59,7 +44,7 @@ export function RegisterPage(props) {
                 </div>
                 <div className={'mb-6'}>
                     <PasswordInput
-                        value={password}
+                        value={form.password}
                         name='password'
                         onChange={onChangeHandler}
                     />

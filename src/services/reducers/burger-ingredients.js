@@ -33,11 +33,12 @@ export const burgerIngredientsReducer = (state = initialState, action) => {
                 burgerIngredientsRequest: false,
                 burgerIngredientsRequestFailed: true,
             }
-        case SET_CURRENT_BURGER_INGREDIENT:
+        case SET_CURRENT_BURGER_INGREDIENT: {
             return {
                 ...state,
-                currentBurgerIngredient: action.payload,
+                currentBurgerIngredient: state.burgerIngredients.find((item) => item._id === action.payload),
             }
+        }
         case CLEAR_CURRENT_BURGER_INGREDIENT:
             return {
                 ...state,

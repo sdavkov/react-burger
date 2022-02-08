@@ -9,20 +9,20 @@ import {ESCAPE_VALUE} from "../../utils/constants";
 
 const modalRoot = document.getElementById("react-modals");
 
-const Modal = React.memo(({ closeModal, title, children }) => {
+const Modal = React.memo(({ onClose, title, children }) => {
 
     useEffect(() => {
 
         const keyDown = (e) => {
             if (e.key === ESCAPE_VALUE)
-                closeModal();
+                onClose();
         }
 
         window.addEventListener('keydown', keyDown)
         return () => {
             window.removeEventListener('keydown', keyDown)
         }
-    }, [closeModal])
+    }, [onClose])
 
     return ReactDOM.createPortal(
         <>
@@ -30,19 +30,19 @@ const Modal = React.memo(({ closeModal, title, children }) => {
                 <div className={styles.title + ' pl-10 pt-10 pr-10'}>
                     <p className='text text_type_main-large'>{title}</p>
                     <div className={styles.close}>
-                        <CloseIcon type="primary" onClick={closeModal} />
+                        <CloseIcon type="primary" onClick={onClose} />
                     </div>
                 </div>
                 {children}
             </div>
-            <ModalOverlay closeModal={closeModal} />
+            <ModalOverlay closeModal={onClose} />
         </>
         , modalRoot
     )
 })
 
 Modal.propTypes = {
-    closeModal: PropTypes.func.isRequired,
+    onClose: PropTypes.func.isRequired,
     title: PropTypes.string
 }
 

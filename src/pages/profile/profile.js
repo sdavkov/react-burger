@@ -1,46 +1,54 @@
 import React from 'react';
 import styles from './profile.module.css'
-import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link} from "react-router-dom";
+import UserProfile from "../../components/user-profile/user-profile";
+import {useDispatch} from "react-redux";
+import {logoutUser} from "../../services/actions/auth";
+import {Link, Route, Switch, useHistory, useLocation, useRouteMatch} from "react-router-dom";
+import Orders from "../../components/orders/orders";
 
-export function ProfilePage(props) {
+export function ProfilePage() {
+
+    const dispatch = useDispatch()
+    const history = useHistory()
+    const {path} = useRouteMatch();
+    const location = useLocation();
+
+    function logoutHandler() {
+        dispatch(logoutUser());
+        history.replace('/login');
+    }
+
+    console.log(location.pathname === path)
+
     return (
         <div className={styles.profile}>
             <div className={styles.nav}>
                 <ul>
                     <li>
-                        <p className="text text_type_main-medium">Профиль</p>
+                        <p className={(location.pathname === path) ? 'text text_type_main-medium' : 'text text_type_main-medium text_color_inactive'}>
+                            <Link style={{color: "inherit"}} to={`${path}`}>Профиль</Link></p>
                     </li>
                     <li>
-                        <p className="text text_type_main-medium text_color_inactive">История заказов</p>
+                        <p className={(location.pathname === `${path}/orders`) ? 'text text_type_main-medium' : 'text text_type_main-medium text_color_inactive'}>
+                            <Link style={{color: "inherit"}} to={`${path}/orders`}>История заказов</Link></p>
                     </li>
                     <li>
-                        <p className="text text_type_main-medium text_color_inactive">Выход</p>
+                        <a className={styles.logout + " text text_type_main-medium text_color_inactive"}
+                           onClick={logoutHandler}>Выход</a>
                     </li>
                 </ul>
                 <p className="text text_type_main-default text_color_inactive">В этом разделе вы можете
                     изменить свои персональные данные</p>
             </div>
             <div className={styles.content}>
-                <form className={'mt-6'}>
-                    <div className={'mb-6'}>
-                        <Input type='text' name='name' placeholder='Имя' icon='EditIcon'/>
-                    </div>
-                    <div className={'mb-6'}>
-                        <Input type='text' name='email' placeholder='Логин' icon='EditIcon'/>
-                    </div>
-                    <div className={'mb-6'}>
-                        <Input type='password' name='email' placeholder='Пароль' icon='CloseIcon'/>
-                    </div>
-                    <div className={styles.actions}>
-                        <p className="text text_type_main-default text_color_inactive mr-7">
-                            <Link className={styles.link} to="/">Отмена</Link>
-                        </p>
-                        <Button type="primary" size="medium">
-                            Сохранить
-                        </Button>
-                    </div>
-                </form>
+                <Switch>
+                    <Route path={`${path}`} exact={true}>
+                        <UserProfile/>
+                    </Route>
+                    <Route path={`${path}/orders`} exact={true}>
+                        <Orders/>
+                    </Route>
+                </Switch>
             </div>
         </div>
     );

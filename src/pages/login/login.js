@@ -1,35 +1,30 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Input, PasswordInput, Button} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link} from "react-router-dom";
 import styles from "./login.module.css";
-import {useDispatch, useSelector} from "react-redux";
-import {loginUser, registerUser, setUserFormValue} from "../../services/actions/auth";
+import {useDispatch} from "react-redux";
+import {loginUser} from "../../services/actions/auth";
 import Error from "../../components/error/error";
+import useForm from "../../hooks/useForm";
+import useAuth from "../../hooks/useAuth";
 
-export function LoginPage(props) {
+export function LoginPage() {
 
-    const {
-        email,
-        password,
-        authRequest,
-        authRequestFailedMessage
-    } = useSelector(store => ({
-        email: store.auth.authUserForm.email,
-        password: store.auth.authUserForm.password,
-        authRequest: store.auth.authRequest,
-        authRequestFailedMessage: store.auth.authRequestFailedMessage,
-    }))
+    const {form, onChangeHandler} = useForm({
+        email: '',
+        password: ''
+    })
+
+    const {authRequest, authRequestFailedMessage} = useAuth();
 
     const dispatch = useDispatch();
 
-    const onChangeHandler = (e) => {
-        dispatch(setUserFormValue(e.target.name, e.target.value));
-    }
-
     const onSubmitHandler = (e) => {
         e.preventDefault();
-        dispatch(loginUser())
+        dispatch(loginUser(form))
     }
+
+    console.log('login')
 
     return (
         <div className={styles.login}>
@@ -37,7 +32,7 @@ export function LoginPage(props) {
             <form className={'mt-6'} onSubmit={onSubmitHandler}>
                 <div className={'mb-6'}>
                     <Input
-                        value={email}
+                        value={form.email}
                         name='email'
                         placeholder='E-mail'
                         onChange={onChangeHandler}
@@ -45,7 +40,7 @@ export function LoginPage(props) {
                 </div>
                 <div className={'mb-6'}>
                     <PasswordInput
-                        value={password}
+                        value={form.password}
                         name='password'
                         onChange={onChangeHandler}
                     />

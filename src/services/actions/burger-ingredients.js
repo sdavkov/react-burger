@@ -15,9 +15,6 @@ export function getBurgerIngredients() {
                 type: GET_BURGER_INGREDIENTS_REQUEST_SUCCESS,
                 payload: data.data
             }))
-            .catch(() => {
-                    dispatch({type: GET_BURGER_INGREDIENTS_REQUEST_FIELD})
-                }
-            )
+            .catch(() => dispatch({type: GET_BURGER_INGREDIENTS_REQUEST_FIELD}));
     }
 }

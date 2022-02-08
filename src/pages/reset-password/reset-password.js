@@ -1,34 +1,30 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link} from "react-router-dom";
+import {Link, useHistory, useLocation} from "react-router-dom";
 import styles from "./reset-password.module.css";
 import {useDispatch, useSelector} from "react-redux";
 import {forgotPassword, resetPassword, setUserFormValue} from "../../services/actions/auth";
 import Error from "../../components/error/error";
+import useForm from "../../hooks/useForm";
+import useAuth from "../../hooks/useAuth";
 
 export function ResetPasswordPage(props) {
 
-    const {
-        password,
-        token,
-        authRequest,
-        authRequestFailedMessage,
-    } = useSelector(store => ({
-        email: store.auth.authUserForm.email,
-        token: store.auth.authUserForm.token,
-        authRequest: store.auth.authRequest,
-        authRequestFailedMessage: store.auth.authRequestFailedMessage,
-    }))
+    const location = useLocation();
+    const reset = location.state && location.state.reset;
+    const history = useHistory();
 
+    useEffect(() => {
+        !reset && history.replace('/forgot-password')
+    }, [reset, history])
+
+    const {form, onChangeHandler} = useForm({password: '', token: ''});
+    const {authRequest, authRequestFailedMessage} = useAuth();
     const dispatch = useDispatch();
-
-    const onChangeHandler = (e) => {
-        dispatch(setUserFormValue(e.target.name, e.target.value));
-    }
 
     const onSubmitHandler = (e) => {
         e.preventDefault();
-        dispatch(resetPassword())
+        dispatch(resetPassword(form))
     }
 
     const [passwordInputProps, setPasswordInputProps] = useState({
@@ -55,7 +51,7 @@ export function ResetPasswordPage(props) {
             <p className="text text_type_main-medium">Восстановление пароля</p>
             <form className={'mt-6'} onSubmit={onSubmitHandler}>
                 <div className={'mb-6'}>
-                    <Input value={password}
+                    <Input value={form.password}
                            onChange={onChangeHandler}
                            name='password'
                            placeholder='Введите новый пароль'
@@ -65,7 +61,7 @@ export function ResetPasswordPage(props) {
                     />
                 </div>
                 <div className={'mb-6'}>
-                    <Input value={token}
+                    <Input value={form.token}
                            onChange={onChangeHandler}
                            name='token'
                            placeholder='Введите код из письма'

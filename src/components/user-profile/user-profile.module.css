@@ -1,0 +1,10 @@
+.actions {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+.link {
+    color: #4C4CFF;
+    cursor: pointer;
+}

@@ -1,32 +1,24 @@
 import React from 'react';
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import styles from "./forgot-password.module.css";
 import {useDispatch, useSelector} from "react-redux";
-import {forgotPassword, setUserFormValue} from "../../services/actions/auth";
+import {forgotPassword} from "../../services/actions/auth";
 import Error from "../../components/error/error";
+import useForm from "../../hooks/useForm";
+import useAuth from "../../hooks/useAuth";
 
 export function ForgotPasswordPage(props) {
 
-    const {
-        email,
-        authRequest,
-        authRequestFailedMessage,
-    } = useSelector(store => ({
-        email: store.auth.authUserForm.email,
-        authRequest: store.auth.authRequest,
-        authRequestFailedMessage: store.auth.authRequestFailedMessage,
-    }))
-
+    const {form, onChangeHandler} = useForm({email: ''})
+    const {authRequest, authRequestFailedMessage} = useAuth();
     const dispatch = useDispatch();
-
-    const onChangeHandler = (e) => {
-        dispatch(setUserFormValue(e.target.name, e.target.value));
-    }
+    const history = useHistory();
 
     const onSubmitHandler = (e) => {
         e.preventDefault();
-        dispatch(forgotPassword())
+        dispatch(forgotPassword(form))
+        history.push(`/reset-password`, {reset: true})
     }
 
     return (
@@ -35,7 +27,7 @@ export function ForgotPasswordPage(props) {
             <form className={'mt-6'} onSubmit={onSubmitHandler}>
                 <div className={'mb-6'}>
                     <Input type={'email'}
-                           value={email}
+                           value={form.email}
                            onChange={onChangeHandler}
                            name='email'
                            placeholder='Укажите e-mail'
