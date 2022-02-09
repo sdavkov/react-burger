@@ -31,7 +31,7 @@ export const burgerConstructorReducer = (state = initialState, action) => {
             }
         case GET_ORDER_REQUEST: return {
             ...state,
-            orderRequest: false,
+            orderRequest: true,
             orderRequestFailed: false,
         }
         case GET_ORDER_REQUEST_FIELD: return {

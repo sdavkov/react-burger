@@ -1,16 +1,16 @@
 import React, {useCallback} from 'react'
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './total-burger-constructor.module.css'
-import {useDispatch, useSelector} from "react-redux";
-import {createOrder} from "../../services/actions/burger-constructor";
+import {useSelector} from "react-redux";
+import {useHistory} from "react-router-dom";
 
 function TotalBurgerConstructor() {
 
-    const dispatch = useDispatch();
+    const history = useHistory();
     const total = useSelector(store => store.burgerConstructor.total)
-    const handlerButtonClick = useCallback(() => {
-        dispatch(createOrder())
-    }, [dispatch])
+    const handlerButtonClick = () => {
+        history.push('/create-new-order');
+    }
 
     return (
         <div className={styles.total + ' mt-10 mb-10 mr-10'}>

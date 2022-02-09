@@ -1,73 +1,106 @@
 import React, {useCallback, useEffect} from 'react';
 import AppHeader from '../app-header/app-header';
-import BurgerConstructor from '../burger-constructor/burger-constructor';
-import BurgerIngredients from '../burger-ingredients/burger-ingredients';
-import IngredientDetails from '../ingredient-details/ingredient-details';
-import Modal from '../modal/modal';
-import OrderDetails from '../order-details/order-details';
-import styles from './app.module.css'
+import {BrowserRouter as Router, Route, Switch, useHistory, useLocation} from "react-router-dom";
+import {
+    Error404,
+    ForgotPasswordPage,
+    HomePage,
+    LoginPage,
+    ProfilePage,
+    RegisterPage,
+    ResetPasswordPage
+} from "../../pages";
+import ProtectedRoute from "../protected-route/protected-route";
+import OnlyNonAuthorizedRoute from "../only-non-authorized-route/only-non-authorized-route";
 import {useDispatch, useSelector} from "react-redux";
+import Modal from "../modal/modal";
+import IngredientDetails from "../ingredient-details/ingredient-details";
 import {CLEAR_CURRENT_BURGER_INGREDIENT, getBurgerIngredients} from "../../services/actions/burger-ingredients";
+import OrderDetails from "../order-details/order-details";
 import {CLEAR_CURRENT_ORDER_NUMBER} from "../../services/actions/burger-constructor";
-import {DndProvider} from "react-dnd";
-import {HTML5Backend} from "react-dnd-html5-backend";
 
-const App = React.memo(() => {
-
-    const {
-        burgerIngredientsRequest,
-        burgerIngredientsRequestFailed,
-        currentBurgerIngredient,
-        currentOrderNumber
-    } = useSelector(store => ({
-        burgerIngredientsRequest: store.burgerIngredients.burgerIngredientsRequest,
-        burgerIngredientsRequestFailed: store.burgerIngredients.burgerIngredientsRequestFailed,
-        currentBurgerIngredient: store.burgerIngredients.currentBurgerIngredient,
-        currentOrderNumber: store.burgerConstructor.currentOrderNumber,
-    }))
+function App() {
 
     const dispatch = useDispatch();
+    useEffect(() =>
+            dispatch(getBurgerIngredients()),
+        [dispatch])
 
-    useEffect(() => {
-        dispatch(getBurgerIngredients())
-    }, [dispatch])
+    const ModalSwitch = () => {
+        const location = useLocation();
+        const history = useHistory();
+        let background = location.state && location.state.background;
 
-    const clearCurrentIngredient = useCallback(() => {
-        dispatch({type: CLEAR_CURRENT_BURGER_INGREDIENT})
-    }, [dispatch]);
+        const dispatch = useDispatch();
 
-    const clearCurrentOrder = useCallback(() => {
-        dispatch({type: CLEAR_CURRENT_ORDER_NUMBER});
-    }, [dispatch])
+        const handleIngredientModalClose = () => {
+            dispatch({type: CLEAR_CURRENT_BURGER_INGREDIENT})
+            history.goBack();
+        };
 
-    return (
-        <>
-            <AppHeader/>
-            <div className='container'>
-                {burgerIngredientsRequest ? (
-                        <p className={styles.loading + ' text text_type_main-medium'}>Загрузка ...</p>) :
-                    burgerIngredientsRequestFailed ? (
-                            <p className={styles.error + ' text text_type_main-medium'}>Ошибка загрузки ингредиентов</p>) :
-                        (<main className={styles.row}>
-                            <DndProvider backend={HTML5Backend}>
-                                <BurgerIngredients/>
-                                <div className="pl-10">&nbsp;</div>
-                                <BurgerConstructor/>
-                            </DndProvider>
-                            {currentBurgerIngredient && (
-                                <Modal closeModal={clearCurrentIngredient}>
-                                    <IngredientDetails/>
-                                </Modal>)}
-                            {currentOrderNumber && (
-                                <Modal closeModal={clearCurrentOrder}>
+        const handleNewOrderModalClose = () => {
+            dispatch({type: CLEAR_CURRENT_ORDER_NUMBER});
+            history.goBack();
+        };
+
+        return (
+            <React.Fragment>
+                <AppHeader/>
+                <div className='container'>
+                    <Switch location={background || location}>
+                        <Route path="/" exact={true}>
+                            <HomePage/>
+                        </Route>
+                        <OnlyNonAuthorizedRoute path="/login" exact={true}>
+                            <LoginPage/>
+                        </OnlyNonAuthorizedRoute>
+                        <OnlyNonAuthorizedRoute path="/register" exact={true}>
+                            <RegisterPage/>
+                        </OnlyNonAuthorizedRoute>
+                        <OnlyNonAuthorizedRoute path="/forgot-password" exact={true}>
+                            <ForgotPasswordPage/>
+                        </OnlyNonAuthorizedRoute>
+                        <OnlyNonAuthorizedRoute path="/reset-password">
+                            <ResetPasswordPage/>
+                        </OnlyNonAuthorizedRoute>
+                        <ProtectedRoute path="/profile">
+                            <ProfilePage/>
+                        </ProtectedRoute>
+                        <ProtectedRoute
+                            path='/create-new-order'
+                            children={
+                                <Modal onClose={handleNewOrderModalClose}>
                                     <OrderDetails/>
                                 </Modal>
-                            )}
-                        </main>)
-                }
-            </div>
-        </>
+                            }
+                        />
+                        <Route path='/ingredients/:ingredientId' exact>
+                            <IngredientDetails/>
+                        </Route>
+                        <Route>
+                            <Error404/>
+                        </Route>
+                    </Switch>
+                    {background && (
+                        <Route
+                            path='/ingredients/:ingredientId'
+                            children={
+                                <Modal onClose={handleIngredientModalClose}>
+                                    <IngredientDetails/>
+                                </Modal>
+                            }
+                        />
+                    )}
+                </div>
+            </React.Fragment>
+        )
+    };
+
+    return (
+        <Router>
+            <ModalSwitch/>
+        </Router>
     );
-});
+}
 
 export default App;
