@@ -1,30 +1,35 @@
-import React from 'react';
-import {Input, PasswordInput, Button} from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link} from "react-router-dom";
+import React, { SyntheticEvent } from 'react';
+import { Input, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Link } from "react-router-dom";
 import styles from "./login.module.css";
-import {useDispatch} from "react-redux";
-import {loginUser} from "../../services/actions/auth";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../../services/actions/auth";
 import Error from "../../components/error/error";
 import useForm from "../../hooks/useForm";
 import useAuth from "../../hooks/useAuth";
 
+interface ILoginForm {
+    email: string;
+    password: string;
+}
+
 export function LoginPage() {
 
-    const {form, onChangeHandler} = useForm({
+    const initForm: ILoginForm = {
         email: '',
-        password: ''
-    })
+        password: '',
+    }
 
-    const {authRequest, authRequestFailedMessage} = useAuth();
+    const { form, onChangeHandler } = useForm<ILoginForm>(initForm)
+
+    const { authRequest, authRequestFailedMessage } = useAuth();
 
     const dispatch = useDispatch();
 
-    const onSubmitHandler = (e) => {
+    const onSubmitHandler = (e: SyntheticEvent) => {
         e.preventDefault();
         dispatch(loginUser(form))
     }
-
-    console.log('login')
 
     return (
         <div className={styles.login}>
@@ -49,7 +54,7 @@ export function LoginPage() {
                     Войти
                 </Button>
             </form>
-            {authRequestFailedMessage && <Error message={authRequestFailedMessage}/>}
+            {authRequestFailedMessage && <Error message={authRequestFailedMessage} />}
             <div className={styles.footer}>
                 <p className="text text_type_main-default text_color_inactive">
                     Вы — новый пользователь? <Link className={styles.link} to='/register'>Зарегистрироваться</Link>

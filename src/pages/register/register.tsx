@@ -1,23 +1,35 @@
-import React, {useState} from 'react';
-import {PasswordInput, Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link} from "react-router-dom";
+import React, { SyntheticEvent } from 'react';
+import { PasswordInput, Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Link } from "react-router-dom";
 import styles from "./register.module.css";
-import {useDispatch, useSelector} from "react-redux";
-import {registerUser, setAuthFormValue, setUserFormValue} from "../../services/actions/auth";
+import { useDispatch } from "react-redux";
+import { registerUser } from "../../services/actions/auth";
 import Error from "../../components/error/error";
 import useForm from "../../hooks/useForm";
 import useAuth from "../../hooks/useAuth";
 
-export function RegisterPage(props) {
+interface IRegisterForm {
+    name: string;
+    email: string;
+    password: string;
+}
 
-    const {form, onChangeHandler} = useForm({name: '', email: '', password: ''})
-    const {authRequest, authRequestFailedMessage} = useAuth();
+export function RegisterPage() {
+
+    const initForm: IRegisterForm = {
+        name: '',
+        email: '',
+        password: '',
+    }
+
+    const { form, onChangeHandler } = useForm<IRegisterForm>(initForm)
+    const { authRequest, authRequestFailedMessage } = useAuth();
 
     const dispatch = useDispatch();
 
-    const onSubmitHandler = (e) => {
-      e.preventDefault();
-      dispatch(registerUser(form))
+    const onSubmitHandler = (e: SyntheticEvent) => {
+        e.preventDefault();
+        dispatch(registerUser(form))
     }
 
     return (
@@ -53,7 +65,7 @@ export function RegisterPage(props) {
                     Зарегистрироваться
                 </Button>
             </form>
-            {authRequestFailedMessage && <Error message={authRequestFailedMessage}/>}
+            {authRequestFailedMessage && <Error message={authRequestFailedMessage} />}
             <div className={styles.footer}>
                 <p className="text text_type_main-default text_color_inactive">
                     Уже зарегистрированы? <Link className={styles.link} to='/login'>Войти</Link>

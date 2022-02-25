@@ -1,6 +1,6 @@
-import React, {useCallback, useEffect} from 'react';
+import React, { useCallback, useEffect } from 'react';
 import AppHeader from '../app-header/app-header';
-import {BrowserRouter as Router, Route, Switch, useHistory, useLocation} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, useHistory, useLocation } from "react-router-dom";
 import {
     Error404,
     ForgotPasswordPage,
@@ -12,18 +12,18 @@ import {
 } from "../../pages";
 import ProtectedRoute from "../protected-route/protected-route";
 import OnlyNonAuthorizedRoute from "../only-non-authorized-route/only-non-authorized-route";
-import {useDispatch, useSelector} from "react-redux";
+import { useDispatch } from "react-redux";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
-import {CLEAR_CURRENT_BURGER_INGREDIENT, getBurgerIngredients} from "../../services/actions/burger-ingredients";
+import { CLEAR_CURRENT_BURGER_INGREDIENT, getBurgerIngredients } from "../../services/actions/burger-ingredients";
 import OrderDetails from "../order-details/order-details";
-import {CLEAR_CURRENT_ORDER_NUMBER} from "../../services/actions/burger-constructor";
+import { CLEAR_CURRENT_ORDER_NUMBER } from "../../services/actions/burger-constructor";
 
 function App() {
 
     const dispatch = useDispatch();
     useEffect(() =>
-            dispatch(getBurgerIngredients()),
+        dispatch(getBurgerIngredients()),
         [dispatch])
 
     const ModalSwitch = () => {
@@ -34,51 +34,51 @@ function App() {
         const dispatch = useDispatch();
 
         const handleIngredientModalClose = () => {
-            dispatch({type: CLEAR_CURRENT_BURGER_INGREDIENT})
+            dispatch({ type: CLEAR_CURRENT_BURGER_INGREDIENT })
             history.goBack();
         };
 
         const handleNewOrderModalClose = () => {
-            dispatch({type: CLEAR_CURRENT_ORDER_NUMBER});
+            dispatch({ type: CLEAR_CURRENT_ORDER_NUMBER });
             history.goBack();
         };
 
         return (
             <React.Fragment>
-                <AppHeader/>
+                <AppHeader />
                 <div className='container'>
                     <Switch location={background || location}>
                         <Route path="/" exact={true}>
-                            <HomePage/>
+                            <HomePage />
                         </Route>
                         <OnlyNonAuthorizedRoute path="/login" exact={true}>
-                            <LoginPage/>
+                            <LoginPage />
                         </OnlyNonAuthorizedRoute>
                         <OnlyNonAuthorizedRoute path="/register" exact={true}>
-                            <RegisterPage/>
+                            <RegisterPage />
                         </OnlyNonAuthorizedRoute>
                         <OnlyNonAuthorizedRoute path="/forgot-password" exact={true}>
-                            <ForgotPasswordPage/>
+                            <ForgotPasswordPage />
                         </OnlyNonAuthorizedRoute>
                         <OnlyNonAuthorizedRoute path="/reset-password">
-                            <ResetPasswordPage/>
+                            <ResetPasswordPage />
                         </OnlyNonAuthorizedRoute>
                         <ProtectedRoute path="/profile">
-                            <ProfilePage/>
+                            <ProfilePage />
                         </ProtectedRoute>
                         <ProtectedRoute
                             path='/create-new-order'
                             children={
                                 <Modal onClose={handleNewOrderModalClose}>
-                                    <OrderDetails/>
+                                    <OrderDetails />
                                 </Modal>
                             }
                         />
                         <Route path='/ingredients/:ingredientId' exact>
-                            <IngredientDetails/>
+                            <IngredientDetails />
                         </Route>
                         <Route>
-                            <Error404/>
+                            <Error404 />
                         </Route>
                     </Switch>
                     {background && (
@@ -86,7 +86,7 @@ function App() {
                             path='/ingredients/:ingredientId'
                             children={
                                 <Modal onClose={handleIngredientModalClose}>
-                                    <IngredientDetails/>
+                                    <IngredientDetails />
                                 </Modal>
                             }
                         />
@@ -98,7 +98,7 @@ function App() {
 
     return (
         <Router>
-            <ModalSwitch/>
+            <ModalSwitch />
         </Router>
     );
 }

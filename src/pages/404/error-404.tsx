@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from './error-404.module.css'
-import {useLocation, useRouteMatch} from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
-export function Error404(props) {
+export function Error404() {
 
     const location = useLocation();
 

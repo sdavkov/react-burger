@@ -1,3 +1,5 @@
+import { AnyAction } from 'redux';
+import { IAuthState } from '../../utils/ts-types';
 import {
     GET_AUTH_REQUEST,
     GET_AUTH_REQUEST_FIELD,
@@ -5,14 +7,14 @@ import {
     SET_CURRENT_USER
 } from "../actions/auth";
 
-const initialState = {
+const initialState: IAuthState = {
     currentUser: null,
     authRequest: false,
     authRequestFailed: false,
     authRequestFailedMessage: '',
 }
 
-export const authReducer = (state = initialState, action) => {
+export const authReducer: (state: IAuthState, action: AnyAction) => IAuthState = (state = initialState, action) => {
     switch (action.type) {
         case GET_AUTH_REQUEST:
             return {
@@ -24,7 +26,6 @@ export const authReducer = (state = initialState, action) => {
         case GET_AUTH_REQUEST_SUCCESS:
             return {
                 ...state,
-                authUserForm: initialState.authUserForm,
                 authRequest: false,
                 authRequestFailed: false,
                 authRequestFailedMessage: ''
@@ -37,12 +38,12 @@ export const authReducer = (state = initialState, action) => {
                 authRequestFailedMessage: action.payload
             }
         case SET_CURRENT_USER: {
-            const {user: {name, email}} = action.payload;
+            const user = action.payload;
             return {
                 ...state,
                 currentUser: {
-                    name,
-                    email,
+                    name: user.name,
+                    email: user.email,
                 }
             }
         }

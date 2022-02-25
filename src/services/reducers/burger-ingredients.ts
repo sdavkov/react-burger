@@ -1,3 +1,5 @@
+import { AnyAction } from 'redux';
+import { IBurgerIngredientState } from '../../utils/ts-types';
 import {
     CLEAR_CURRENT_BURGER_INGREDIENT,
     GET_BURGER_INGREDIENTS_REQUEST,
@@ -6,14 +8,14 @@ import {
     SET_CURRENT_BURGER_INGREDIENT
 } from "../actions/burger-ingredients";
 
-const initialState = {
+const initialState: IBurgerIngredientState = {
     burgerIngredients: [],
-    currentBurgerIngredient: null,
+    currentBurgerIngredient: undefined,
     burgerIngredientsRequest: false,
     burgerIngredientsRequestFailed: false,
 }
 
-export const burgerIngredientsReducer = (state = initialState, action) => {
+export const burgerIngredientsReducer: (state: IBurgerIngredientState, action: AnyAction) => IBurgerIngredientState = (state = initialState, action) => {
     switch (action.type) {
         case GET_BURGER_INGREDIENTS_REQUEST:
             return {
@@ -42,7 +44,7 @@ export const burgerIngredientsReducer = (state = initialState, action) => {
         case CLEAR_CURRENT_BURGER_INGREDIENT:
             return {
                 ...state,
-                currentBurgerIngredient: null,
+                currentBurgerIngredient: undefined,
             }
         default:
             return state;

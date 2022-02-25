@@ -1,3 +1,5 @@
+import { AnyAction } from 'redux';
+import { IBurgerConstructorState } from '../../utils/ts-types';
 import {
     CLEAR_CART,
     CLEAR_CURRENT_ORDER_NUMBER,
@@ -7,15 +9,15 @@ import {
     SET_CART
 } from "../actions/burger-constructor";
 
-const initialState = {
+const initialState: IBurgerConstructorState = {
     cart: [],
-    total: null,
-    currentOrderNumber: null,
+    total: 0,
+    currentOrderNumber: 0,
     orderRequest: false,
     orderRequestFailed: false,
 }
 
-export const burgerConstructorReducer = (state = initialState, action) => {
+export const burgerConstructorReducer: (state: IBurgerConstructorState | undefined, action: AnyAction) => IBurgerConstructorState = (state = initialState, action) => {
     switch (action.type) {
         case SET_CART:
             return {
@@ -27,7 +29,7 @@ export const burgerConstructorReducer = (state = initialState, action) => {
             return {
                 ...state,
                 cart: [],
-                total: null,
+                total: 0,
             }
         case GET_ORDER_REQUEST: return {
             ...state,
@@ -48,7 +50,7 @@ export const burgerConstructorReducer = (state = initialState, action) => {
         case CLEAR_CURRENT_ORDER_NUMBER:
             return {
                 ...state,
-                currentOrderNumber: null,
+                currentOrderNumber: 0,
             }
         default:
             return state;
