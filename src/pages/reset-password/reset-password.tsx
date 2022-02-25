@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useEffect, useState } from 'react';
+import React, { SyntheticEvent, useEffect } from 'react';
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import styles from "./reset-password.module.css";
@@ -7,14 +7,11 @@ import { resetPassword } from "../../services/actions/auth";
 import Error from "../../components/error/error";
 import useForm from "../../hooks/useForm";
 import useAuth from "../../hooks/useAuth";
+import { ILocationState } from '../../utils/ts-types'
 
 interface IResetPasswordForm {
     password: string;
     token: string;
-}
-
-interface ILocationState {
-    reset: boolean;
 }
 
 export function ResetPasswordPage() {

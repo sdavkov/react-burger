@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import AppHeader from '../app-header/app-header';
 import { BrowserRouter as Router, Route, Switch, useHistory, useLocation } from "react-router-dom";
 import {
@@ -18,6 +18,7 @@ import IngredientDetails from "../ingredient-details/ingredient-details";
 import { CLEAR_CURRENT_BURGER_INGREDIENT, getBurgerIngredients } from "../../services/actions/burger-ingredients";
 import OrderDetails from "../order-details/order-details";
 import { CLEAR_CURRENT_ORDER_NUMBER } from "../../services/actions/burger-constructor";
+import { ILocationState } from '../../utils/ts-types';
 
 function App() {
 
@@ -27,7 +28,7 @@ function App() {
         [dispatch])
 
     const ModalSwitch = () => {
-        const location = useLocation();
+        const location = useLocation<ILocationState>();
         const history = useHistory();
         let background = location.state && location.state.background;
 
