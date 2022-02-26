@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 
-function Error({message}) {
+interface IErrorProps {
+    message: string;
+}
+
+const Error: FunctionComponent<IErrorProps> = ({ message }) => {
     return (
         <div className={'m-6'}>
             <p className="text text_type_main-default">

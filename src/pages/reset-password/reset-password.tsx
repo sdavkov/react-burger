@@ -7,12 +7,7 @@ import { resetPassword } from "../../services/actions/auth";
 import Error from "../../components/error/error";
 import useForm from "../../hooks/useForm";
 import useAuth from "../../hooks/useAuth";
-import { ILocationState } from '../../utils/ts-types'
-
-interface IResetPasswordForm {
-    password: string;
-    token: string;
-}
+import { ILocationState, IResetPasswordForm } from '../../utils/ts-types'
 
 export function ResetPasswordPage() {
 

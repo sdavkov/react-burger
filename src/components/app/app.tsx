@@ -19,10 +19,11 @@ import { CLEAR_CURRENT_BURGER_INGREDIENT, getBurgerIngredients } from "../../ser
 import OrderDetails from "../order-details/order-details";
 import { CLEAR_CURRENT_ORDER_NUMBER } from "../../services/actions/burger-constructor";
 import { ILocationState } from '../../utils/ts-types';
+import { AppDispatch } from '../../services/reducers';
 
 function App() {
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
     useEffect(() =>
         dispatch(getBurgerIngredients()),
         [dispatch])

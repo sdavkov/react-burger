@@ -7,11 +7,7 @@ import { loginUser } from "../../services/actions/auth";
 import Error from "../../components/error/error";
 import useForm from "../../hooks/useForm";
 import useAuth from "../../hooks/useAuth";
-
-interface ILoginForm {
-    email: string;
-    password: string;
-}
+import { ILoginForm } from '../../utils/ts-types';
 
 export function LoginPage() {
 

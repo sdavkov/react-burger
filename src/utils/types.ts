@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import {BURGER_INGREDIENT_BUN_TYPE, BURGER_INGREDIENT_MAIN_TYPE, BURGER_INGREDIENT_SAUCE_TYPE} from "./constants";
+import { BURGER_INGREDIENT_BUN_TYPE, BURGER_INGREDIENT_MAIN_TYPE, BURGER_INGREDIENT_SAUCE_TYPE } from "./constants";
 
 export const burgerIngredientPropTypes = PropTypes.shape({
     _id: PropTypes.string.isRequired,
@@ -10,5 +10,8 @@ export const burgerIngredientPropTypes = PropTypes.shape({
     carbohydrates: PropTypes.number.isRequired,
     calories: PropTypes.number.isRequired,
     price: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired
+    image: PropTypes.string.isRequired,
+    image_mobile: PropTypes.string.isRequired,
+    image_large: PropTypes.string.isRequired,
+    __v: PropTypes.number.isRequired,
 });

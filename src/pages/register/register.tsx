@@ -7,12 +7,7 @@ import { registerUser } from "../../services/actions/auth";
 import Error from "../../components/error/error";
 import useForm from "../../hooks/useForm";
 import useAuth from "../../hooks/useAuth";
-
-interface IRegisterForm {
-    name: string;
-    email: string;
-    password: string;
-}
+import { IRegisterForm } from '../../utils/ts-types';
 
 export function RegisterPage() {
 

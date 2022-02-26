@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Orders(props) {
+function Orders() {
     return (
         <div></div>
     );

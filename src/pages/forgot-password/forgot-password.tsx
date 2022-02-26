@@ -7,10 +7,7 @@ import { forgotPassword } from "../../services/actions/auth";
 import Error from "../../components/error/error";
 import useForm from "../../hooks/useForm";
 import useAuth from "../../hooks/useAuth";
-
-interface IForgotPasswordForm {
-    email: string;
-}
+import { IForgotPasswordForm } from '../../utils/ts-types';
 
 export function ForgotPasswordPage() {
 

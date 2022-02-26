@@ -8,7 +8,6 @@ import {
 } from "../actions/auth";
 
 const initialState: IAuthState = {
-    currentUser: null,
     authRequest: false,
     authRequestFailed: false,
     authRequestFailedMessage: '',
@@ -50,7 +49,7 @@ export const authReducer: (state: IAuthState, action: AnyAction) => IAuthState =
         case LOGOUT_USER: {
             return {
                 ...state,
-                currentUser: null,
+                currentUser: undefined,
             }
         }
         default:

@@ -10,7 +10,6 @@ import {
 
 const initialState: IBurgerIngredientState = {
     burgerIngredients: [],
-    currentBurgerIngredient: undefined,
     burgerIngredientsRequest: false,
     burgerIngredientsRequestFailed: false,
 }

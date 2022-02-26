@@ -4,16 +4,13 @@ import './index.css';
 import App from './components/app/app';
 import reportWebVitals from './reportWebVitals';
 import '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css'
-import {Provider} from "react-redux";
-import {rootReducer} from "./services/reducers";
-import {configureStore} from "@reduxjs/toolkit";
-
-const store = configureStore({ reducer: rootReducer })
+import { Provider } from "react-redux";
+import { store } from './services/reducers';
 
 ReactDOM.render(
     <React.StrictMode>
         <Provider store={store}>
-            <App/>
+            <App />
         </Provider>
     </React.StrictMode>,
     document.getElementById('root')

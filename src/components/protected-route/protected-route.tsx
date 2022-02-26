@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from 'react';
-import {Redirect, Route} from "react-router-dom";
-import {getUser} from "../../services/actions/auth";
+import React, { FunctionComponent, useEffect } from 'react';
+import { Redirect, Route, RouteProps } from "react-router-dom";
+import { getUser } from "../../services/actions/auth";
 import useAuth from "../../hooks/useAuth";
-import {useDispatch, useSelector} from "react-redux";
+import { useDispatch } from "react-redux";
 
-function ProtectedRoute({children, ...rest}) {
+const ProtectedRoute: FunctionComponent<RouteProps> = ({ children, ...rest }) => {
 
-    const {currentUser, authRequest} = useAuth();
+    const { currentUser, authRequest } = useAuth();
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -20,14 +20,14 @@ function ProtectedRoute({children, ...rest}) {
     return (
         <Route
             {...rest}
-            render={({location}) =>
+            render={({ location }) =>
                 currentUser ?
                     (children
                     ) : (
                         <Redirect to={{
                             pathname: '/login',
-                            state: {from: location}
-                        }}/>)
+                            state: { from: location }
+                        }} />)
             }
         />
     );

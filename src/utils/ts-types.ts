@@ -3,6 +3,7 @@ import { Location } from 'history'
 export interface ILocationState {
 	reset: boolean;
 	background: Location<unknown>;
+	from: string;
 }
 
 interface BaseAction {
@@ -15,7 +16,7 @@ export interface IUser {
 }
 
 export interface IAuthState {
-	currentUser: IUser | null;
+	currentUser?: IUser;
 	authRequest: boolean;
 	authRequestFailed: boolean;
 	authRequestFailedMessage: string;
@@ -45,7 +46,7 @@ export interface IBurgerIngredient {
 
 export interface IBurgerIngredientState {
 	burgerIngredients: IBurgerIngredient[],
-	currentBurgerIngredient: IBurgerIngredient | undefined,
+	currentBurgerIngredient?: IBurgerIngredient,
 	burgerIngredientsRequest: boolean,
 	burgerIngredientsRequestFailed: boolean,
 }
@@ -82,4 +83,30 @@ export interface IRootState {
 	burgerConstructor: IBurgerConstructorState,
 	burgerIngredients: IBurgerIngredientState,
 	auth: IAuthState,
+}
+
+export interface IRegisterForm {
+	name: string;
+	email: string;
+	password: string;
+}
+
+export interface ILoginForm {
+	email: string;
+	password: string;
+}
+
+export interface IUserProfileForm {
+	name: string;
+	email: string;
+	password: string;
+}
+
+export interface IResetPasswordForm {
+	password: string;
+	token: string;
+}
+
+export interface IForgotPasswordForm {
+	email: string;
 }
