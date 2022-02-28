@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react'
+import React, { FC, useCallback, useMemo } from 'react'
 import styles from './burger-constructor.module.css'
 import TotalBurgerConstructor from '../total-burger-constructor/total-burger-constructor'
 import { useDispatch, useSelector } from "react-redux";
@@ -10,7 +10,7 @@ import { IBurgerIngredient, IRootState } from '../../utils/ts-types';
 import { AppDispatch } from '../../services/reducers';
 
 
-const BurgerConstructor = React.memo(() => {
+const BurgerConstructor: FC = React.memo(() => {
 
     const cart = useSelector((state: IRootState) => state.burgerConstructor.cart);
 
@@ -44,26 +44,26 @@ const BurgerConstructor = React.memo(() => {
 
     return (
         <div className={`${styles.constructor} pt-25 pb-5 pr-4 pl-4`}>
-            {bun && (
-                <>
-                    <div className={`${styles.list} ${canDropDecoratorCssClass}`} ref={dropTarget}>
-                        {cart.length > 0 &&
-                            <>
-                                <BurgerConstructorItem cartItem={bun} topBun={true} />
-                                <div className='pt-4'></div>
-                                <div className={styles.items + ' custom-scroll'}>
-                                    {additions.map((cartItem, index) => (
-                                        <BurgerConstructorItem key={cartItem.id} index={index} moveCard={moveCard}
-                                            cartItem={cartItem} />
-                                    ))}
-                                </div>
-                                <BurgerConstructorItem cartItem={bun} bottomBun={true} />
-                            </>
-                        }
-                    </div>
+            <>
+                <div className={`${styles.list} ${canDropDecoratorCssClass}`} ref={dropTarget}>
+                    {bun && (
+                        <>
+                            <BurgerConstructorItem cartItem={bun} topBun={true} />
+                            <div className='pt-4'></div>
+                            <div className={styles.items + ' custom-scroll'}>
+                                {additions.map((cartItem, index) => (
+                                    <BurgerConstructorItem key={cartItem.id} index={index} moveCard={moveCard}
+                                        cartItem={cartItem} />
+                                ))}
+                            </div>
+                            <BurgerConstructorItem cartItem={bun} bottomBun={true} />
+                        </>
+                    )}
+                </div>
+                {bun && (
                     <TotalBurgerConstructor />
-                </>
-            )}
+                )}
+            </>
         </div>
     )
 })

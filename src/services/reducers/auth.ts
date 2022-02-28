@@ -37,7 +37,7 @@ export const authReducer: (state: IAuthState, action: AnyAction) => IAuthState =
                 authRequestFailedMessage: action.payload
             }
         case SET_CURRENT_USER: {
-            const user = action.payload;
+            const user = action.payload.user;
             return {
                 ...state,
                 currentUser: {
