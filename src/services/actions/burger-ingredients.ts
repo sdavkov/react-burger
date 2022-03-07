@@ -1,11 +1,10 @@
 import { checkResponse, getBurgerIngredientsRequest } from "../api";
+import {
+    GET_BURGER_INGREDIENTS_REQUEST,
+    GET_BURGER_INGREDIENTS_REQUEST_FIELD,
+    GET_BURGER_INGREDIENTS_REQUEST_SUCCESS
+} from '../constants/burger-ingredients';
 import { AppDispatch } from '../reducers';
-
-export const GET_BURGER_INGREDIENTS_REQUEST = 'GET_BURGER_INGREDIENTS_REQUEST';
-export const GET_BURGER_INGREDIENTS_REQUEST_SUCCESS = 'GET_BURGER_INGREDIENTS_REQUEST_SUCCESS';
-export const GET_BURGER_INGREDIENTS_REQUEST_FIELD = 'GET_BURGER_INGREDIENTS_REQUEST_FIELD';
-export const SET_CURRENT_BURGER_INGREDIENT = 'SET_CURRENT_BURGER_INGREDIENT';
-export const CLEAR_CURRENT_BURGER_INGREDIENT = 'CLEAR_CURRENT_BURGER_INGREDIENT';
 
 export function getBurgerIngredients() {
     return function (dispatch: AppDispatch) {

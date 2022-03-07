@@ -15,11 +15,12 @@ import OnlyNonAuthorizedRoute from "../only-non-authorized-route/only-non-author
 import { useDispatch } from "react-redux";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
-import { CLEAR_CURRENT_BURGER_INGREDIENT, getBurgerIngredients } from "../../services/actions/burger-ingredients";
+import { getBurgerIngredients } from "../../services/actions/burger-ingredients";
 import OrderDetails from "../order-details/order-details";
 import { CLEAR_CURRENT_ORDER_NUMBER } from "../../services/actions/burger-constructor";
 import { ILocationState } from '../../utils/ts-types';
 import { AppDispatch } from '../../services/reducers';
+import { CLEAR_CURRENT_BURGER_INGREDIENT } from '../../services/constants/burger-ingredients';
 
 function App() {
 

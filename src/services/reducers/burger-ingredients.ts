@@ -6,7 +6,7 @@ import {
     GET_BURGER_INGREDIENTS_REQUEST_FIELD,
     GET_BURGER_INGREDIENTS_REQUEST_SUCCESS,
     SET_CURRENT_BURGER_INGREDIENT
-} from "../actions/burger-ingredients";
+} from "../constants/burger-ingredients";
 
 const initialState: IBurgerIngredientState = {
     burgerIngredients: [],

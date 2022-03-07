@@ -2,8 +2,8 @@ import React, { useEffect } from 'react'
 import styles from './ingredient-details.module.css'
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { SET_CURRENT_BURGER_INGREDIENT } from "../../services/actions/burger-ingredients";
 import { IRootState } from '../../utils/ts-types';
+import { SET_CURRENT_BURGER_INGREDIENT } from '../../services/constants/burger-ingredients';
 
 const IngredientDetails = React.memo(() => {
 
