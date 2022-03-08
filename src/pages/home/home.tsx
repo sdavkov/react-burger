@@ -5,7 +5,8 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import BurgerIngredients from "../../components/burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../../components/burger-constructor/burger-constructor";
 import { useSelector } from "react-redux";
-import { IRootState } from '../../utils/ts-types'
+import { RootState } from '../../services/store';
+
 
 export function HomePage() {
 
@@ -13,7 +14,7 @@ export function HomePage() {
         burgerIngredientsRequest,
         burgerIngredientsRequestFailed,
 
-    } = useSelector((state: IRootState) => (state.burgerIngredients));
+    } = useSelector((state: RootState) => (state.burgerIngredients));
 
     return (
         <React.Fragment>

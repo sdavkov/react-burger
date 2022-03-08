@@ -1,25 +1,25 @@
 import { IBurgerIngredient } from '../../utils/ts-types';
 import { checkResponse, getBurgerIngredientsRequest } from "../api";
 import {
-    GET_BURGER_INGREDIENTS,
-    GET_BURGER_INGREDIENTS_FIELED,
-    GET_BURGER_INGREDIENTS_SUCCESS,
+    GET_BURGER_INGREDIENTS_REQUEST,
+    GET_BURGER_INGREDIENTS_REQUEST_FAILED,
+    GET_BURGER_INGREDIENTS_REQUEST_SUCCESS,
     SET_CURRENT_BURGER_INGREDIENT,
     CLEAR_CURRENT_BURGER_INGREDIENT,
 } from '../constants/burger-ingredients';
-import { AppDispatch } from '../reducers';
+import { AppDispatch } from '../store';
 
 export interface IGetBurgerIngredientsAction {
-    readonly type: typeof GET_BURGER_INGREDIENTS;
+    readonly type: typeof GET_BURGER_INGREDIENTS_REQUEST;
 }
 
 export interface IGetBurgerIngredientsSuccessAction {
-    readonly type: typeof GET_BURGER_INGREDIENTS_SUCCESS;
+    readonly type: typeof GET_BURGER_INGREDIENTS_REQUEST_SUCCESS;
     readonly burgerIngredients: IBurgerIngredient[];
 }
 
 export interface IGetBurgerIngredientsFailedAction {
-    readonly type: typeof GET_BURGER_INGREDIENTS_FIELED;
+    readonly type: typeof GET_BURGER_INGREDIENTS_REQUEST_FAILED;
 }
 
 export interface ISetCurrentBurgerIngredientAction {
@@ -31,25 +31,25 @@ export interface IClearCurrentBurgerIngredientAction {
     readonly type: typeof CLEAR_CURRENT_BURGER_INGREDIENT;
 }
 
-export const GetBurgerIngredients = (): IGetBurgerIngredientsAction => ({
-    type: GET_BURGER_INGREDIENTS,
+export const getBurgerIngredientsAction = (): IGetBurgerIngredientsAction => ({
+    type: GET_BURGER_INGREDIENTS_REQUEST,
 })
 
-export const GetBurgerIngredientsRequestSuccess = (burgerIngredients: IBurgerIngredient[]): IGetBurgerIngredientsSuccessAction => ({
-    type: GET_BURGER_INGREDIENTS_SUCCESS,
+export const getBurgerIngredientsRequestSuccessAction = (burgerIngredients: IBurgerIngredient[]): IGetBurgerIngredientsSuccessAction => ({
+    type: GET_BURGER_INGREDIENTS_REQUEST_SUCCESS,
     burgerIngredients,
 })
 
-export const GetBurgerIngredientsFailed = (): IGetBurgerIngredientsFailedAction => ({
-    type: GET_BURGER_INGREDIENTS_FIELED,
+export const getBurgerIngredientsFailedAction = (): IGetBurgerIngredientsFailedAction => ({
+    type: GET_BURGER_INGREDIENTS_REQUEST_FAILED,
 })
 
-export const SetCurrentBurgerIngredient = (burgerIngredient: IBurgerIngredient): ISetCurrentBurgerIngredientAction => ({
+export const setCurrentBurgerIngredientAction = (burgerIngredient: IBurgerIngredient): ISetCurrentBurgerIngredientAction => ({
     type: SET_CURRENT_BURGER_INGREDIENT,
     burgerIngredient,
 })
 
-export const ClearCurrentBurgerIngredient = (): IClearCurrentBurgerIngredientAction => ({
+export const clearCurrentBurgerIngredientAction = (): IClearCurrentBurgerIngredientAction => ({
     type: CLEAR_CURRENT_BURGER_INGREDIENT,
 })
 
@@ -60,15 +60,10 @@ export type TBurgerIngredientsActions =
     | ISetCurrentBurgerIngredientAction
     | IClearCurrentBurgerIngredientAction;
 
-export function getBurgerIngredients() {
-    return function (dispatch: AppDispatch) {
-        dispatch({ type: GET_BURGER_INGREDIENTS })
-        getBurgerIngredientsRequest()
-            .then(checkResponse)
-            .then(data => dispatch({
-                type: GET_BURGER_INGREDIENTS_SUCCESS,
-                payload: data.data
-            }))
-            .catch(() => dispatch({ type: GET_BURGER_INGREDIENTS_FIELED }));
-    }
+export const getBurgerIngredients = () => (dispatch: AppDispatch) => {
+    dispatch(getBurgerIngredientsAction())
+    getBurgerIngredientsRequest()
+        .then(checkResponse)
+        .then(data => dispatch(getBurgerIngredientsRequestSuccessAction(data.data)))
+        .catch(() => dispatch(getBurgerIngredientsFailedAction()));
 }

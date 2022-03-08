@@ -2,19 +2,18 @@ import React, { useEffect } from 'react'
 import styles from './order-details.module.css'
 import orderImage from '../../images/order.svg'
 import { useDispatch, useSelector } from "react-redux";
-import { createOrder } from "../../services/actions/burger-constructor";
-import { IRootState } from '../../utils/ts-types';
-import { AppDispatch } from '../../services/reducers';
+import { AppDispatch, RootState } from '../../services/store';
+import { createOrder } from '../../services/actions/burger-constructor';
 
 const OrderDetails = () => {
 
     const dispatch = useDispatch<AppDispatch>();
 
     useEffect(() => {
-        dispatch(createOrder())
+        dispatch(createOrder)
     }, [dispatch])
 
-    const { currentOrderNumber, orderRequest } = useSelector((state: IRootState) => state.burgerConstructor)
+    const { currentOrderNumber, orderRequest } = useSelector((state: RootState) => state.burgerConstructor)
     return (
         <div className={styles.details}>
             {orderRequest ? (<React.Fragment>

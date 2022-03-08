@@ -3,12 +3,12 @@ import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-co
 import styles from './total-burger-constructor.module.css'
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { IRootState } from '../../utils/ts-types';
+import { RootState } from '../../services/store';
 
 function TotalBurgerConstructor() {
 
     const history = useHistory();
-    const total = useSelector((state: IRootState) => state.burgerConstructor.total)
+    const total = useSelector((state: RootState) => state.burgerConstructor.total)
     const handlerButtonClick = () => {
         history.push('/create-new-order');
     }

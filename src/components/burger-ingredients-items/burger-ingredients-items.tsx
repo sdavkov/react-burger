@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import styles from './burger-ingredients-items.module.css'
 import { useSelector } from "react-redux";
 import BurgerIngredientItem from "../burger-ingredient-item/burger-ingredient-item";
-import { IRootState } from '../../utils/ts-types';
+import { RootState } from '../../services/store';
 
 interface IBurgerIngredientsItemsProps {
     title: string;
@@ -13,7 +13,7 @@ interface IBurgerIngredientsItemsProps {
 
 const BurgerIngredientsItems: FunctionComponent<IBurgerIngredientsItemsProps> = React.memo(React.forwardRef(({ title, type }, ref) => {
 
-    const burgerIngredients = useSelector((state: IRootState) => state.burgerIngredients.burgerIngredients);
+    const burgerIngredients = useSelector((state: RootState) => state.burgerIngredients.burgerIngredients);
 
     return (
         <>

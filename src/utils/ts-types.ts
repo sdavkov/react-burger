@@ -44,13 +44,6 @@ export interface IBurgerIngredient {
 	__v: number;
 }
 
-export interface IBurgerIngredientState {
-	burgerIngredients: IBurgerIngredient[],
-	currentBurgerIngredient?: IBurgerIngredient,
-	burgerIngredientsRequest: boolean,
-	burgerIngredientsRequestFailed: boolean,
-}
-
 export interface IBurgerIngredientAction extends BaseAction {
 	payload: {
 		burgerIngredients: IBurgerIngredient[];
@@ -77,12 +70,6 @@ export interface IBurgerConstructorAction extends BaseAction {
 		cart: ICart[];
 		orderNumber: 0;
 	}
-}
-
-export interface IRootState {
-	burgerConstructor: IBurgerConstructorState,
-	burgerIngredients: IBurgerIngredientState,
-	auth: IAuthState,
 }
 
 export interface IRegisterForm {

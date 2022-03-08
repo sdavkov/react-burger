@@ -8,7 +8,7 @@ import { useDrag, useDrop } from "react-dnd";
 import { burgerIngredientPropTypes } from "../../utils/types";
 import { BURGER_INGREDIENT_BUN_TYPE } from "../../utils/constants";
 import { ICart } from '../../utils/ts-types';
-import { AppDispatch } from '../../services/reducers';
+import { AppDispatch } from '../../services/store';
 
 interface IBurgerConstructorItem {
     cartItem: ICart;

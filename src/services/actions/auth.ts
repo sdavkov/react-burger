@@ -8,92 +8,85 @@ import {
 import { deleteCookie, getCookie, setCookie } from "../../utils/cookies";
 import { ACCESS_TOKEN_NAME, REFRESH_TOKEN_NAME } from "../../utils/constants";
 import { IForgotPasswordForm, ILoginForm, IRegisterForm, IResetPasswordForm, IUserProfileForm } from '../../utils/ts-types';
-import { AppDispatch } from '../reducers';
-
-export const SET_CURRENT_USER = 'SET_CURRENT_USER';
-export const GET_AUTH_REQUEST = 'GET_AUTH_REQUEST';
-export const GET_AUTH_REQUEST_SUCCESS = 'GET_AUTH_REQUEST_SUCCESS';
-export const GET_AUTH_REQUEST_FIELD = 'GET_AUTH_REQUEST_FIELD';
-export const LOGOUT_USER = 'LOGOUT_USER';
+import { AppDispatch } from '../store';
+import { getAuthAction, getAuthFailedAction, getAuthSuccessAction, logoutUserAction, setCurrentUserAction } from '../slices/auth';
 
 export function registerUser(form: IRegisterForm) {
     return function (dispatch: AppDispatch) {
-        dispatch({ type: GET_AUTH_REQUEST });
+        dispatch(getAuthAction());
         getRegisterUserRequest(form)
             .then(checkResponse)
             .then(data => {
                 if (data.success) {
-                    dispatch({ type: GET_AUTH_REQUEST_SUCCESS });
-                    dispatch({ type: SET_CURRENT_USER, payload: data })
+                    dispatch(getAuthSuccessAction());
+                    dispatch(setCurrentUserAction(data.data))
                     setCookie(ACCESS_TOKEN_NAME, data.accessToken.split('Bearer ')[1], { expires: 20 })
                     setCookie(REFRESH_TOKEN_NAME, data.refreshToken, { expires: 20 })
                 } else
                     return Promise.reject(new Error('Ошибка регистрации'));
             })
-            .catch((e) => {
-                dispatch({ type: GET_AUTH_REQUEST_FIELD, payload: e.message })
-            }
+            .catch((e) =>
+                dispatch(getAuthFailedAction(e.message))
             );
     }
 }
 
 export function loginUser(form: ILoginForm) {
     return function (dispatch: AppDispatch) {
-        dispatch({ type: GET_AUTH_REQUEST });
+        dispatch(getAuthAction());
         getLoginUserRequest(form)
             .then(checkResponse)
             .then(data => {
                 if (data.success) {
-                    dispatch({ type: GET_AUTH_REQUEST_SUCCESS });
-                    dispatch({ type: SET_CURRENT_USER, payload: data })
+                    dispatch(getAuthSuccessAction());
+                    dispatch(setCurrentUserAction(data.data))
                     setCookie(ACCESS_TOKEN_NAME, data.accessToken.split('Bearer ')[1], { expires: 20 * 60 })
                     setCookie(REFRESH_TOKEN_NAME, data.refreshToken, { expires: 1440 * 60 })
                 } else
                     return Promise.reject(new Error('Ошибка аутентификации'));
             })
-            .catch((e) => {
-                dispatch({ type: GET_AUTH_REQUEST_FIELD, payload: e.message })
-            }
+            .catch((e) =>
+                dispatch(getAuthFailedAction(e.message))
             );
     }
 }
 
 export function logoutUser() {
     return function (dispatch: AppDispatch) {
-        dispatch({ type: GET_AUTH_REQUEST });
+        dispatch(getAuthAction());
         const refreshToken = getCookie(REFRESH_TOKEN_NAME);
         if (refreshToken) {
             getLogoutUserRequest(refreshToken)
                 .then(checkResponse)
                 .then(data => {
-                    dispatch({ type: LOGOUT_USER })
+                    dispatch(logoutUserAction())
                     deleteCookie(ACCESS_TOKEN_NAME);
                     deleteCookie(REFRESH_TOKEN_NAME);
-                    dispatch({ type: GET_AUTH_REQUEST_SUCCESS });
+                    dispatch(getAuthSuccessAction());
                 })
-                .catch(() => {
-                    dispatch({ type: GET_AUTH_REQUEST_FIELD })
+                .catch((e) => {
+                    dispatch(getAuthFailedAction(e.message))
                 });
         }
         else {
-            dispatch({ type: GET_AUTH_REQUEST_FIELD })
+            dispatch(getAuthFailedAction('No refresh token!'))
         }
     }
 }
 
 export function getUser() {
     return function (dispatch: AppDispatch) {
-        dispatch({ type: GET_AUTH_REQUEST });
+        dispatch(getAuthAction());
         const access_tocken = getCookie(ACCESS_TOKEN_NAME);
         if (access_tocken) {
             getUserRequest(access_tocken)
                 .then(checkResponse)
                 .then(data => {
                     if (data.message === "jwt expired") {
-                        dispatch({ type: GET_AUTH_REQUEST_FIELD })
+                        throw new Error("jwt expired");
                     }
-                    dispatch({ type: SET_CURRENT_USER, payload: data });
-                    dispatch({ type: GET_AUTH_REQUEST_SUCCESS });
+                    dispatch(setCurrentUserAction(data.data));
+                    dispatch(getAuthSuccessAction());
                 })
                 .catch(() => {
                     const refreshToken = getCookie(REFRESH_TOKEN_NAME);
@@ -106,15 +99,15 @@ export function getUser() {
                                 getUserRequest(data.accessToken.split('Bearer ')[1])
                                     .then(checkResponse)
                                     .then(data => {
-                                        dispatch({ type: SET_CURRENT_USER, payload: data });
-                                        dispatch({ type: GET_AUTH_REQUEST_SUCCESS });
+                                        dispatch(setCurrentUserAction(data.data));
+                                        dispatch(getAuthSuccessAction());
                                     })
                             })
-                            .catch(() => {
-                                dispatch({ type: GET_AUTH_REQUEST_FIELD })
+                            .catch((e) => {
+                                dispatch(getAuthFailedAction(e.message))
                             })
                     } else {
-                        dispatch({ type: GET_AUTH_REQUEST_FIELD })
+                        dispatch(getAuthFailedAction('No refresh tocken!'))
                     }
                 }
                 )
@@ -130,15 +123,15 @@ export function getUser() {
                         getUserRequest(data.accessToken.split('Bearer ')[1])
                             .then(checkResponse)
                             .then(data => {
-                                dispatch({ type: SET_CURRENT_USER, payload: data });
-                                dispatch({ type: GET_AUTH_REQUEST_SUCCESS });
+                                dispatch(setCurrentUserAction(data.data));
+                                dispatch(getAuthSuccessAction());
                             })
                     })
-                    .catch(() => {
-                        dispatch({ type: GET_AUTH_REQUEST_FIELD })
+                    .catch((e) => {
+                        dispatch(getAuthFailedAction(e.message))
                     })
             } else {
-                dispatch({ type: GET_AUTH_REQUEST_FIELD })
+                dispatch(getAuthFailedAction('No refresh tocken!'))
             }
         }
     }
@@ -146,55 +139,52 @@ export function getUser() {
 
 export function updateUser(form: IUserProfileForm) {
     return function (dispatch: AppDispatch) {
-        dispatch({ type: GET_AUTH_REQUEST });
+        dispatch(getAuthAction());
         const access_tocken = getCookie(ACCESS_TOKEN_NAME);
         if (access_tocken) {
             getUpdateUserRequest(form, access_tocken)
                 .then(checkResponse)
                 .then(data => {
                     if (data.success) {
-                        dispatch({ type: GET_AUTH_REQUEST_SUCCESS });
-                        dispatch({ type: SET_CURRENT_USER, payload: data })
+                        dispatch(setCurrentUserAction(data.data))
+                        dispatch(getAuthSuccessAction());
                     } else
                         return Promise.reject(new Error('Ошибка при обновления данных пользователя'));
                 })
-                .catch((e) => {
-                    dispatch({ type: GET_AUTH_REQUEST_FIELD, payload: e.message })
-                }
+                .catch((e) =>
+                    dispatch(getAuthFailedAction(e.message))
                 );
         }
         else {
-            dispatch({ type: GET_AUTH_REQUEST_FIELD })
+            dispatch(getAuthFailedAction('No access tocken!'))
         }
     }
 }
 
 export function forgotPassword(form: IForgotPasswordForm) {
     return function (dispatch: AppDispatch) {
-        dispatch({ type: GET_AUTH_REQUEST });
+        dispatch(getAuthAction());
         getForgotPasswordRequest(form)
             .then(checkResponse)
             .then(data => {
-                dispatch({ type: GET_AUTH_REQUEST_SUCCESS });
+                dispatch(getAuthSuccessAction());
             })
-            .catch((e) => {
-                dispatch({ type: GET_AUTH_REQUEST_FIELD, payload: e.message })
-            }
+            .catch((e) =>
+                dispatch(getAuthFailedAction(e.message))
             );
     }
 }
 
 export function resetPassword(form: IResetPasswordForm) {
     return function (dispatch: AppDispatch) {
-        dispatch({ type: GET_AUTH_REQUEST });
+        dispatch(getAuthAction());
         getResetPasswordRequest(form)
             .then(checkResponse)
             .then(data => {
-                dispatch({ type: GET_AUTH_REQUEST_SUCCESS });
+                dispatch(getAuthSuccessAction());
             })
-            .catch((e) => {
-                dispatch({ type: GET_AUTH_REQUEST_FIELD, payload: e.message })
-            }
+            .catch((e) =>
+                dispatch(getAuthFailedAction(e.message))
             );
     }
 }

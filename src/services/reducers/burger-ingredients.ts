@@ -1,34 +1,41 @@
-import { AnyAction } from 'redux';
-import { IBurgerIngredientState } from '../../utils/ts-types';
+import { IBurgerIngredient } from '../../utils/ts-types';
+import { TBurgerIngredientsActions } from '../actions/burger-ingredients';
 import {
     CLEAR_CURRENT_BURGER_INGREDIENT,
-    GET_BURGER_INGREDIENTS,
-    GET_BURGER_INGREDIENTS_REQUEST_FIELED,
-    GET_BURGER_INGREDIENTS_SUCCESS,
+    GET_BURGER_INGREDIENTS_REQUEST,
+    GET_BURGER_INGREDIENTS_REQUEST_FAILED,
+    GET_BURGER_INGREDIENTS_REQUEST_SUCCESS,
     SET_CURRENT_BURGER_INGREDIENT
 } from "../constants/burger-ingredients";
 
-const initialState: IBurgerIngredientState = {
+export type TBurgerIngredientState = {
+    burgerIngredients: IBurgerIngredient[],
+    currentBurgerIngredient?: IBurgerIngredient,
+    burgerIngredientsRequest: boolean,
+    burgerIngredientsRequestFailed: boolean,
+}
+
+const initialState: TBurgerIngredientState = {
     burgerIngredients: [],
     burgerIngredientsRequest: false,
     burgerIngredientsRequestFailed: false,
 }
 
-export const burgerIngredientsReducer: (state: IBurgerIngredientState, action: AnyAction) => IBurgerIngredientState = (state = initialState, action) => {
+export const burgerIngredientsReducer = (state = initialState, action: TBurgerIngredientsActions): TBurgerIngredientState => {
     switch (action.type) {
-        case GET_BURGER_INGREDIENTS:
+        case GET_BURGER_INGREDIENTS_REQUEST:
             return {
                 ...state,
                 burgerIngredientsRequest: true
             }
-        case GET_BURGER_INGREDIENTS_SUCCESS:
+        case GET_BURGER_INGREDIENTS_REQUEST_SUCCESS:
             return {
                 ...state,
-                burgerIngredients: action.payload,
+                burgerIngredients: action.burgerIngredients,
                 burgerIngredientsRequest: false,
                 burgerIngredientsRequestFailed: false,
             }
-        case GET_BURGER_INGREDIENTS_REQUEST_FIELED:
+        case GET_BURGER_INGREDIENTS_REQUEST_FAILED:
             return {
                 ...state,
                 burgerIngredientsRequest: false,
@@ -37,7 +44,7 @@ export const burgerIngredientsReducer: (state: IBurgerIngredientState, action: A
         case SET_CURRENT_BURGER_INGREDIENT: {
             return {
                 ...state,
-                currentBurgerIngredient: state.burgerIngredients.find((item) => item._id === action.payload),
+                currentBurgerIngredient: state.burgerIngredients.find((item) => item._id === action.burgerIngredient._id),
             }
         }
         case CLEAR_CURRENT_BURGER_INGREDIENT:

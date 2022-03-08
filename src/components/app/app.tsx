@@ -17,10 +17,10 @@ import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import { getBurgerIngredients } from "../../services/actions/burger-ingredients";
 import OrderDetails from "../order-details/order-details";
-import { CLEAR_CURRENT_ORDER_NUMBER } from "../../services/actions/burger-constructor";
 import { ILocationState } from '../../utils/ts-types';
-import { AppDispatch } from '../../services/reducers';
+import { AppDispatch } from '../../services/store'
 import { CLEAR_CURRENT_BURGER_INGREDIENT } from '../../services/constants/burger-ingredients';
+import { clearCurrentOrderNumberAction } from '../../services/slices/burger-constructor';
 
 function App() {
 
@@ -42,7 +42,7 @@ function App() {
         };
 
         const handleNewOrderModalClose = () => {
-            dispatch({ type: CLEAR_CURRENT_ORDER_NUMBER });
+            dispatch(clearCurrentOrderNumberAction());
             history.goBack();
         };
 

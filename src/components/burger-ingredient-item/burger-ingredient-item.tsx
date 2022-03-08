@@ -5,7 +5,8 @@ import { useDrag } from "react-dnd";
 import { burgerIngredientPropTypes } from "../../utils/types";
 import { useHistory, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { IBurgerIngredient, IRootState } from '../../utils/ts-types';
+import { IBurgerIngredient } from '../../utils/ts-types';
+import { RootState } from '../../services/store';
 
 interface IBurgerIngredientItemProps {
     burgerIngredient: IBurgerIngredient;
@@ -16,7 +17,7 @@ const BurgerIngredientItem: FunctionComponent<IBurgerIngredientItemProps> = ({ b
     const location = useLocation();
     const history = useHistory();
 
-    const cart = useSelector((store: IRootState) => store.burgerConstructor.cart);
+    const cart = useSelector((store: RootState) => store.burgerConstructor.cart);
 
     const [, dragRef] = useDrag({
         type: 'ingredient',

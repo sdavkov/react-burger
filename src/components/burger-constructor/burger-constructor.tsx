@@ -6,13 +6,13 @@ import { addCartItem, moveCartItem } from "../../services/actions/burger-constru
 import { useDrop } from "react-dnd";
 import BurgerConstructorItem from "../burger-constructor-item/burger-constructor-item";
 import { BURGER_INGREDIENT_BUN_TYPE } from "../../utils/constants";
-import { IBurgerIngredient, IRootState } from '../../utils/ts-types';
-import { AppDispatch } from '../../services/reducers';
+import { IBurgerIngredient } from '../../utils/ts-types';
+import { AppDispatch, RootState } from '../../services/store';
 
 
 const BurgerConstructor: FC = React.memo(() => {
 
-    const cart = useSelector((state: IRootState) => state.burgerConstructor.cart);
+    const cart = useSelector((state: RootState) => state.burgerConstructor.cart);
 
     const bun = useMemo(() => cart.find(cartItem => cartItem.burgerIngredient.type === BURGER_INGREDIENT_BUN_TYPE), [cart]);
     const additions = useMemo(() => cart.filter(cartItem => cartItem.burgerIngredient.type !== BURGER_INGREDIENT_BUN_TYPE), [cart]);
