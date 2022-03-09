@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { RootState } from '../services/store';
+import { RootState } from '../services/types';
 
 function useAuth() {
     const {

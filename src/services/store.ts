@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './slices/auth';
 import burgerConstructorReducer from './slices/burger-constructor';
-import { burgerIngredientsReducer } from './reducers/burger-ingredients';
+import burgerIngredientsReducer from './slices/burger-ingredients';
 
 export const store = configureStore(
 	{
@@ -12,6 +12,3 @@ export const store = configureStore(
 		}
 	}
 )
-
-export type AppDispatch = typeof store.dispatch;
-export type RootState = ReturnType<typeof store.getState>

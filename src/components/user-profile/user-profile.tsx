@@ -5,8 +5,8 @@ import { useDispatch } from "react-redux";
 import Error from "../error/error";
 import useForm from "../../hooks/useForm";
 import useAuth from "../../hooks/useAuth";
-import { updateUser } from "../../services/actions/auth";
 import { IUserProfileForm } from '../../utils/ts-types';
+import { updateUser } from '../../services/slices/auth';
 
 function UserProfile() {
 

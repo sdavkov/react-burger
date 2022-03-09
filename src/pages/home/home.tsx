@@ -5,7 +5,7 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import BurgerIngredients from "../../components/burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../../components/burger-constructor/burger-constructor";
 import { useSelector } from "react-redux";
-import { RootState } from '../../services/store';
+import { RootState } from '../../services/types';
 
 
 export function HomePage() {

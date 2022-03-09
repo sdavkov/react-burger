@@ -3,11 +3,11 @@ import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-component
 import { Link, useHistory, useLocation } from "react-router-dom";
 import styles from "./reset-password.module.css";
 import { useDispatch } from "react-redux";
-import { resetPassword } from "../../services/actions/auth";
 import Error from "../../components/error/error";
 import useForm from "../../hooks/useForm";
 import useAuth from "../../hooks/useAuth";
 import { ILocationState, IResetPasswordForm } from '../../utils/ts-types'
+import { resetPassword } from '../../services/slices/auth';
 
 export function ResetPasswordPage() {
 

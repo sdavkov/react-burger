@@ -2,8 +2,8 @@ import React, { useEffect } from 'react'
 import styles from './ingredient-details.module.css'
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { SET_CURRENT_BURGER_INGREDIENT } from '../../services/constants/burger-ingredients';
-import { RootState } from '../../services/store';
+import { RootState } from '../../services/types';
+import { setCurrentBurgerIngredientAction } from '../../services/slices/burger-ingredients';
 
 const IngredientDetails = React.memo(() => {
 
@@ -13,7 +13,7 @@ const IngredientDetails = React.memo(() => {
     const { currentBurgerIngredient, burgerIngredientsRequest } = useSelector((state: RootState) => state.burgerIngredients);
 
     useEffect(() => {
-        dispatch({ type: SET_CURRENT_BURGER_INGREDIENT, payload: ingredientId });
+        dispatch(setCurrentBurgerIngredientAction(ingredientId));
     }, [dispatch, ingredientId, burgerIngredientsRequest])
 
     if (burgerIngredientsRequest)

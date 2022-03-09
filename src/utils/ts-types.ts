@@ -15,6 +15,10 @@ export interface IUser {
 	email: string;
 }
 
+export interface IOrder {
+	number: number;
+}
+
 export interface IAuthState {
 	currentUser?: IUser;
 	authRequest: boolean;

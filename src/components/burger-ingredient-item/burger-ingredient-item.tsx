@@ -6,7 +6,7 @@ import { burgerIngredientPropTypes } from "../../utils/types";
 import { useHistory, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { IBurgerIngredient } from '../../utils/ts-types';
-import { RootState } from '../../services/store';
+import { RootState } from '../../services/types';
 
 interface IBurgerIngredientItemProps {
     burgerIngredient: IBurgerIngredient;

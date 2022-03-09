@@ -3,7 +3,7 @@ import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-co
 import styles from './total-burger-constructor.module.css'
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { RootState } from '../../services/store';
+import { RootState } from '../../services/types';
 
 function TotalBurgerConstructor() {
 

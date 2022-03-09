@@ -2,8 +2,8 @@ import React, { useEffect } from 'react'
 import styles from './order-details.module.css'
 import orderImage from '../../images/order.svg'
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from '../../services/store';
-import { createOrder } from '../../services/actions/burger-constructor';
+import { AppDispatch, RootState } from '../../services/types';
+import { createOrder } from '../../services/slices/burger-constructor';
 
 const OrderDetails = () => {
 

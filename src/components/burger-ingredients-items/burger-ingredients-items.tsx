@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import styles from './burger-ingredients-items.module.css'
 import { useSelector } from "react-redux";
 import BurgerIngredientItem from "../burger-ingredient-item/burger-ingredient-item";
-import { RootState } from '../../services/store';
+import { RootState } from '../../services/types';
 
 interface IBurgerIngredientsItemsProps {
     title: string;

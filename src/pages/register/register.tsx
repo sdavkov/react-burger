@@ -3,11 +3,11 @@ import { PasswordInput, Button, Input } from "@ya.praktikum/react-developer-burg
 import { Link } from "react-router-dom";
 import styles from "./register.module.css";
 import { useDispatch } from "react-redux";
-import { registerUser } from "../../services/actions/auth";
 import Error from "../../components/error/error";
 import useForm from "../../hooks/useForm";
 import useAuth from "../../hooks/useAuth";
 import { IRegisterForm } from '../../utils/ts-types';
+import { registerUser } from '../../services/slices/auth';
 
 export function RegisterPage() {
 

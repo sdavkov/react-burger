@@ -1,8 +1,8 @@
 import React, { FunctionComponent, useEffect } from 'react';
 import { Redirect, Route, RouteProps } from "react-router-dom";
-import { getUser } from "../../services/actions/auth";
 import useAuth from "../../hooks/useAuth";
 import { useDispatch } from "react-redux";
+import { getUser } from '../../services/slices/auth';
 
 const ProtectedRoute: FunctionComponent<RouteProps> = ({ children, ...rest }) => {
 

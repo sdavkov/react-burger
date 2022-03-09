@@ -2,13 +2,13 @@ import React, { FunctionComponent, useRef } from "react";
 import PropTypes from 'prop-types'
 import styles from "./burger-constructor-item.module.css";
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { removeCartItem } from "../../services/actions/burger-constructor";
 import { useDispatch } from "react-redux";
 import { useDrag, useDrop } from "react-dnd";
 import { burgerIngredientPropTypes } from "../../utils/types";
 import { BURGER_INGREDIENT_BUN_TYPE } from "../../utils/constants";
 import { ICart } from '../../utils/ts-types';
-import { AppDispatch } from '../../services/store';
+import { AppDispatch } from '../../services/types';
+import { removeCartItem } from '../../services/slices/burger-constructor';
 
 interface IBurgerConstructorItem {
     cartItem: ICart;

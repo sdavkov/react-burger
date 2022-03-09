@@ -3,11 +3,11 @@ import { Input, PasswordInput, Button } from "@ya.praktikum/react-developer-burg
 import { Link } from "react-router-dom";
 import styles from "./login.module.css";
 import { useDispatch } from "react-redux";
-import { loginUser } from "../../services/actions/auth";
 import Error from "../../components/error/error";
 import useForm from "../../hooks/useForm";
 import useAuth from "../../hooks/useAuth";
 import { ILoginForm } from '../../utils/ts-types';
+import { loginUser } from '../../services/slices/auth';
 
 export function LoginPage() {
 

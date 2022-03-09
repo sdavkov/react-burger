@@ -15,18 +15,18 @@ import OnlyNonAuthorizedRoute from "../only-non-authorized-route/only-non-author
 import { useDispatch } from "react-redux";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
-import { getBurgerIngredients } from "../../services/actions/burger-ingredients";
 import OrderDetails from "../order-details/order-details";
 import { ILocationState } from '../../utils/ts-types';
-import { AppDispatch } from '../../services/store'
-import { CLEAR_CURRENT_BURGER_INGREDIENT } from '../../services/constants/burger-ingredients';
+import { AppDispatch } from '../../services/types';
 import { clearCurrentOrderNumberAction } from '../../services/slices/burger-constructor';
+import { clearBurgerIngredientAction, fetchBurgerIngredients } from '../../services/slices/burger-ingredients';
 
 function App() {
 
     const dispatch = useDispatch<AppDispatch>();
     useEffect(() =>
-        dispatch(getBurgerIngredients()),
+        //@ts-ignore
+        dispatch(fetchBurgerIngredients()),
         [dispatch])
 
     const ModalSwitch = () => {
@@ -37,7 +37,7 @@ function App() {
         const dispatch = useDispatch();
 
         const handleIngredientModalClose = () => {
-            dispatch({ type: CLEAR_CURRENT_BURGER_INGREDIENT })
+            dispatch(clearBurgerIngredientAction())
             history.goBack();
         };
 

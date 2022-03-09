@@ -2,12 +2,12 @@ import React, { FC, useCallback, useMemo } from 'react'
 import styles from './burger-constructor.module.css'
 import TotalBurgerConstructor from '../total-burger-constructor/total-burger-constructor'
 import { useDispatch, useSelector } from "react-redux";
-import { addCartItem, moveCartItem } from "../../services/actions/burger-constructor";
 import { useDrop } from "react-dnd";
 import BurgerConstructorItem from "../burger-constructor-item/burger-constructor-item";
 import { BURGER_INGREDIENT_BUN_TYPE } from "../../utils/constants";
 import { IBurgerIngredient } from '../../utils/ts-types';
-import { AppDispatch, RootState } from '../../services/store';
+import { AppDispatch, RootState } from '../../services/types';
+import { addCartItem, moveCartItem } from '../../services/slices/burger-constructor';
 
 
 const BurgerConstructor: FC = React.memo(() => {
@@ -39,7 +39,7 @@ const BurgerConstructor: FC = React.memo(() => {
     const canDropDecoratorCssClass = cart.length === 0 ? (isHover ? (canDrop ? styles.allowDrop : styles.disableDrop) : '') : '';
 
     const moveCard = useCallback((dragIndex, hoverIndex) => {
-        dispatch(moveCartItem(dragIndex, hoverIndex));
+        dispatch(moveCartItem({ dragIndex, hoverIndex }));
     }, [dispatch]);
 
     return (

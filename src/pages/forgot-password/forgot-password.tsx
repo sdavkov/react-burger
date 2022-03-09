@@ -3,11 +3,11 @@ import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-component
 import { Link, useHistory } from "react-router-dom";
 import styles from "./forgot-password.module.css";
 import { useDispatch } from "react-redux";
-import { forgotPassword } from "../../services/actions/auth";
 import Error from "../../components/error/error";
 import useForm from "../../hooks/useForm";
 import useAuth from "../../hooks/useAuth";
 import { IForgotPasswordForm } from '../../utils/ts-types';
+import { forgotPassword } from '../../services/slices/auth';
 
 export function ForgotPasswordPage() {
 
