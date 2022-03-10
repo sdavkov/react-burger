@@ -6,8 +6,13 @@ import { useDispatch } from "react-redux";
 import Error from "../../components/error/error";
 import useForm from "../../hooks/useForm";
 import useAuth from "../../hooks/useAuth";
-import { IRegisterForm } from '../../utils/ts-types';
 import { registerUser } from '../../services/slices/auth';
+
+export interface IRegisterForm {
+    name: string;
+    email: string;
+    password: string;
+}
 
 export function RegisterPage() {
 

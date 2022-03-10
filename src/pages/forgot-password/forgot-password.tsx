@@ -6,8 +6,11 @@ import { useDispatch } from "react-redux";
 import Error from "../../components/error/error";
 import useForm from "../../hooks/useForm";
 import useAuth from "../../hooks/useAuth";
-import { IForgotPasswordForm } from '../../utils/ts-types';
 import { forgotPassword } from '../../services/slices/auth';
+
+export interface IForgotPasswordForm {
+    email: string;
+}
 
 export function ForgotPasswordPage() {
 

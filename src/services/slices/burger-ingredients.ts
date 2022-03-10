@@ -1,10 +1,10 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { IBurgerIngredient } from '../../utils/ts-types'
 import { getBurgerIngredientsRequest } from '../api';
+import { TBurgerIngredient } from '../types/data';
 
 export type TBurgerIngredientState = {
-	burgerIngredients: IBurgerIngredient[],
-	currentBurgerIngredient?: IBurgerIngredient,
+	burgerIngredients: TBurgerIngredient[],
+	currentBurgerIngredient?: TBurgerIngredient,
 	burgerIngredientsRequest: boolean,
 	burgerIngredientsRequestFailed: boolean,
 }

@@ -1,11 +1,16 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { ACCESS_TOKEN_NAME, REFRESH_TOKEN_NAME } from '../../utils/constants';
 import { deleteCookie, getCookie, setCookie } from '../../utils/cookies';
-import { IForgotPasswordForm, ILoginForm, IRegisterForm, IResetPasswordForm, IUser, IUserProfileForm } from '../../utils/ts-types';
 import { getForgotPasswordRequest, getLoginUserRequest, getRefreshTokenRequest, getRegisterUserRequest, getResetPasswordRequest, getUpdateUserRequest, getUserRequest } from '../api';
+import { TUser } from '../types/data';
+import { IRegisterForm } from '../../pages/register/register';
+import { IResetPasswordForm } from '../../pages/reset-password/reset-password';
+import { ILoginForm } from '../../pages/login/login';
+import { IUserProfileForm } from '../../components/user-profile/user-profile';
+import { IForgotPasswordForm } from '../../pages/forgot-password/forgot-password';
 
 export type TAuthState = {
-	currentUser?: IUser;
+	currentUser?: TUser;
 	authRequest: boolean;
 	authRequestFailed: boolean;
 	authRequestFailedMessage?: string;

@@ -16,7 +16,7 @@ import { useDispatch } from "react-redux";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import OrderDetails from "../order-details/order-details";
-import { ILocationState } from '../../utils/ts-types';
+import { ILocationState } from '../../utils/common-types';
 import { AppDispatch } from '../../services/types';
 import { clearCurrentOrderNumberAction } from '../../services/slices/burger-constructor';
 import { clearBurgerIngredientAction, fetchBurgerIngredients } from '../../services/slices/burger-ingredients';

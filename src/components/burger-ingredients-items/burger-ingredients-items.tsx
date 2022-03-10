@@ -1,5 +1,4 @@
 import React, { FunctionComponent, LegacyRef, RefObject } from 'react'
-import PropTypes from 'prop-types'
 import styles from './burger-ingredients-items.module.css'
 import { useSelector } from "react-redux";
 import BurgerIngredientItem from "../burger-ingredient-item/burger-ingredient-item";
@@ -27,8 +26,4 @@ const BurgerIngredientsItems: FunctionComponent<IBurgerIngredientsItemsProps> = 
     )
 }))
 
-BurgerIngredientsItems.propTypes = {
-    title: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-}
 export default BurgerIngredientsItems

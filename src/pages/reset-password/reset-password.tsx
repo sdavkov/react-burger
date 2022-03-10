@@ -5,9 +5,14 @@ import styles from "./reset-password.module.css";
 import { useDispatch } from "react-redux";
 import Error from "../../components/error/error";
 import useForm from "../../hooks/useForm";
-import useAuth from "../../hooks/useAuth";
-import { ILocationState, IResetPasswordForm } from '../../utils/ts-types'
 import { resetPassword } from '../../services/slices/auth';
+import { ILocationState } from '../../utils/common-types';
+import useAuth from '../../hooks/useAuth';
+
+export interface IResetPasswordForm {
+    password: string;
+    token: string;
+}
 
 export function ResetPasswordPage() {
 

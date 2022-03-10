@@ -1,13 +1,13 @@
 import { v4 as uuidv4 } from "uuid";
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { ACCESS_TOKEN_NAME, BURGER_INGREDIENT_BUN_TYPE } from '../../utils/constants'
-import { IBurgerIngredient, ICart, IOrder } from '../../utils/ts-types'
 import { RootState } from '../types'
 import { getCookie } from '../../utils/cookies';
 import { getCreateOrderRequest } from '../api';
+import { TBurgerIngredient, TCart, TOrder } from '../types/data';
 
 export type TBurgerConstructorState = {
-	cart: ICart[],
+	cart: TCart[],
 	total: number,
 	currentOrderNumber: number,
 	orderRequest: boolean,
@@ -23,11 +23,11 @@ const initialState: TBurgerConstructorState = {
 }
 
 export type TSetCartAction = {
-	cart: ICart[];
+	cart: TCart[];
 	total: number
 }
 
-const getTotal = (cart: ICart[]) => {
+const getTotal = (cart: TCart[]) => {
 	const bun = cart.find((item) => item.burgerIngredient.type === BURGER_INGREDIENT_BUN_TYPE);
 	const additions = cart.filter(item => item.burgerIngredient.type !== BURGER_INGREDIENT_BUN_TYPE);
 	let total = 0;
@@ -38,10 +38,10 @@ const getTotal = (cart: ICart[]) => {
 	return total;
 }
 
-export const moveCartItem = createAsyncThunk<{ cart: ICart[], total: number }, { dragIndex: number, hoverIndex: number }, { state: RootState }>(
+export const moveCartItem = createAsyncThunk<{ cart: TCart[], total: number }, { dragIndex: number, hoverIndex: number }, { state: RootState }>(
 	'burgerConstructor/moveCartItem',
 	(params, thunkAPI) => {
-		let cart = thunkAPI.getState().burgerConstructor.cart;
+		let cart = [...thunkAPI.getState().burgerConstructor.cart];
 		const bun = cart.find(cartItem => cartItem.burgerIngredient.type === BURGER_INGREDIENT_BUN_TYPE);
 		if (bun) {
 			const additions = cart.filter(cartItem => cartItem.burgerIngredient.type !== BURGER_INGREDIENT_BUN_TYPE);
@@ -54,7 +54,7 @@ export const moveCartItem = createAsyncThunk<{ cart: ICart[], total: number }, {
 	}
 )
 
-export const createOrder = createAsyncThunk<{ name: string; order: IOrder; success: boolean } | undefined, undefined, { state: RootState }>(
+export const createOrder = createAsyncThunk<{ name: string; order: TOrder; success: boolean } | undefined, undefined, { state: RootState }>(
 	'burgerConstructor/createOrder',
 	(_, thunkAPI) => {
 		const access_tocken = getCookie(ACCESS_TOKEN_NAME);
@@ -67,10 +67,10 @@ export const createOrder = createAsyncThunk<{ name: string; order: IOrder; succe
 	}
 )
 
-export const addCartItem = createAsyncThunk<{ cart: ICart[], total: number } | undefined, IBurgerIngredient, { state: RootState }>(
+export const addCartItem = createAsyncThunk<{ cart: TCart[], total: number } | undefined, TBurgerIngredient, { state: RootState }>(
 	'burgerConstructor/addCartItem',
 	(burgerIngredient, thunkAPI) => {
-		let cart = thunkAPI.getState().burgerConstructor.cart;
+		let cart = [...thunkAPI.getState().burgerConstructor.cart];
 		if (burgerIngredient.type === BURGER_INGREDIENT_BUN_TYPE) {
 			//удаляем другую булку, т.к. может быть только одна булка
 			cart = cart.filter(item => item.burgerIngredient.type !== BURGER_INGREDIENT_BUN_TYPE);
@@ -85,7 +85,7 @@ export const addCartItem = createAsyncThunk<{ cart: ICart[], total: number } | u
 	}
 )
 
-export const removeCartItem = createAsyncThunk<{ cart: ICart[], total: number } | undefined, ICart, { state: RootState }>(
+export const removeCartItem = createAsyncThunk<{ cart: TCart[], total: number } | undefined, TCart, { state: RootState }>(
 	'burgerConstructor/removeCartItem',
 	(cartItem, thunkAPI) => {
 		let cart = thunkAPI.getState().burgerConstructor.cart.filter(item => item.id !== cartItem.id);

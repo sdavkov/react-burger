@@ -2,7 +2,7 @@ import React, { FunctionComponent, useEffect } from 'react';
 import { Redirect, Route, RouteProps, useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import { useDispatch } from "react-redux";
-import { ILocationState } from '../../utils/ts-types';
+import { ILocationState } from '../../utils/common-types';
 import { getUser } from '../../services/slices/auth';
 
 const OnlyNonAuthorizedRoute: FunctionComponent<RouteProps> = ({ children, ...rest }) => {

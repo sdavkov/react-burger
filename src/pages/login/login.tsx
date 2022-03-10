@@ -6,8 +6,12 @@ import { useDispatch } from "react-redux";
 import Error from "../../components/error/error";
 import useForm from "../../hooks/useForm";
 import useAuth from "../../hooks/useAuth";
-import { ILoginForm } from '../../utils/ts-types';
 import { loginUser } from '../../services/slices/auth';
+
+export interface ILoginForm {
+    email: string;
+    password: string;
+}
 
 export function LoginPage() {
 

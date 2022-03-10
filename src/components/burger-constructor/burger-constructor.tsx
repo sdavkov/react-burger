@@ -5,9 +5,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useDrop } from "react-dnd";
 import BurgerConstructorItem from "../burger-constructor-item/burger-constructor-item";
 import { BURGER_INGREDIENT_BUN_TYPE } from "../../utils/constants";
-import { IBurgerIngredient } from '../../utils/ts-types';
 import { AppDispatch, RootState } from '../../services/types';
 import { addCartItem, moveCartItem } from '../../services/slices/burger-constructor';
+import { TBurgerIngredient } from '../../services/types/data';
 
 
 const BurgerConstructor: FC = React.memo(() => {
@@ -21,7 +21,7 @@ const BurgerConstructor: FC = React.memo(() => {
 
     const [{ isHover, canDrop }, dropTarget] = useDrop({
         accept: "ingredient",
-        drop(burgerIngredient: IBurgerIngredient) {
+        drop(burgerIngredient: TBurgerIngredient) {
             dispatch(addCartItem(burgerIngredient))
         },
         canDrop(burgerIngredient) {

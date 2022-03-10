@@ -2,14 +2,13 @@ import React, { FunctionComponent } from 'react'
 import styles from "./burger-ingredient-item.module.css";
 import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrag } from "react-dnd";
-import { burgerIngredientPropTypes } from "../../utils/types";
 import { useHistory, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { IBurgerIngredient } from '../../utils/ts-types';
 import { RootState } from '../../services/types';
+import { TBurgerIngredient } from '../../services/types/data';
 
 interface IBurgerIngredientItemProps {
-    burgerIngredient: IBurgerIngredient;
+    burgerIngredient: TBurgerIngredient;
 }
 
 const BurgerIngredientItem: FunctionComponent<IBurgerIngredientItemProps> = ({ burgerIngredient }) => {
@@ -42,10 +41,6 @@ const BurgerIngredientItem: FunctionComponent<IBurgerIngredientItemProps> = ({ b
             <p className={styles.name + ' text text_type_main-default'}>{burgerIngredient.name}</p>
         </div>
     )
-}
-
-BurgerIngredientItem.propTypes = {
-    burgerIngredient: burgerIngredientPropTypes.isRequired,
 }
 
 export default BurgerIngredientItem
