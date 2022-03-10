@@ -80,9 +80,6 @@ export const getUser = createAsyncThunk(
 					return getUserRequest(data.accessToken.split('Bearer ')[1])
 				})
 			}
-			else {
-				return Promise.reject(new Error("jwt expired"));
-			}
 		}
 	}
 )
@@ -180,7 +177,9 @@ export const authSlice = createSlice({
 			state.authRequest = false;
 			state.authRequestFailed = false;
 			state.authRequestFailedMessage = '';
-			state.currentUser = action.payload.user;
+			if (action.payload) {
+				state.currentUser = action.payload.user;
+			}
 		});
 		builder.addCase(getUser.rejected, (state, action) => {
 			state.authRequest = false;
