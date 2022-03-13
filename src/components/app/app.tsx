@@ -20,6 +20,7 @@ import { ILocationState } from '../../utils/common-types';
 import { AppDispatch } from '../../services/types';
 import { clearCurrentOrderNumberAction } from '../../services/slices/burger-constructor';
 import { clearBurgerIngredientAction, fetchBurgerIngredients } from '../../services/slices/burger-ingredients';
+import FeedPage from '../../pages/feed/feed';
 
 function App() {
 
@@ -66,6 +67,9 @@ function App() {
                         <OnlyNonAuthorizedRoute path="/reset-password">
                             <ResetPasswordPage />
                         </OnlyNonAuthorizedRoute>
+                        <Route path="/feed" exact={true}>
+                            <FeedPage />
+                        </Route>
                         <ProtectedRoute path="/profile">
                             <ProfilePage />
                         </ProtectedRoute>
