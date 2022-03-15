@@ -1,5 +1,5 @@
 import type { AnyAction, Middleware, MiddlewareAPI } from 'redux';
-import { closedWSConnection, errorWSConnection, getWSMessage, successWSConnection } from '../slices/web-socket';
+import { closedWSConnection, errorWSConnection, getWSMessage, successWSConnection, TWSResponse } from '../slices/web-socket';
 import { AppDispatch, RootState } from '../types';
 
 export const socketMiddleware = (wsUrl: string): Middleware => {
@@ -8,7 +8,7 @@ export const socketMiddleware = (wsUrl: string): Middleware => {
 
 		return next => (action: AnyAction) => {
 			const { dispatch } = store;
-			const { type, payload } = action;
+			const { type } = action;
 			if (type === 'webSocket/startWSConnection') {
 				// объект класса WebSocket
 				socket = new WebSocket(wsUrl);
@@ -27,8 +27,7 @@ export const socketMiddleware = (wsUrl: string): Middleware => {
 
 				// функция, которая вызывается при получения события от сервера
 				socket.onmessage = event => {
-					const { data } = event;
-					dispatch(getWSMessage(data));
+					dispatch(getWSMessage(JSON.parse(event.data)));
 				};
 				// функция, которая вызывается при закрытии соединения
 				socket.onclose = event => {

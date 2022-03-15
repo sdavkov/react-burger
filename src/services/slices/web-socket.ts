@@ -9,17 +9,20 @@ export type TOrder = {
 	readonly updatedAt: Date;
 }
 
-export type TWSState = {
-	wsConnected: boolean;
-	wsRequest: boolean;
-	wsError: boolean;
+export type TWSResponse = {
 	success: boolean;
 	orders: TOrder[];
 	total: number;
 	totalToday: number;
 }
 
-const initialState: TWSState = {
+export type TWSState = {
+	wsConnected: boolean;
+	wsRequest: boolean;
+	wsError: boolean;
+}
+
+const initialState: TWSState & TWSResponse = {
 	wsConnected: false,
 	wsRequest: false,
 	wsError: false,
@@ -51,8 +54,12 @@ export const webSocketSlice = createSlice({
 		closedWSConnection: (state) => {
 			state.wsConnected = false;
 		},
-		getWSMessage: (state, payload) => {
-			console.log(payload);
+		getWSMessage: (state, action) => {
+			const res = action.payload as TWSResponse;
+			state.success = res.success;
+			state.orders = res.orders;
+			state.total = res.total;
+			state.totalToday = res.totalToday;
 		}
 	}
 });
