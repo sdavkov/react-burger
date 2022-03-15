@@ -3,7 +3,7 @@ export type TUser = {
 	email: string;
 }
 
-export type TOrder = {
+export type TCreatedOrder = {
 	number: number;
 }
 

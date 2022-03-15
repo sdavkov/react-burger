@@ -1,5 +1,5 @@
 import { API_URL } from "../utils/constants";
-import { TBurgerIngredient, TCart, TOrder, TUser } from './types/data';
+import { TBurgerIngredient, TCart, TCreatedOrder, TUser } from './types/data';
 import { IRegisterForm } from '../pages/register/register';
 import { IResetPasswordForm } from '../pages/reset-password/reset-password';
 import { ILoginForm } from '../pages/login/login';
@@ -27,7 +27,7 @@ export const getCreateOrderRequest = async (cart: TCart[], token: string) =>
             Authorization: 'Bearer ' + token,
         },
         body: JSON.stringify({ ingredients: cart.map(item => item.burgerIngredient._id) })
-    }).then((res) => checkResponse<{ name: string; order: TOrder; success: boolean; }>(res));;
+    }).then((res) => checkResponse<{ name: string; order: TCreatedOrder; success: boolean; }>(res));;
 
 export const getBurgerIngredientsRequest = async () =>
     await fetch(`${API_URL}ingredients`).then((res) =>

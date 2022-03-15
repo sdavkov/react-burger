@@ -2,10 +2,19 @@ import React from 'react'
 import styles from './feed-order.module.css'
 import bun from '../../images/bun.png'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import { useHistory, useLocation } from 'react-router-dom';
 
 export default function FeedOrder() {
+
+	const location = useLocation();
+	const history = useHistory();
+
+	const onClickHandler = () => {
+		//history.push(`/ingredients/${burgerIngredient._id}`, { background: location })
+	}
+
 	return (
-		<div className={styles.order}>
+		<div className={styles.order} onClick={onClickHandler}>
 			<div className={styles.info}>
 				<p className="text text_type_digits-default">#1234567890</p>
 				<p className="text text_type_main-default text_color_inactive">

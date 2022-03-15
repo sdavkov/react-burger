@@ -4,7 +4,7 @@ import { ACCESS_TOKEN_NAME, BURGER_INGREDIENT_BUN_TYPE } from '../../utils/const
 import { RootState } from '../types'
 import { getCookie } from '../../utils/cookies';
 import { getCreateOrderRequest } from '../api';
-import { TBurgerIngredient, TCart, TOrder } from '../types/data';
+import { TBurgerIngredient, TCart, TCreatedOrder } from '../types/data';
 
 export type TBurgerConstructorState = {
 	cart: TCart[],
@@ -54,7 +54,7 @@ export const moveCartItem = createAsyncThunk<{ cart: TCart[], total: number }, {
 	}
 )
 
-export const createOrder = createAsyncThunk<{ name: string; order: TOrder; success: boolean } | undefined, undefined, { state: RootState }>(
+export const createOrder = createAsyncThunk<{ name: string; order: TCreatedOrder; success: boolean } | undefined, void, { state: RootState }>(
 	'burgerConstructor/createOrder',
 	(_, thunkAPI) => {
 		const access_tocken = getCookie(ACCESS_TOKEN_NAME);

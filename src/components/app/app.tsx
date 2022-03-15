@@ -21,13 +21,16 @@ import { AppDispatch } from '../../services/types';
 import { clearCurrentOrderNumberAction } from '../../services/slices/burger-constructor';
 import { clearBurgerIngredientAction, fetchBurgerIngredients } from '../../services/slices/burger-ingredients';
 import FeedPage from '../../pages/feed/feed';
+import { startWSConnection } from '../../services/slices/web-socket';
 
 function App() {
 
     const dispatch = useDispatch<AppDispatch>();
-    useEffect(() =>
+    useEffect(() => {
         //@ts-ignore
-        dispatch(fetchBurgerIngredients()),
+        dispatch(fetchBurgerIngredients());
+        dispatch(startWSConnection());
+    },
         [dispatch])
 
     const ModalSwitch = () => {

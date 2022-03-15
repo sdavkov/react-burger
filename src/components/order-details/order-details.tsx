@@ -10,7 +10,7 @@ const OrderDetails = () => {
     const dispatch = useDispatch<AppDispatch>();
 
     useEffect(() => {
-        dispatch(createOrder)
+        dispatch(createOrder())
     }, [dispatch])
 
     const { currentOrderNumber, orderRequest } = useSelector((state: RootState) => state.burgerConstructor)
