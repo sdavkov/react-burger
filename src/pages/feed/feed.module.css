@@ -33,6 +33,10 @@
 	flex-basis: 50%;
 }
 
+.done .row {
+	color: #00CCCC;
+}
+
 .in_work {
 	flex-basis: 50%;
 }

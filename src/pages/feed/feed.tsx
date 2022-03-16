@@ -7,6 +7,8 @@ import { useSelector } from 'react-redux';
 export default function FeedPage() {
 
 	const { orders, total, totalToday } = useSelector((state: RootState) => state.webSocket);
+	console.log(orders.filter(i => i.status !== 'done').slice(0, 10))
+	console.log(orders.filter(i => i.status === 'done').slice(0, 10))
 
 	return (
 		<div className={styles.feed}>
@@ -22,11 +24,9 @@ export default function FeedPage() {
 								<p className="text text_type_main-medium mb-6">
 									Готовы:
 								</p>
-								<p className="text text_type_digits-default mb-2">034533</p>
-								<p className="text text_type_digits-default mb-2">034532</p>
-								<p className="text text_type_digits-default mb-2">034530</p>
-								<p className="text text_type_digits-default mb-2">034527</p>
-								<p className="text text_type_digits-default mb-2">034525</p>
+								{orders.filter(i => i.status === 'done').slice(0, 10).map((order => (
+									<p key={order._id} className={styles.row + " text text_type_digits-default mb-2"}>{order.number}</p>
+								)))}
 							</div>
 						</div>
 						<div className={styles.in_work}>
@@ -34,11 +34,9 @@ export default function FeedPage() {
 								<p className="text text_type_main-medium mb-6">
 									В работе:
 								</p>
-								<p className="text text_type_digits-default mb-2">034533</p>
-								<p className="text text_type_digits-default mb-2">034532</p>
-								<p className="text text_type_digits-default mb-2">034530</p>
-								<p className="text text_type_digits-default mb-2">034527</p>
-								<p className="text text_type_digits-default mb-2">034525</p>
+								{orders.filter(i => i.status !== 'done').slice(0, 10).map((order => (
+									<p key={order._id} className="text text_type_digits-default mb-2">{order.number}</p>
+								)))}
 							</div>
 						</div>
 					</div>
