@@ -22,29 +22,6 @@
 	justify-content: start;
 }
 
-.ingredient {
-	border-radius: 50%;
-
-	background: linear-gradient(63.18deg, #801ab3 0%, #4c4cff 100%);
-	padding: 2px;
-	width: 64px;
-	height: 64px;
-	position: relative;
-}
-
-.ingredient:not(:last-child) {
-	margin-right: -15px;
-}
-
-.ingredient img {
-	background: #131316;
-	border-radius: 50%;
-	object-fit: cover;
-	display: block;
-	width: 60px;
-	height: 60px;
-}
-
 .ingredients_total {
 	display: flex;
 	align-items: center;

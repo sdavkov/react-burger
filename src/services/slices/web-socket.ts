@@ -3,10 +3,11 @@ import { createSlice } from '@reduxjs/toolkit';
 export type TOrder = {
 	readonly ingredients: string[];
 	readonly _id: string;
+	readonly name: string;
 	readonly status: string;
 	readonly number: number;
-	readonly createdAt: Date;
-	readonly updatedAt: Date;
+	readonly createdAt: string;
+	readonly updatedAt: string;
 }
 
 export type TWSResponse = {
