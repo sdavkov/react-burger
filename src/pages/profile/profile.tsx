@@ -3,7 +3,7 @@ import styles from './profile.module.css'
 import UserProfile from "../../components/user-profile/user-profile";
 import { useDispatch } from "react-redux";
 import { Link, Route, Switch, useHistory, useLocation, useRouteMatch } from "react-router-dom";
-import Orders from "../../components/orders/orders";
+import UserOrders from "../../components/user-orders/user-orders";
 import { logoutUser } from '../../services/slices/auth';
 
 export function ProfilePage() {
@@ -44,7 +44,7 @@ export function ProfilePage() {
                         <UserProfile />
                     </Route>
                     <Route path={`${path}/orders`} exact={true}>
-                        <Orders />
+                        <UserOrders />
                     </Route>
                 </Switch>
             </div>

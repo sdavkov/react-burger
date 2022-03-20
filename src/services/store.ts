@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { WSS_ALL_ORDERS_URL } from '../utils/constants';
 import { socketAllOrdersMiddleware } from './midelware/socketAllOrdersMiddleware';
 import authReducer from './slices/auth';
 import burgerConstructorReducer from './slices/burger-constructor';
@@ -13,6 +14,6 @@ export const store = configureStore(
 			burgerIngredients: burgerIngredientsReducer,
 			webSocket: webSocketReducer,
 		},
-		middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(socketAllOrdersMiddleware('wss://norma.nomoreparties.space/orders/all')),
+		middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(socketAllOrdersMiddleware(WSS_ALL_ORDERS_URL)),
 	}
 )
