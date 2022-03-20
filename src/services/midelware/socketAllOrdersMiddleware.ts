@@ -1,8 +1,8 @@
 import type { AnyAction, Middleware, MiddlewareAPI } from 'redux';
-import { closedWSConnection, errorWSConnection, getWSMessage, successWSConnection, TWSResponse } from '../slices/web-socket';
+import { closedWSConnection, errorWSConnection, getWSMessage, successWSConnection } from '../slices/web-socket';
 import { AppDispatch, RootState } from '../types';
 
-export const socketMiddleware = (wsUrl: string): Middleware => {
+export const socketAllOrdersMiddleware = (wsUrl: string): Middleware => {
 	return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
 		let socket: WebSocket | null = null;
 

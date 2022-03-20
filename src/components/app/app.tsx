@@ -15,19 +15,20 @@ import OnlyNonAuthorizedRoute from "../only-non-authorized-route/only-non-author
 import { useDispatch } from "react-redux";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
-import OrderDetails from "../order-details/order-details";
+import OrderDetails from "../create-order/create-order";
 import { ILocationState } from '../../utils/common-types';
 import { AppDispatch } from '../../services/types';
 import { clearCurrentOrderNumberAction } from '../../services/slices/burger-constructor';
 import { clearBurgerIngredientAction, fetchBurgerIngredients } from '../../services/slices/burger-ingredients';
-import FeedPage from '../../pages/feed/feed';
+import FeedPage from '../../pages/feed-orders/feed-orders';
 import { startWSConnection } from '../../services/slices/web-socket';
+import OrderDetail from '../order-detail/order-detail';
+import DetailPage from '../../pages/detail-page/detail-page';
 
 function App() {
 
     const dispatch = useDispatch<AppDispatch>();
     useEffect(() => {
-        //@ts-ignore
         dispatch(fetchBurgerIngredients());
         dispatch(startWSConnection());
     },
@@ -49,6 +50,10 @@ function App() {
             dispatch(clearCurrentOrderNumberAction());
             history.goBack();
         };
+
+        const handleOrderDetailModalClose = () => {
+            history.goBack();
+        }
 
         return (
             <React.Fragment>
@@ -84,22 +89,48 @@ function App() {
                                 </Modal>
                             }
                         />
-                        <Route path='/ingredients/:ingredientId' exact>
-                            <IngredientDetails />
-                        </Route>
+                        <Route
+                            path='/ingredients/:ingredientId'
+                            exact
+                            children={
+                                <DetailPage>
+                                    <IngredientDetails />
+                                </DetailPage>
+                            }
+                        />
+                        <Route
+                            path='/feed/:id'
+                            exact
+                            children={
+                                <DetailPage>
+                                    <OrderDetail />
+                                </DetailPage>
+                            }
+                        />
                         <Route>
                             <Error404 />
                         </Route>
                     </Switch>
                     {background && (
-                        <Route
-                            path='/ingredients/:ingredientId'
-                            children={
-                                <Modal onClose={handleIngredientModalClose}>
-                                    <IngredientDetails />
-                                </Modal>
-                            }
-                        />
+                        <Switch>
+                            <Route
+                                path='/ingredients/:ingredientId'
+                                children={
+                                    <Modal onClose={handleIngredientModalClose}>
+                                        <IngredientDetails />
+                                    </Modal>
+                                }
+                            />
+                            <Route
+                                path='/feed/:id'
+                                exact
+                                children={
+                                    <Modal onClose={handleOrderDetailModalClose}>
+                                        <OrderDetail />
+                                    </Modal>
+                                }
+                            />
+                        </Switch>
                     )}
                 </div>
             </React.Fragment>

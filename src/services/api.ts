@@ -27,7 +27,7 @@ export const getCreateOrderRequest = async (cart: TCart[], token: string) =>
             Authorization: 'Bearer ' + token,
         },
         body: JSON.stringify({ ingredients: cart.map(item => item.burgerIngredient._id) })
-    }).then((res) => checkResponse<{ name: string; order: TCreatedOrder; success: boolean; }>(res));;
+    }).then((res) => checkResponse<{ name: string; order: TCreatedOrder; success: boolean; }>(res));
 
 export const getBurgerIngredientsRequest = async () =>
     await fetch(`${API_URL}ingredients`).then((res) =>

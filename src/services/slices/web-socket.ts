@@ -1,10 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+export type TOrderStatus = 'created' | 'done' | 'pending';
+
 export type TOrder = {
 	readonly ingredients: string[];
 	readonly _id: string;
 	readonly name: string;
-	readonly status: string;
+	readonly status: TOrderStatus;
 	readonly number: number;
 	readonly createdAt: string;
 	readonly updatedAt: string;

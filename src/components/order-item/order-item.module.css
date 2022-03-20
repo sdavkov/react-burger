@@ -3,6 +3,7 @@
 	background: #1C1C21;
 	border-radius: 40px;
 	margin-bottom: 16px;
+	cursor: pointer;
 }
 
 .info {
@@ -20,6 +21,7 @@
 .ingredients_list {
 	display: flex;
 	justify-content: start;
+	flex-wrap: wrap;
 }
 
 .ingredients_total {

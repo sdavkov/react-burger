@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import styles from './order-details.module.css'
+import styles from './create-order.module.css'
 import orderImage from '../../images/order.svg'
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from '../../services/types';

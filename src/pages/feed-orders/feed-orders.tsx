@@ -1,21 +1,19 @@
 import React from 'react'
-import styles from './feed.module.css'
-import FeedOrder from '../../components/feed-order/feed-order'
+import styles from './feed-orders.module.css'
+import OrderItem from '../../components/order-item/order-item'
 import { RootState } from '../../services/types';
 import { useSelector } from 'react-redux';
 
 export default function FeedPage() {
 
 	const { orders, total, totalToday } = useSelector((state: RootState) => state.webSocket);
-	console.log(orders.filter(i => i.status !== 'done').slice(0, 10))
-	console.log(orders.filter(i => i.status === 'done').slice(0, 10))
 
 	return (
 		<div className={styles.feed}>
 			<p className='text_type_main-large'>Лента заказов</p>
 			<div className={styles.container}>
 				<div className={styles.orders + ' custom-scroll pr-2'}>
-					{orders.map((order) => (<FeedOrder key={order._id} order={order} />))}
+					{orders.map((order) => (<OrderItem key={order._id} order={order} />))}
 				</div>
 				<div className={styles.dashboard}>
 					<div className={styles.row + ' mb-15'}>
@@ -24,7 +22,7 @@ export default function FeedPage() {
 								<p className="text text_type_main-medium mb-6">
 									Готовы:
 								</p>
-								{orders.filter(i => i.status === 'done').slice(0, 10).map((order => (
+								{orders.filter(i => i.status === 'done').slice(0, 5).map((order => (
 									<p key={order._id} className={styles.row + " text text_type_digits-default mb-2"}>{order.number}</p>
 								)))}
 							</div>
@@ -34,7 +32,7 @@ export default function FeedPage() {
 								<p className="text text_type_main-medium mb-6">
 									В работе:
 								</p>
-								{orders.filter(i => i.status !== 'done').slice(0, 10).map((order => (
+								{orders.filter(i => i.status !== 'done').slice(0, 5).map((order => (
 									<p key={order._id} className="text text_type_digits-default mb-2">{order.number}</p>
 								)))}
 							</div>
