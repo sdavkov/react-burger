@@ -16,8 +16,6 @@ export type TAuthState = {
 	authRequestFailedMessage?: string;
 }
 
-//export interface IGetAuthAction
-
 const initialState: TAuthState = {
 	authRequest: false,
 	authRequestFailed: false,

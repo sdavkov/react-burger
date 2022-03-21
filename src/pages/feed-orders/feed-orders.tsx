@@ -1,19 +1,39 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styles from './feed-orders.module.css'
 import OrderItem from '../../components/order-item/order-item'
-import { RootState } from '../../services/types';
-import { useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../services/types';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useLocation } from 'react-router-dom';
+import { closedWSConnection, startWSConnection } from '../../services/slices/web-socket';
+import { WSS_ALL_ORDERS_URL } from '../../utils/constants';
 
 export default function FeedPage() {
 
+	const dispatch = useDispatch<AppDispatch>();
+
+	useEffect(
+		() => {
+			dispatch(startWSConnection(WSS_ALL_ORDERS_URL));
+			return () => { dispatch(closedWSConnection()) }
+		},
+		[dispatch]
+	);
+
 	const { orders, total, totalToday } = useSelector((state: RootState) => state.webSocket);
+
+	const location = useLocation();
+	const history = useHistory();
+
+	const onClickHandler = (order_id: string) => {
+		history.push(`/feed/${order_id}`, { background: location });
+	}
 
 	return (
 		<div className={styles.feed}>
 			<p className='text_type_main-large'>Лента заказов</p>
 			<div className={styles.container}>
 				<div className={styles.orders + ' custom-scroll pr-2'}>
-					{orders.map((order) => (<OrderItem key={order._id} order={order} />))}
+					{orders.map((order) => (<OrderItem key={order._id} onClickHandler={onClickHandler} order={order} />))}
 				</div>
 				<div className={styles.dashboard}>
 					<div className={styles.row + ' mb-15'}>

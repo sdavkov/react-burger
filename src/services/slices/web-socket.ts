@@ -1,29 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
-
-export type TOrderStatus = 'created' | 'done' | 'pending';
-
-export type TOrder = {
-	readonly ingredients: string[];
-	readonly _id: string;
-	readonly name: string;
-	readonly status: TOrderStatus;
-	readonly number: number;
-	readonly createdAt: string;
-	readonly updatedAt: string;
-}
-
-export type TWSResponse = {
-	success: boolean;
-	orders: TOrder[];
-	total: number;
-	totalToday: number;
-}
-
-export type TWSState = {
-	wsConnected: boolean;
-	wsRequest: boolean;
-	wsError: boolean;
-}
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { TWSResponse, TWSState } from '../types/web-sockets';
 
 const initialState: TWSState & TWSResponse = {
 	wsConnected: false,
@@ -39,7 +15,7 @@ export const webSocketSlice = createSlice({
 	name: 'webSocket',
 	initialState,
 	reducers: {
-		startWSConnection: (state) => {
+		startWSConnection: (state, action: PayloadAction<string>) => {
 			state.wsRequest = true;
 			state.wsError = false;
 			state.wsConnected = false;
@@ -57,12 +33,11 @@ export const webSocketSlice = createSlice({
 		closedWSConnection: (state) => {
 			state.wsConnected = false;
 		},
-		getWSMessage: (state, action) => {
-			const res = action.payload as TWSResponse;
-			state.success = res.success;
-			state.orders = res.orders;
-			state.total = res.total;
-			state.totalToday = res.totalToday;
+		getWSMessage: (state, action: PayloadAction<TWSResponse>) => {
+			state.success = action.payload.success;
+			state.orders = action.payload.orders;
+			state.total = action.payload.total;
+			state.totalToday = action.payload.totalToday;
 		}
 	}
 });

@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { TOrder } from '../services/slices/web-socket';
 import { RootState } from '../services/types';
 import { TBurgerIngredient } from '../services/types/data';
+import { TOrder } from '../services/types/web-sockets';
 
 export interface IOrderIngredient {
 	ingredient: TBurgerIngredient;

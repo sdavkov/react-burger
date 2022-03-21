@@ -1,4 +1,4 @@
-import { TOrderStatus } from '../services/slices/web-socket';
+import { TOrderStatus } from '../services/types/web-sockets';
 
 export function formatDateFromOrder(date: string): string {
 	const day = 1000 * 60 * 60 * 24;

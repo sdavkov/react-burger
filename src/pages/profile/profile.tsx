@@ -35,8 +35,16 @@ export function ProfilePage() {
                             onClick={logoutHandler}>Выход</a>
                     </li>
                 </ul>
-                <p className="text text_type_main-default text_color_inactive">В этом разделе вы можете
-                    изменить свои персональные данные</p>
+                <Switch>
+                    <Route path={`${path}`} exact={true}>
+                        <p className="text text_type_main-default text_color_inactive mt-20">
+                            В этом разделе вы можете изменить свои персональные данные</p>
+                    </Route>
+                    <Route path={`${path}/orders`} exact={true}>
+                        <p className="text text_type_main-default text_color_inactive mt-20">
+                            В этом разделе вы можете просмотреть свою историю заказов</p>
+                    </Route>
+                </Switch>
             </div>
             <div className={styles.content}>
                 <Switch>

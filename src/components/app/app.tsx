@@ -24,13 +24,14 @@ import FeedPage from '../../pages/feed-orders/feed-orders';
 import { startWSConnection } from '../../services/slices/web-socket';
 import OrderDetail from '../order-detail/order-detail';
 import DetailPage from '../../pages/detail-page/detail-page';
+import { WSS_ALL_ORDERS_URL } from '../../utils/constants';
 
 function App() {
 
     const dispatch = useDispatch<AppDispatch>();
     useEffect(() => {
         dispatch(fetchBurgerIngredients());
-        dispatch(startWSConnection());
+        dispatch(startWSConnection(WSS_ALL_ORDERS_URL));
     },
         [dispatch])
 
@@ -107,6 +108,15 @@ function App() {
                                 </DetailPage>
                             }
                         />
+                        <ProtectedRoute
+                            path='/profile/orders/:id'
+                            exact
+                            children={
+                                <DetailPage>
+                                    <OrderDetail />
+                                </DetailPage>
+                            }
+                        />
                         <Route>
                             <Error404 />
                         </Route>
@@ -123,6 +133,15 @@ function App() {
                             />
                             <Route
                                 path='/feed/:id'
+                                exact
+                                children={
+                                    <Modal onClose={handleOrderDetailModalClose}>
+                                        <OrderDetail />
+                                    </Modal>
+                                }
+                            />
+                            <ProtectedRoute
+                                path='/profile/orders/:id'
                                 exact
                                 children={
                                     <Modal onClose={handleOrderDetailModalClose}>
