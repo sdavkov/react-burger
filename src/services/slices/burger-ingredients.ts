@@ -42,7 +42,7 @@ export const burgerIngredientsSlice = createSlice({
 		});
 		builder.addCase(fetchBurgerIngredients.rejected, (state) => {
 			state.burgerIngredientsRequest = false;
-			state.burgerIngredientsRequest = true;
+			state.burgerIngredientsRequestFailed = true;
 		});
 	}
 })

@@ -1,25 +1,15 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import styles from './feed-orders.module.css'
 import OrderItem from '../../components/order-item/order-item'
-import { AppDispatch, RootState } from '../../services/types';
-import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
-import { closedWSConnection, startWSConnection } from '../../services/slices/web-socket';
-import { WSS_ALL_ORDERS_URL } from '../../utils/constants';
+import useWebSocket from '../../hooks/useWebSocket';
+import { useAppSelector } from '../../services/store';
 
 export default function FeedPage() {
 
-	const dispatch = useDispatch<AppDispatch>();
+	useWebSocket();
 
-	useEffect(
-		() => {
-			dispatch(startWSConnection(WSS_ALL_ORDERS_URL));
-			return () => { dispatch(closedWSConnection()) }
-		},
-		[dispatch]
-	);
-
-	const { orders, total, totalToday } = useSelector((state: RootState) => state.webSocket);
+	const { orders, total, totalToday } = useAppSelector(state => state.webSocket);
 
 	const location = useLocation();
 	const history = useHistory();

@@ -1,11 +1,11 @@
 import React, { SyntheticEvent } from 'react';
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./user-profile.module.css";
-import { useDispatch } from "react-redux";
 import Error from "../error/error";
 import useForm from "../../hooks/useForm";
 import useAuth from "../../hooks/useAuth";
 import { updateUser } from '../../services/slices/auth';
+import { useAppDispatch } from '../../services/store';
 
 export interface IUserProfileForm {
     name: string;
@@ -23,7 +23,7 @@ function UserProfile() {
         password: ''
     });
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const onSubmitHandler = (e: SyntheticEvent) => {
         e.preventDefault();

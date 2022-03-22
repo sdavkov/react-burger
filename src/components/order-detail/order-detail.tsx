@@ -1,23 +1,24 @@
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import React from 'react'
-import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import useOrderIngredients from '../../hooks/useOrderIngredients'
-import { RootState } from '../../services/types'
+import useWebSocket from '../../hooks/useWebSocket'
+import { useAppSelector } from '../../services/store'
 import { formatDateFromOrder, orderStatusToString } from '../../utils/common'
 import FeedOrderDetailIngredient from '../feed-order-detail-ingredient/feed-order-detail-ingredient'
 import styles from './order-detail.module.css'
 
 const OrderDetail = () => {
+	useWebSocket();
 	const { id } = useParams<{ id: string }>()
-	const order = useSelector((state: RootState) => state.webSocket.orders.find(order => order._id === id));
+	const order = useAppSelector(state => state.webSocket.orders.find(order => order._id === id));
 	const { fullIngredients, total } = useOrderIngredients(order);
+
 
 	let styleStatus = 'text text_type_main-medium mb-15 ';
 	if (order?.status === 'done') {
 		styleStatus += styles.done_status;
 	}
-
 	return (
 		<>
 			{order && (

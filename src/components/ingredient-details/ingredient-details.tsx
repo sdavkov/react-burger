@@ -1,16 +1,15 @@
 import React, { useEffect } from 'react'
 import styles from './ingredient-details.module.css'
-import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { RootState } from '../../services/types';
 import { setCurrentBurgerIngredientAction } from '../../services/slices/burger-ingredients';
+import { useAppDispatch, useAppSelector } from '../../services/store';
 
 const IngredientDetails = React.memo(() => {
 
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const { ingredientId } = useParams<{ ingredientId: string }>()
 
-    const { currentBurgerIngredient, burgerIngredientsRequest } = useSelector((state: RootState) => state.burgerIngredients);
+    const { currentBurgerIngredient, burgerIngredientsRequest } = useAppSelector(state => state.burgerIngredients);
 
     useEffect(() => {
         dispatch(setCurrentBurgerIngredientAction(ingredientId));

@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../services/types';
+import { useAppSelector } from '../services/store';
 import { TBurgerIngredient } from '../services/types/data';
 import { TOrder } from '../services/types/web-sockets';
 
@@ -10,7 +9,7 @@ export interface IOrderIngredient {
 }
 
 function useOrderIngredients(order: TOrder | undefined) {
-	const burgerIngredients = useSelector((state: RootState) => state.burgerIngredients.burgerIngredients);
+	const burgerIngredients = useAppSelector(state => state.burgerIngredients.burgerIngredients);
 	const { fullIngredients, total } = useMemo(() => {
 		if (order) {
 			return order.ingredients.reduce<{ fullIngredients: IOrderIngredient[], total: number }>((res, orderIngredient) => {

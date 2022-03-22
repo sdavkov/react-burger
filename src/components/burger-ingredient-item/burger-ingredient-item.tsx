@@ -3,9 +3,8 @@ import styles from "./burger-ingredient-item.module.css";
 import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrag } from "react-dnd";
 import { useHistory, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { RootState } from '../../services/types';
 import { TBurgerIngredient } from '../../services/types/data';
+import { useAppSelector } from '../../services/store';
 
 interface IBurgerIngredientItemProps {
     burgerIngredient: TBurgerIngredient;
@@ -16,7 +15,7 @@ const BurgerIngredientItem: FunctionComponent<IBurgerIngredientItemProps> = ({ b
     const location = useLocation();
     const history = useHistory();
 
-    const cart = useSelector((store: RootState) => store.burgerConstructor.cart);
+    const cart = useAppSelector(store => store.burgerConstructor.cart);
 
     const [, dragRef] = useDrag({
         type: 'ingredient',

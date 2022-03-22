@@ -1,14 +1,15 @@
 import React from 'react';
 import styles from './profile.module.css'
 import UserProfile from "../../components/user-profile/user-profile";
-import { useDispatch } from "react-redux";
 import { Link, Route, Switch, useHistory, useLocation, useRouteMatch } from "react-router-dom";
 import UserOrders from "../../components/user-orders/user-orders";
 import { logoutUser } from '../../services/slices/auth';
+import OrderDetail from '../../components/order-detail/order-detail';
+import { useAppDispatch } from '../../services/store';
 
 export function ProfilePage() {
 
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const history = useHistory()
     const { path } = useRouteMatch();
     const location = useLocation();
@@ -17,7 +18,7 @@ export function ProfilePage() {
         dispatch(logoutUser());
         history.replace('/login');
     }
-
+    console.log(location)
     return (
         <div className={styles.profile}>
             <div className={styles.nav}>
@@ -54,8 +55,13 @@ export function ProfilePage() {
                     <Route path={`${path}/orders`} exact={true}>
                         <UserOrders />
                     </Route>
+                    <Route
+                        path={`${path}/orders/:id`} exact={true}
+                        children={
+                            <OrderDetail />
+                        } />
                 </Switch>
             </div>
-        </div>
+        </div >
     );
 }

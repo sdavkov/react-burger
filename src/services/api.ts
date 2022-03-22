@@ -5,6 +5,7 @@ import { IResetPasswordForm } from '../pages/reset-password/reset-password';
 import { ILoginForm } from '../pages/login/login';
 import { IUserProfileForm } from '../components/user-profile/user-profile';
 import { IForgotPasswordForm } from '../pages/forgot-password/forgot-password';
+import { TOrder } from './types/web-sockets';
 
 export async function checkResponse<T>(res: Response): Promise<T> {
     if (res.ok) {
@@ -28,6 +29,10 @@ export const getCreateOrderRequest = async (cart: TCart[], token: string) =>
         },
         body: JSON.stringify({ ingredients: cart.map(item => item.burgerIngredient._id) })
     }).then((res) => checkResponse<{ name: string; order: TCreatedOrder; success: boolean; }>(res));
+
+export const getOrderByIdRequest = async (order_id: string) =>
+    await fetch(`${API_URL}orders/${order_id}`).then((res) =>
+        checkResponse<{ orders: TOrder[]; success: boolean; }>(res));
 
 export const getBurgerIngredientsRequest = async () =>
     await fetch(`${API_URL}ingredients`).then((res) =>

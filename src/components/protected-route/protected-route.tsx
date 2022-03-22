@@ -1,13 +1,13 @@
 import React, { FunctionComponent, useEffect } from 'react';
 import { Redirect, Route, RouteProps } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
-import { useDispatch } from "react-redux";
 import { getUser } from '../../services/slices/auth';
+import { useAppDispatch } from '../../services/store';
 
 const ProtectedRoute: FunctionComponent<RouteProps> = ({ children, ...rest }) => {
 
     const { currentUser, authRequest } = useAuth();
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         currentUser == null && dispatch(getUser())

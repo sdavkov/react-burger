@@ -1,8 +1,7 @@
 import React, { FunctionComponent, LegacyRef, RefObject } from 'react'
 import styles from './burger-ingredients-items.module.css'
-import { useSelector } from "react-redux";
 import BurgerIngredientItem from "../burger-ingredient-item/burger-ingredient-item";
-import { RootState } from '../../services/types';
+import { useAppSelector } from '../../services/store';
 
 interface IBurgerIngredientsItemsProps {
     title: string;
@@ -12,7 +11,7 @@ interface IBurgerIngredientsItemsProps {
 
 const BurgerIngredientsItems: FunctionComponent<IBurgerIngredientsItemsProps> = React.memo(React.forwardRef(({ title, type }, ref) => {
 
-    const burgerIngredients = useSelector((state: RootState) => state.burgerIngredients.burgerIngredients);
+    const burgerIngredients = useAppSelector((state) => state.burgerIngredients.burgerIngredients);
 
     return (
         <>

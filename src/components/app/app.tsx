@@ -12,26 +12,22 @@ import {
 } from "../../pages";
 import ProtectedRoute from "../protected-route/protected-route";
 import OnlyNonAuthorizedRoute from "../only-non-authorized-route/only-non-authorized-route";
-import { useDispatch } from "react-redux";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import OrderDetails from "../create-order/create-order";
 import { ILocationState } from '../../utils/common-types';
-import { AppDispatch } from '../../services/types';
 import { clearCurrentOrderNumberAction } from '../../services/slices/burger-constructor';
 import { clearBurgerIngredientAction, fetchBurgerIngredients } from '../../services/slices/burger-ingredients';
 import FeedPage from '../../pages/feed-orders/feed-orders';
-import { startWSConnection } from '../../services/slices/web-socket';
 import OrderDetail from '../order-detail/order-detail';
 import DetailPage from '../../pages/detail-page/detail-page';
-import { WSS_ALL_ORDERS_URL } from '../../utils/constants';
+import { useAppDispatch } from '../../services/store';
 
 function App() {
 
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
     useEffect(() => {
         dispatch(fetchBurgerIngredients());
-        dispatch(startWSConnection(WSS_ALL_ORDERS_URL));
     },
         [dispatch])
 
@@ -40,7 +36,7 @@ function App() {
         const history = useHistory();
         let background = location.state && location.state.background;
 
-        const dispatch = useDispatch();
+        const dispatch = useAppDispatch();
 
         const handleIngredientModalClose = () => {
             dispatch(clearBurgerIngredientAction())
@@ -101,15 +97,6 @@ function App() {
                         />
                         <Route
                             path='/feed/:id'
-                            exact
-                            children={
-                                <DetailPage>
-                                    <OrderDetail />
-                                </DetailPage>
-                            }
-                        />
-                        <ProtectedRoute
-                            path='/profile/orders/:id'
                             exact
                             children={
                                 <DetailPage>

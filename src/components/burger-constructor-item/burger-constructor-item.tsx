@@ -1,12 +1,11 @@
 import React, { FunctionComponent, useRef } from "react";
 import styles from "./burger-constructor-item.module.css";
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch } from "react-redux";
 import { useDrag, useDrop } from "react-dnd";
 import { BURGER_INGREDIENT_BUN_TYPE } from "../../utils/constants";
-import { AppDispatch } from '../../services/types';
 import { removeCartItem } from '../../services/slices/burger-constructor';
 import { TCart } from '../../services/types/data';
+import { useAppDispatch } from '../../services/store';
 
 interface IBurgerConstructorItem {
     cartItem: TCart;
@@ -18,7 +17,7 @@ interface IBurgerConstructorItem {
 
 const BurgerConstructorItem: FunctionComponent<IBurgerConstructorItem> = ({ cartItem, index, moveCard, topBun = false, bottomBun = false }) => {
 
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
     const ref = useRef<HTMLParagraphElement>(null);
 
     const [{ handlerId }, drop] = useDrop({

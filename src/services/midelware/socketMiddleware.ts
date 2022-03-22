@@ -13,6 +13,7 @@ export const socketMiddleware = (wsActions: IWSActions): Middleware => {
 			const { wsInit, wsSendMessage, wsOpen, wsClose, wsError, wsMessage } = wsActions;
 
 			if (type === wsInit) {
+				console.log(type, wsInit)
 				// объект класса WebSocket
 				socket = new WebSocket(payload);
 			}
