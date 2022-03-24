@@ -1,15 +1,15 @@
 import React, { FunctionComponent, useEffect } from 'react';
 import { Redirect, Route, RouteProps, useLocation } from "react-router-dom";
-import { getUser } from "../../services/actions/auth";
 import useAuth from "../../hooks/useAuth";
-import { useDispatch } from "react-redux";
-import { ILocationState } from '../../utils/ts-types';
+import { ILocationState } from '../../utils/common-types';
+import { getUser } from '../../services/slices/auth';
+import { useAppDispatch } from '../../services/store';
 
 const OnlyNonAuthorizedRoute: FunctionComponent<RouteProps> = ({ children, ...rest }) => {
 
     const { state } = useLocation<ILocationState>()
     const { currentUser, authRequest } = useAuth();
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         currentUser == null && dispatch(getUser())

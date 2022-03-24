@@ -1,12 +1,11 @@
-import { useSelector } from "react-redux";
-import { IRootState } from '../utils/ts-types';
+import { useAppSelector } from '../services/store';
 
 function useAuth() {
     const {
         authRequest,
         authRequestFailedMessage,
         currentUser,
-    } = useSelector((state: IRootState) => ({
+    } = useAppSelector(state => ({
         authRequest: state.auth.authRequest,
         authRequestFailedMessage: state.auth.authRequestFailedMessage,
         currentUser: state.auth.currentUser,

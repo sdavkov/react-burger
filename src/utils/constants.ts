@@ -1,4 +1,6 @@
-export const API_URL ="https://norma.nomoreparties.space/api/"
+export const API_URL = "https://norma.nomoreparties.space/api/"
+export const WSS_ALL_ORDERS_URL = "wss://norma.nomoreparties.space/orders/all"
+export const WSS_PERSONALS_ORDERS_URL = "wss://norma.nomoreparties.space/orders"
 export const ESCAPE_VALUE = "Escape"
 export const BURGER_INGREDIENT_BUN_TYPE = "bun"
 export const BURGER_INGREDIENT_MAIN_TYPE = "main"

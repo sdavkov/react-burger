@@ -2,12 +2,17 @@ import React, { SyntheticEvent, useEffect } from 'react';
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import styles from "./reset-password.module.css";
-import { useDispatch } from "react-redux";
-import { resetPassword } from "../../services/actions/auth";
 import Error from "../../components/error/error";
 import useForm from "../../hooks/useForm";
-import useAuth from "../../hooks/useAuth";
-import { ILocationState, IResetPasswordForm } from '../../utils/ts-types'
+import { resetPassword } from '../../services/slices/auth';
+import { ILocationState } from '../../utils/common-types';
+import useAuth from '../../hooks/useAuth';
+import { useAppDispatch } from '../../services/store';
+
+export interface IResetPasswordForm {
+    password: string;
+    token: string;
+}
 
 export function ResetPasswordPage() {
 
@@ -26,7 +31,7 @@ export function ResetPasswordPage() {
 
     const { form, onChangeHandler } = useForm<IResetPasswordForm>(initForm);
     const { authRequest, authRequestFailedMessage } = useAuth();
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const onSubmitHandler = (e: SyntheticEvent) => {
         e.preventDefault();

@@ -1,17 +1,14 @@
 import React, { FunctionComponent, useRef } from "react";
-import PropTypes from 'prop-types'
 import styles from "./burger-constructor-item.module.css";
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { removeCartItem } from "../../services/actions/burger-constructor";
-import { useDispatch } from "react-redux";
 import { useDrag, useDrop } from "react-dnd";
-import { burgerIngredientPropTypes } from "../../utils/types";
 import { BURGER_INGREDIENT_BUN_TYPE } from "../../utils/constants";
-import { ICart } from '../../utils/ts-types';
-import { AppDispatch } from '../../services/reducers';
+import { removeCartItem } from '../../services/slices/burger-constructor';
+import { TCart } from '../../services/types/data';
+import { useAppDispatch } from '../../services/store';
 
 interface IBurgerConstructorItem {
-    cartItem: ICart;
+    cartItem: TCart;
     index?: number;
     moveCard?: (dragIndex: number, hoverIndex: number) => void;
     topBun?: boolean;
@@ -20,7 +17,7 @@ interface IBurgerConstructorItem {
 
 const BurgerConstructorItem: FunctionComponent<IBurgerConstructorItem> = ({ cartItem, index, moveCard, topBun = false, bottomBun = false }) => {
 
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
     const ref = useRef<HTMLParagraphElement>(null);
 
     const [{ handlerId }, drop] = useDrop({
@@ -36,7 +33,7 @@ const BurgerConstructorItem: FunctionComponent<IBurgerConstructorItem> = ({ cart
             else
                 return true;
         },
-        hover(item: { cartItem: ICart, index: number }, monitor) {
+        hover(item: { cartItem: TCart, index: number }, monitor) {
             if (!ref.current || !moveCard || !index) {
                 return;
             }
@@ -108,17 +105,6 @@ const BurgerConstructorItem: FunctionComponent<IBurgerConstructorItem> = ({ cart
             />
         </div>
     )
-}
-
-BurgerConstructorItem.propTypes = {
-    cartItem: PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        burgerIngredient: burgerIngredientPropTypes.isRequired,
-    }).isRequired,
-    index: PropTypes.number,
-    moveCard: PropTypes.func,
-    topBun: PropTypes.bool,
-    bottomBun: PropTypes.bool,
 }
 
 export default BurgerConstructorItem

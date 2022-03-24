@@ -1,14 +1,15 @@
 import React from 'react';
 import styles from './profile.module.css'
 import UserProfile from "../../components/user-profile/user-profile";
-import { useDispatch } from "react-redux";
-import { logoutUser } from "../../services/actions/auth";
 import { Link, Route, Switch, useHistory, useLocation, useRouteMatch } from "react-router-dom";
-import Orders from "../../components/orders/orders";
+import UserOrders from "../../components/user-orders/user-orders";
+import { logoutUser } from '../../services/slices/auth';
+import OrderDetail from '../../components/order-detail/order-detail';
+import { useAppDispatch } from '../../services/store';
 
 export function ProfilePage() {
 
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const history = useHistory()
     const { path } = useRouteMatch();
     const location = useLocation();
@@ -17,7 +18,7 @@ export function ProfilePage() {
         dispatch(logoutUser());
         history.replace('/login');
     }
-
+    console.log(location)
     return (
         <div className={styles.profile}>
             <div className={styles.nav}>
@@ -35,8 +36,16 @@ export function ProfilePage() {
                             onClick={logoutHandler}>Выход</a>
                     </li>
                 </ul>
-                <p className="text text_type_main-default text_color_inactive">В этом разделе вы можете
-                    изменить свои персональные данные</p>
+                <Switch>
+                    <Route path={`${path}`} exact={true}>
+                        <p className="text text_type_main-default text_color_inactive mt-20">
+                            В этом разделе вы можете изменить свои персональные данные</p>
+                    </Route>
+                    <Route path={`${path}/orders`} exact={true}>
+                        <p className="text text_type_main-default text_color_inactive mt-20">
+                            В этом разделе вы можете просмотреть свою историю заказов</p>
+                    </Route>
+                </Switch>
             </div>
             <div className={styles.content}>
                 <Switch>
@@ -44,10 +53,15 @@ export function ProfilePage() {
                         <UserProfile />
                     </Route>
                     <Route path={`${path}/orders`} exact={true}>
-                        <Orders />
+                        <UserOrders />
                     </Route>
+                    <Route
+                        path={`${path}/orders/:id`} exact={true}
+                        children={
+                            <OrderDetail />
+                        } />
                 </Switch>
             </div>
-        </div>
+        </div >
     );
 }

@@ -1,20 +1,26 @@
 import { API_URL } from "../utils/constants";
-import { ICart, IForgotPasswordForm, ILoginForm, IRegisterForm, IResetPasswordForm, IUserProfileForm } from '../utils/ts-types';
+import { TBurgerIngredient, TCart, TCreatedOrder, TUser } from './types/data';
+import { IRegisterForm } from '../pages/register/register';
+import { IResetPasswordForm } from '../pages/reset-password/reset-password';
+import { ILoginForm } from '../pages/login/login';
+import { IUserProfileForm } from '../components/user-profile/user-profile';
+import { IForgotPasswordForm } from '../pages/forgot-password/forgot-password';
+import { TOrder } from './types/web-sockets';
 
-export async function checkResponse(res: Response) {
-    if (res.ok)
-        return res.json();
-    else {
-        let data = null;
-        try {
-            data = await res.json();
-        } finally {
-            return Promise.reject(new Error(`Ошибка ${res.status}` + (data ? `: ${data.message}` : '')));
-        }
+export async function checkResponse<T>(res: Response): Promise<T> {
+    if (res.ok) {
+        return res.json() as Promise<T>;
     }
+
+    const data = await res.json();
+    if (data.message === "jwt expired") {
+        return Promise.reject(new Error("jwt expired"));
+    }
+
+    return Promise.reject(new Error(`Ошибка: ${res.status}`));
 }
 
-export const getCreateOrderRequest = async (cart: ICart[], token: string) =>
+export const getCreateOrderRequest = async (cart: TCart[], token: string) =>
     await fetch(`${API_URL}orders`, {
         method: 'POST',
         headers: {
@@ -22,10 +28,16 @@ export const getCreateOrderRequest = async (cart: ICart[], token: string) =>
             Authorization: 'Bearer ' + token,
         },
         body: JSON.stringify({ ingredients: cart.map(item => item.burgerIngredient._id) })
-    });
+    }).then((res) => checkResponse<{ name: string; order: TCreatedOrder; success: boolean; }>(res));
+
+export const getOrderByIdRequest = async (order_id: string) =>
+    await fetch(`${API_URL}orders/${order_id}`).then((res) =>
+        checkResponse<{ orders: TOrder[]; success: boolean; }>(res));
 
 export const getBurgerIngredientsRequest = async () =>
-    await fetch(`${API_URL}ingredients`);
+    await fetch(`${API_URL}ingredients`).then((res) =>
+        checkResponse<{ data: TBurgerIngredient[]; success: boolean }>(res)
+    );
 
 export const getRegisterUserRequest = async ({ name, email, password }: IRegisterForm) => await
     fetch(`${API_URL}auth/register`, {
@@ -34,7 +46,7 @@ export const getRegisterUserRequest = async ({ name, email, password }: IRegiste
             'Content-Type': 'application/json;charset=utf-8'
         },
         body: JSON.stringify({ email, password, name })
-    });
+    }).then((res) => checkResponse<{ user: TUser; accessToken: string, refreshToken: string; success: boolean; }>(res));
 
 export const getLoginUserRequest = async ({ email, password }: ILoginForm) => await
     fetch(`${API_URL}auth/login`, {
@@ -43,7 +55,7 @@ export const getLoginUserRequest = async ({ email, password }: ILoginForm) => aw
             'Content-Type': 'application/json;charset=utf-8'
         },
         body: JSON.stringify({ email, password })
-    });
+    }).then((res) => checkResponse<{ user: TUser; accessToken: string, refreshToken: string; success: boolean; }>(res));;
 
 export const getLogoutUserRequest = async (token: string) => await
     fetch(`${API_URL}auth/logout`, {
@@ -61,7 +73,7 @@ export const getUserRequest = async (token: string) => await
             'Content-Type': 'application/json;charset=utf-8',
             Authorization: 'Bearer ' + token
         },
-    });
+    }).then((res) => checkResponse<{ user: TUser, success: boolean }>(res));
 
 export const getUpdateUserRequest = async ({ name, email, password }: IUserProfileForm, token: string) => await
     fetch(`${API_URL}auth/user`, {
@@ -71,7 +83,7 @@ export const getUpdateUserRequest = async ({ name, email, password }: IUserProfi
             Authorization: 'Bearer ' + token
         },
         body: JSON.stringify({ name, email, password })
-    });
+    }).then((res) => checkResponse<{ data: TUser, success: boolean }>(res));
 
 export const getRefreshTokenRequest = async (token: string) =>
     fetch(`${API_URL}auth/token`, {
@@ -80,7 +92,7 @@ export const getRefreshTokenRequest = async (token: string) =>
             'Content-Type': 'application/json;charset=utf-8',
         },
         body: JSON.stringify({ token })
-    });
+    }).then((res) => checkResponse<{ accessToken: string; refreshToken: string; success: boolean; }>(res));
 
 export const getForgotPasswordRequest = async ({ email }: IForgotPasswordForm) => await
     fetch(`${API_URL}password-reset`, {
@@ -89,7 +101,7 @@ export const getForgotPasswordRequest = async ({ email }: IForgotPasswordForm) =
             'Content-Type': 'application/json;charset=utf-8'
         },
         body: JSON.stringify({ email })
-    });
+    }).then((res) => checkResponse<{ message: string; success: boolean; }>(res));
 
 export const getResetPasswordRequest = async ({ password, token }: IResetPasswordForm) => await
     fetch(`${API_URL}password-reset/reset`, {
@@ -98,4 +110,4 @@ export const getResetPasswordRequest = async ({ password, token }: IResetPasswor
             'Content-Type': 'application/json;charset=utf-8'
         },
         body: JSON.stringify({ password, token })
-    });
+    }).then((res) => checkResponse<{ message: string; success: boolean; }>(res));;

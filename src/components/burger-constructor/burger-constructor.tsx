@@ -1,27 +1,25 @@
 import React, { FC, useCallback, useMemo } from 'react'
 import styles from './burger-constructor.module.css'
 import TotalBurgerConstructor from '../total-burger-constructor/total-burger-constructor'
-import { useDispatch, useSelector } from "react-redux";
-import { addCartItem, moveCartItem } from "../../services/actions/burger-constructor";
 import { useDrop } from "react-dnd";
 import BurgerConstructorItem from "../burger-constructor-item/burger-constructor-item";
 import { BURGER_INGREDIENT_BUN_TYPE } from "../../utils/constants";
-import { IBurgerIngredient, IRootState } from '../../utils/ts-types';
-import { AppDispatch } from '../../services/reducers';
+import { addCartItem, moveCartItem } from '../../services/slices/burger-constructor';
+import { TBurgerIngredient } from '../../services/types/data';
+import { useAppDispatch, useAppSelector } from '../../services/store';
 
 
 const BurgerConstructor: FC = React.memo(() => {
 
-    const cart = useSelector((state: IRootState) => state.burgerConstructor.cart);
+    const cart = useAppSelector(state => state.burgerConstructor.cart);
+    const dispatch = useAppDispatch();
 
     const bun = useMemo(() => cart.find(cartItem => cartItem.burgerIngredient.type === BURGER_INGREDIENT_BUN_TYPE), [cart]);
     const additions = useMemo(() => cart.filter(cartItem => cartItem.burgerIngredient.type !== BURGER_INGREDIENT_BUN_TYPE), [cart]);
 
-    const dispatch = useDispatch<AppDispatch>();
-
     const [{ isHover, canDrop }, dropTarget] = useDrop({
         accept: "ingredient",
-        drop(burgerIngredient: IBurgerIngredient) {
+        drop(burgerIngredient: TBurgerIngredient) {
             dispatch(addCartItem(burgerIngredient))
         },
         canDrop(burgerIngredient) {
@@ -39,7 +37,7 @@ const BurgerConstructor: FC = React.memo(() => {
     const canDropDecoratorCssClass = cart.length === 0 ? (isHover ? (canDrop ? styles.allowDrop : styles.disableDrop) : '') : '';
 
     const moveCard = useCallback((dragIndex, hoverIndex) => {
-        dispatch(moveCartItem(dragIndex, hoverIndex));
+        dispatch(moveCartItem({ dragIndex, hoverIndex }));
     }, [dispatch]);
 
     return (

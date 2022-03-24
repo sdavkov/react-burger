@@ -2,12 +2,16 @@ import React, { SyntheticEvent } from 'react';
 import { Input, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
 import styles from "./login.module.css";
-import { useDispatch } from "react-redux";
-import { loginUser } from "../../services/actions/auth";
 import Error from "../../components/error/error";
 import useForm from "../../hooks/useForm";
 import useAuth from "../../hooks/useAuth";
-import { ILoginForm } from '../../utils/ts-types';
+import { loginUser } from '../../services/slices/auth';
+import { useAppDispatch } from '../../services/store';
+
+export interface ILoginForm {
+    email: string;
+    password: string;
+}
 
 export function LoginPage() {
 
@@ -20,7 +24,7 @@ export function LoginPage() {
 
     const { authRequest, authRequestFailedMessage } = useAuth();
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const onSubmitHandler = (e: SyntheticEvent) => {
         e.preventDefault();

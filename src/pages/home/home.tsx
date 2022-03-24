@@ -4,8 +4,8 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import BurgerIngredients from "../../components/burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../../components/burger-constructor/burger-constructor";
-import { useSelector } from "react-redux";
-import { IRootState } from '../../utils/ts-types'
+import { useAppSelector } from '../../services/store';
+
 
 export function HomePage() {
 
@@ -13,7 +13,7 @@ export function HomePage() {
         burgerIngredientsRequest,
         burgerIngredientsRequestFailed,
 
-    } = useSelector((state: IRootState) => (state.burgerIngredients));
+    } = useAppSelector(state => (state.burgerIngredients));
 
     return (
         <React.Fragment>

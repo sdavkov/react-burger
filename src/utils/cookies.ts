@@ -8,7 +8,7 @@ export function getCookie(name: string) {
 export function setCookie(name: string, value: string, props: { expires: number | Date }) {
     const d = new Date();
     if (typeof props.expires == 'number') {
-        d.setTime(d.getTime() + props.expires * 1000);
+        d.setTime(d.getTime() + props.expires * 60000);
     }
     const ds = d.toUTCString();
 

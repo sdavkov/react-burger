@@ -2,12 +2,17 @@ import React, { SyntheticEvent } from 'react';
 import { PasswordInput, Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
 import styles from "./register.module.css";
-import { useDispatch } from "react-redux";
-import { registerUser } from "../../services/actions/auth";
 import Error from "../../components/error/error";
 import useForm from "../../hooks/useForm";
 import useAuth from "../../hooks/useAuth";
-import { IRegisterForm } from '../../utils/ts-types';
+import { registerUser } from '../../services/slices/auth';
+import { useAppDispatch } from '../../services/store';
+
+export interface IRegisterForm {
+    name: string;
+    email: string;
+    password: string;
+}
 
 export function RegisterPage() {
 
@@ -20,7 +25,7 @@ export function RegisterPage() {
     const { form, onChangeHandler } = useForm<IRegisterForm>(initForm)
     const { authRequest, authRequestFailedMessage } = useAuth();
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const onSubmitHandler = (e: SyntheticEvent) => {
         e.preventDefault();

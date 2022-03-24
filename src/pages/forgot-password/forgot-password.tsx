@@ -2,12 +2,15 @@ import React, { SyntheticEvent } from 'react';
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useHistory } from "react-router-dom";
 import styles from "./forgot-password.module.css";
-import { useDispatch } from "react-redux";
-import { forgotPassword } from "../../services/actions/auth";
 import Error from "../../components/error/error";
 import useForm from "../../hooks/useForm";
 import useAuth from "../../hooks/useAuth";
-import { IForgotPasswordForm } from '../../utils/ts-types';
+import { forgotPassword } from '../../services/slices/auth';
+import { useAppDispatch } from '../../services/store';
+
+export interface IForgotPasswordForm {
+    email: string;
+}
 
 export function ForgotPasswordPage() {
 
@@ -17,7 +20,7 @@ export function ForgotPasswordPage() {
 
     const { form, onChangeHandler } = useForm<IForgotPasswordForm>(initForm)
     const { authRequest, authRequestFailedMessage } = useAuth();
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const history = useHistory();
 
     const onSubmitHandler = (e: SyntheticEvent) => {
