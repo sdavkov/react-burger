@@ -16,7 +16,7 @@ export type TAuthState = {
 	authRequestFailedMessage?: string;
 }
 
-const initialState: TAuthState = {
+export const initialState: TAuthState = {
 	authRequest: false,
 	authRequestFailed: false,
 	authRequestFailedMessage: '',
