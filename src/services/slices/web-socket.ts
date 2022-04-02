@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TWSResponse, TWSState } from '../types/web-sockets';
 
-const initialState: TWSState & TWSResponse = {
+export const initialState: TWSState & TWSResponse = {
 	wsConnected: false,
 	wsRequest: false,
 	wsError: false,
