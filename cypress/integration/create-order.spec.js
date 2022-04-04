@@ -18,7 +18,9 @@ describe('Constructor page works correctly', function () {
 	it("should open ingredients popup", () => {
 		cy.wait("@getIngredients").then((interception) => { });
 		cy.get("[class^=burger-ingredient-item_item__]").first().click();
+		cy.get('[data-test-id="test-ingredient-name"]').should('have.text', 'Краторная булка N-200i');
 		cy.get("[class^=modal_close]").click();
+		cy.get("[class^=modal_close]").should("not.exist");
 	});
 
 	it("constructor should work", () => {
@@ -42,7 +44,9 @@ describe('Constructor page works correctly', function () {
 
 		cy.get("button").contains("Оформить заказ").as("submit");
 
-		cy.get("@submit").click().wait("@postOrder").then((interception) => { });;
+		cy.get("@submit").click().wait("@postOrder").then((interception) => { });
+		cy.get("[class^=create-order_number__]").contains(/^[0-9]*$/);
 		cy.get("[class^=modal_close]").click();
+		cy.get("[class^=modal_close]").should("not.exist");
 	});
 }); 

@@ -24,7 +24,7 @@ const IngredientDetails = React.memo(() => {
                 <div className={styles.ingredient}>
                     <img className={styles.image + ' mb-4'} src={currentBurgerIngredient.image_large}
                         alt={currentBurgerIngredient.name} />
-                    <p className="text text_type_main-medium mb-8">{currentBurgerIngredient.name}</p>
+                    <p className="text text_type_main-medium mb-8" data-test-id="test-ingredient-name">{currentBurgerIngredient.name}</p>
                     <div className={styles.analyzes + ' text_color_inactive mb-15'}>
                         <div className={styles.analysis + ' mr-5'}>
                             <p className='text text_type_main-default mb-3'>Каллории, ккал</p>

@@ -110,10 +110,18 @@ function App() {
                     </Switch>
                     {background && (
                         <Switch>
+                            <ProtectedRoute
+                                path='/create-new-order'
+                                children={
+                                    <Modal onClose={handleNewOrderModalClose}>
+                                        <OrderDetails />
+                                    </Modal>
+                                }
+                            />
                             <Route
                                 path='/ingredients/:ingredientId'
                                 children={
-                                    <Modal onClose={handleIngredientModalClose}>
+                                    <Modal title='Детали ингредиента' onClose={handleIngredientModalClose}>
                                         <IngredientDetails />
                                     </Modal>
                                 }
