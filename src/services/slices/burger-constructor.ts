@@ -14,7 +14,7 @@ export type TBurgerConstructorState = {
 	orderRequestFailed: boolean,
 }
 
-const initialState: TBurgerConstructorState = {
+export const initialState: TBurgerConstructorState = {
 	cart: [],
 	total: 0,
 	currentOrderNumber: 0,
