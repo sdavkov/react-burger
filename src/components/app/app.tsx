@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import AppHeader from '../app-header/app-header';
-import { BrowserRouter as Router, Route, Switch, useHistory, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, HashRouter, Route, Switch, useHistory, useLocation } from "react-router-dom";
 import {
     Error404,
     ForgotPasswordPage,
@@ -152,9 +152,9 @@ function App() {
     };
 
     return (
-        <Router>
+        <HashRouter basename='/react-burger' >
             <ModalSwitch />
-        </Router>
+        </HashRouter>
     );
 }
 
